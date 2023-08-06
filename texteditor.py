@@ -10,9 +10,11 @@ movements = {
     "l":QTextCursor.MoveOperation.NextCharacter, 
     "b":QTextCursor.MoveOperation.PreviousWord, 
     "w":QTextCursor.MoveOperation.NextWord, 
-    "e":[QTextCursor.MoveOperation.NextWord, 
+    "e":[
+        QTextCursor.MoveOperation.NextWord, 
          QTextCursor.MoveOperation.EndOfWord, 
-         QTextCursor.MoveOperation.PreviousCharacter], 
+        #  QTextCursor.MoveOperation.PreviousCharacter
+         ], 
     }
 
 
@@ -20,21 +22,25 @@ class MyTextEdit(QTextEdit):
     def __init__(self):
         super().__init__()
         self.cursor = self.textCursor()
-        self.cursor.insertText("hola como va\n todo por ahí")
+        self.cursor.insertText("hola como va\ntodo por ahí")
         self.setFont("monospace")
         self.setCursorWidth(8)
-        self.insert_mode = False
+        self.insertMode = False
 
     def keyPressEvent(self, event):
         if event.text() == "i":
-            self.insert_mode = True
-        elif not self.insert_mode:
+            self.enterInsertMode()
+        elif not self.insertMode:
             if event.text() in movements.keys():
                 self.moveCursor(event.text())
             else:
                 pass
         else:
             super().keyPressEvent(event)
+
+    def enterInsertMode(self):
+        self.insertMode = True
+        self.setCursorWidth(1)
 
     def moveCursor(self, char):
         movement = movements[char]
