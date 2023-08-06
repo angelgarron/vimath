@@ -34,11 +34,11 @@ class MyTextEdit(QTextEdit):
             else:
                 super().keyPressEvent(event)
         else:
-            if event.text() == "i" and not self.insertMode:
+            if event.key() == Qt.Key_I and not self.insertMode:
                 self.enterInsertMode()
             else:
                 if event.key() in self.movements.keys():
-                    self.moveCursor(event.key())
+                    self.moveCursor(self.movements[event.key()])
 
     def enterInsertMode(self):
         self.insertMode = True
@@ -48,9 +48,8 @@ class MyTextEdit(QTextEdit):
         self.insertMode = False
         self.setCursorWidth(8)
 
-    def moveCursor(self, key):
-        movement = self.movements[key]
-        if isinstance(key, list):
+    def moveCursor(self, movement):
+        if isinstance(movement, list):
             for m in movement:
                 self.cursor.movePosition(m, self.cursor.MoveMode.MoveAnchor, 1)
                 self.setTextCursor(self.cursor)
