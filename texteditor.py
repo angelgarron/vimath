@@ -1,7 +1,7 @@
 import sys
 from PySide6.QtCore import (QCoreApplication, QMetaObject, QRect)
 from PySide6.QtGui import (QKeySequence, QShortcut, QTextCursor)
-from PySide6.QtWidgets import (QApplication, QMainWindow, QTextEdit, QWidget)
+from PySide6.QtWidgets import (QApplication, QMainWindow, QTextEdit, QWidget, QVBoxLayout)
 
 movements = {
     "h":QTextCursor.MoveOperation.PreviousCharacter, 
@@ -17,8 +17,8 @@ movements = {
 
 
 class MyTextEdit(QTextEdit):
-    def __init__(self, widget):
-        super().__init__(widget)
+    def __init__(self):
+        super().__init__()
         self.cursor = self.textCursor()
         self.cursor.insertText("hola como va\n todo por ahí")
         self.setFont("monospace")
@@ -47,30 +47,25 @@ class MyTextEdit(QTextEdit):
             self.setTextCursor(self.cursor)
             
 
-class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
-        if not MainWindow.objectName():
-            MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(658, 427)
-        self.centralwidget = QWidget(MainWindow)
-        self.textEdit = MyTextEdit(self.centralwidget)
-        self.textEdit.setGeometry(QRect(80, 40, 501, 311))
-        MainWindow.setCentralWidget(self.centralwidget)
+class MyMainWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+        self.initUI()
+
+    def initUI(self):
+        self.setGeometry(100, 100, 400, 300)
+        layout = QVBoxLayout()
+        text_edit = MyTextEdit()
+        layout.addWidget(text_edit)
+
+        container = QWidget()
+        container.setLayout(layout)
+        self.setCentralWidget(container)
 
 
-        self.retranslateUi(MainWindow)
-
-        QMetaObject.connectSlotsByName(MainWindow)
-    # setupUi
-
-
-    def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
-    # retranslateUi
-
-app = QApplication(sys.argv)
-MainWindow = QMainWindow()
-ui = Ui_MainWindow()
-ui.setupUi(MainWindow)
-MainWindow.show()
-sys.exit(app.exec())
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    window = MyMainWindow()
+    window.show()
+    sys.exit(app.exec())
