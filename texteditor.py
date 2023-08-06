@@ -1,5 +1,5 @@
 import sys
-from PySide6.QtCore import (QCoreApplication, QMetaObject, QRect)
+from PySide6.QtCore import (QCoreApplication, QMetaObject, QRect, Qt)
 from PySide6.QtGui import (QKeySequence, QShortcut, QTextCursor)
 from PySide6.QtWidgets import (QApplication, QMainWindow, QTextEdit, QWidget, QVBoxLayout)
 
@@ -28,8 +28,10 @@ class MyTextEdit(QTextEdit):
         self.insertMode = False
 
     def keyPressEvent(self, event):
-        if event.text() == "i":
+        if event.text() == "i" and not self.insertMode:
             self.enterInsertMode()
+        elif event.modifiers() == Qt.ControlModifier and event.key() == Qt.Key.Key_C:
+            self.exitInsertMode()
         elif not self.insertMode:
             if event.text() in movements.keys():
                 self.moveCursor(event.text())
@@ -41,6 +43,10 @@ class MyTextEdit(QTextEdit):
     def enterInsertMode(self):
         self.insertMode = True
         self.setCursorWidth(1)
+
+    def exitInsertMode(self):
+        self.insertMode = False
+        self.setCursorWidth(8)
 
     def moveCursor(self, char):
         movement = movements[char]
