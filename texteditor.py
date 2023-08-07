@@ -3,32 +3,30 @@ from PySide6.QtCore import (QCoreApplication, QMetaObject, QRect, Qt)
 from PySide6.QtGui import (QKeySequence, QShortcut, QTextCursor)
 from PySide6.QtWidgets import (QApplication, QMainWindow, QTextEdit, QWidget, QVBoxLayout)
 
-class RegisterAction:
+class Movements:
     actions = []
-    def __init__(self, action):
-        self.actions.append(action)
+    def __init__(self, key, movement):
+        self.key = key
+        self.movement = movement
+        Movements.actions.append(self)
 
-    
-@RegisterAction
-class MoveLeft:
-    key = [Qt.Key_H]
-    @staticmethod
-    def moveCursor(cursor):
-        cursor.movePosition(QTextCursor.MoveOperation.PreviousCharacter, cursor.MoveMode.MoveAnchor, 1)
+    def moveCursor(self, cursor):
+        cursor.movePosition(self.movement, cursor.MoveMode.MoveAnchor, 1)
+        
+Movements([Qt.Key_H], QTextCursor.MoveOperation.PreviousCharacter)
+Movements([Qt.Key_J], QTextCursor.MoveOperation.Down)
+Movements([Qt.Key_K], QTextCursor.MoveOperation.Up)
+Movements([Qt.Key_L], QTextCursor.MoveOperation.NextCharacter)
+Movements([Qt.Key_B], QTextCursor.MoveOperation.PreviousWord)
+Movements([Qt.Key_W], QTextCursor.MoveOperation.NextWord)
+# Qt.Key_E:[
+#     QTextCursor.MoveOperation.NextWord, 
+#     QTextCursor.MoveOperation.EndOfWord, 
+#     #  QTextCursor.MoveOperation.PreviousCharacter
+#     ], 
 
 class MyTextEdit(QTextEdit):
     movements = {
-        Qt.Key_H:QTextCursor.MoveOperation.PreviousCharacter, 
-        Qt.Key_J:QTextCursor.MoveOperation.Down, 
-        Qt.Key_K:QTextCursor.MoveOperation.Up, 
-        Qt.Key_L:QTextCursor.MoveOperation.NextCharacter, 
-        Qt.Key_B:QTextCursor.MoveOperation.PreviousWord, 
-        Qt.Key_W:QTextCursor.MoveOperation.NextWord, 
-        Qt.Key_E:[
-            QTextCursor.MoveOperation.NextWord, 
-            QTextCursor.MoveOperation.EndOfWord, 
-            #  QTextCursor.MoveOperation.PreviousCharacter
-            ], 
         }
 
     def __init__(self):
@@ -49,8 +47,7 @@ class MyTextEdit(QTextEdit):
             if event.key() == Qt.Key_I and not self.insertMode:
                 self.enterInsertMode()
             else:
-                print(RegisterAction.actions)#deb
-                actions = RegisterAction.actions
+                actions = Movements.actions
                 for action in actions:
                     if event.key() == action.key[0]:
                         action.moveCursor(self.cursor)
