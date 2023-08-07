@@ -11,7 +11,12 @@ class Movements:
         Movements.actions.append(self)
 
     def moveCursor(self, cursor):
-        cursor.movePosition(self.movement, cursor.MoveMode.MoveAnchor, 1)
+        if isinstance(self.movement, list):
+            for m in self.movement:
+                cursor.movePosition(m, cursor.MoveMode.MoveAnchor, 1)
+        else:
+            cursor.movePosition(self.movement, cursor.MoveMode.MoveAnchor, 1)
+            
         
 Movements([Qt.Key_H], QTextCursor.MoveOperation.PreviousCharacter)
 Movements([Qt.Key_J], QTextCursor.MoveOperation.Down)
@@ -19,11 +24,11 @@ Movements([Qt.Key_K], QTextCursor.MoveOperation.Up)
 Movements([Qt.Key_L], QTextCursor.MoveOperation.NextCharacter)
 Movements([Qt.Key_B], QTextCursor.MoveOperation.PreviousWord)
 Movements([Qt.Key_W], QTextCursor.MoveOperation.NextWord)
-# Qt.Key_E:[
-#     QTextCursor.MoveOperation.NextWord, 
-#     QTextCursor.MoveOperation.EndOfWord, 
-#     #  QTextCursor.MoveOperation.PreviousCharacter
-#     ], 
+Movements([Qt.Key_E], [
+    QTextCursor.MoveOperation.NextWord, 
+    QTextCursor.MoveOperation.EndOfWord, 
+    #  QTextCursor.MoveOperation.PreviousCharacter
+    ])
 
 class MyTextEdit(QTextEdit):
     movements = {
@@ -61,15 +66,6 @@ class MyTextEdit(QTextEdit):
         self.insertMode = False
         self.setCursorWidth(8)
 
-    def moveCursor(self, movement):
-        if isinstance(movement, list):
-            for m in movement:
-                self.cursor.movePosition(m, self.cursor.MoveMode.MoveAnchor, 1)
-                self.setTextCursor(self.cursor)
-        else:
-            self.cursor.movePosition(movement, self.cursor.MoveMode.MoveAnchor, 1)
-            self.setTextCursor(self.cursor)
-            
 
 class MyMainWindow(QMainWindow):
     def __init__(self):
