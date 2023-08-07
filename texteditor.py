@@ -31,9 +31,6 @@ Movements([Qt.Key_E], [
     ])
 
 class MyTextEdit(QTextEdit):
-    movements = {
-        }
-
     def __init__(self):
         super().__init__()
         self.cursor = self.textCursor()
