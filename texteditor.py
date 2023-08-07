@@ -3,6 +3,18 @@ from PySide6.QtCore import (QCoreApplication, QMetaObject, QRect, Qt)
 from PySide6.QtGui import (QKeySequence, QShortcut, QTextCursor)
 from PySide6.QtWidgets import (QApplication, QMainWindow, QTextEdit, QWidget, QVBoxLayout)
 
+class RegisterAction:
+    actions = []
+    def __init__(self, action):
+        self.actions.append(action)
+
+    
+@RegisterAction
+class MoveLeft:
+    key = [Qt.Key_H]
+    @staticmethod
+    def moveCursor(cursor):
+        cursor.movePosition(QTextCursor.MoveOperation.PreviousCharacter, cursor.MoveMode.MoveAnchor, 1)
 
 class MyTextEdit(QTextEdit):
     movements = {
@@ -37,8 +49,12 @@ class MyTextEdit(QTextEdit):
             if event.key() == Qt.Key_I and not self.insertMode:
                 self.enterInsertMode()
             else:
-                if event.key() in self.movements.keys():
-                    self.moveCursor(self.movements[event.key()])
+                print(RegisterAction.actions)#deb
+                actions = RegisterAction.actions
+                for action in actions:
+                    if event.key() == action.key[0]:
+                        action.moveCursor(self.cursor)
+                        self.setTextCursor(self.cursor)
 
     def enterInsertMode(self):
         self.insertMode = True
