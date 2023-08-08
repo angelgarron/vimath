@@ -17,23 +17,51 @@ class BaseMovement:
             cursor.movePosition(self.movement, cursor.MoveMode.MoveAnchor, 1)
             
 @RegisterAction
-class Movements(BaseMovement):
+class MoveLeft(BaseMovement):
     def __init__(self):
         self.key = [Qt.Key_H]
         self.movement = QTextCursor.MoveOperation.PreviousCharacter
+
+@RegisterAction
+class MoveDown(BaseMovement):
+    def __init__(self):
+        self.key = [Qt.Key_J]
+        self.movement = QTextCursor.MoveOperation.Down
+
+@RegisterAction
+class MoveUp(BaseMovement):
+    def __init__(self):
+        self.key = [Qt.Key_K]
+        self.movement = QTextCursor.MoveOperation.Up
+        
+@RegisterAction
+class MoveRight(BaseMovement):
+    def __init__(self):
+        self.key = [Qt.Key_L]
+        self.movement = QTextCursor.MoveOperation.Right
+
+@RegisterAction
+class MoveWordBegin(BaseMovement):
+    def __init__(self):
+        self.key = [Qt.Key_W]
+        self.movement = QTextCursor.MoveOperation.NextWord
         
         
-# Movements([Qt.Key_H], QTextCursor.MoveOperation.PreviousCharacter)
-# Movements([Qt.Key_J], QTextCursor.MoveOperation.Down)
-# Movements([Qt.Key_K], QTextCursor.MoveOperation.Up)
-# Movements([Qt.Key_L], QTextCursor.MoveOperation.NextCharacter)
-# Movements([Qt.Key_B], QTextCursor.MoveOperation.PreviousWord)
-# Movements([Qt.Key_W], QTextCursor.MoveOperation.NextWord)
-# Movements([Qt.Key_E], [
-#     QTextCursor.MoveOperation.NextWord, 
-#     QTextCursor.MoveOperation.EndOfWord, 
-#     #  QTextCursor.MoveOperation.PreviousCharacter
-#     ])
+@RegisterAction
+class MoveBeginningWord(BaseMovement):
+    def __init__(self):
+        self.key = [Qt.Key_B]
+        self.movement = QTextCursor.MoveOperation.PreviousWord
+
+@RegisterAction
+class MoveWordEnd(BaseMovement):
+    def __init__(self):
+        self.key = [Qt.Key_E]
+        self.movement = [
+    QTextCursor.MoveOperation.NextWord, 
+    QTextCursor.MoveOperation.EndOfWord, 
+    #  QTextCursor.MoveOperation.PreviousCharacter
+    ]
 
 class MyTextEdit(QTextEdit):
     def __init__(self):
@@ -54,7 +82,7 @@ class MyTextEdit(QTextEdit):
             if event.key() == Qt.Key_I and not self.insertMode:
                 self.enterInsertMode()
             else:
-                actions = Movements.actions
+                actions = RegisterAction.actions
                 for action in actions:
                     if event.key() == action.key[0]:
                         action.moveCursor(self.cursor)
