@@ -3,13 +3,12 @@ from PySide6.QtCore import (QCoreApplication, QMetaObject, QRect, Qt)
 from PySide6.QtGui import (QKeySequence, QShortcut, QTextCursor)
 from PySide6.QtWidgets import (QApplication, QMainWindow, QTextEdit, QWidget, QVBoxLayout)
 
-class Movements:
+class RegisterAction(object):
     actions = []
-    def __init__(self, key, movement):
-        self.key = key
-        self.movement = movement
-        Movements.actions.append(self)
+    def __init__(self, action):
+        RegisterAction.actions.append(action())
 
+class BaseMovement:
     def moveCursor(self, cursor):
         if isinstance(self.movement, list):
             for m in self.movement:
@@ -17,18 +16,24 @@ class Movements:
         else:
             cursor.movePosition(self.movement, cursor.MoveMode.MoveAnchor, 1)
             
+@RegisterAction
+class Movements(BaseMovement):
+    def __init__(self):
+        self.key = [Qt.Key_H]
+        self.movement = QTextCursor.MoveOperation.PreviousCharacter
         
-Movements([Qt.Key_H], QTextCursor.MoveOperation.PreviousCharacter)
-Movements([Qt.Key_J], QTextCursor.MoveOperation.Down)
-Movements([Qt.Key_K], QTextCursor.MoveOperation.Up)
-Movements([Qt.Key_L], QTextCursor.MoveOperation.NextCharacter)
-Movements([Qt.Key_B], QTextCursor.MoveOperation.PreviousWord)
-Movements([Qt.Key_W], QTextCursor.MoveOperation.NextWord)
-Movements([Qt.Key_E], [
-    QTextCursor.MoveOperation.NextWord, 
-    QTextCursor.MoveOperation.EndOfWord, 
-    #  QTextCursor.MoveOperation.PreviousCharacter
-    ])
+        
+# Movements([Qt.Key_H], QTextCursor.MoveOperation.PreviousCharacter)
+# Movements([Qt.Key_J], QTextCursor.MoveOperation.Down)
+# Movements([Qt.Key_K], QTextCursor.MoveOperation.Up)
+# Movements([Qt.Key_L], QTextCursor.MoveOperation.NextCharacter)
+# Movements([Qt.Key_B], QTextCursor.MoveOperation.PreviousWord)
+# Movements([Qt.Key_W], QTextCursor.MoveOperation.NextWord)
+# Movements([Qt.Key_E], [
+#     QTextCursor.MoveOperation.NextWord, 
+#     QTextCursor.MoveOperation.EndOfWord, 
+#     #  QTextCursor.MoveOperation.PreviousCharacter
+#     ])
 
 class MyTextEdit(QTextEdit):
     def __init__(self):
