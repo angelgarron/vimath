@@ -48,3 +48,9 @@ class MoveWordEnd(BaseMovement):
     QTextCursor.MoveOperation.EndOfWord, 
     #  QTextCursor.MoveOperation.PreviousCharacter
     ]
+
+@RegisterAction
+class MoveNonBlankFirst(BaseMovement):
+    def __init__(self):
+        self.key = [Qt.Key_G, Qt.Key_G]
+        self.movement = QTextCursor.MoveOperation.StartOfBlock

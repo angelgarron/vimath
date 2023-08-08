@@ -12,6 +12,7 @@ class MyTextEdit(QTextEdit):
         self.setFont("monospace")
         self.setCursorWidth(8)
         self.insertMode = False
+        self.storedKeys = []
 
     def keyPressEvent(self, event):
         if self.insertMode:
@@ -24,10 +25,13 @@ class MyTextEdit(QTextEdit):
                 self.enterInsertMode()
             else:
                 actions = RegisterAction.actions
+                self.storedKeys.append(event.key())
                 for action in actions:
-                    if event.key() == action.key[0]:
+                    if action.key == self.storedKeys:
                         action.moveCursor(self.cursor)
                         self.setTextCursor(self.cursor)
+                        self.storedKeys = []
+                        break
 
     def enterInsertMode(self):
         self.insertMode = True
