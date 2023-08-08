@@ -2,66 +2,7 @@ import sys
 from PySide6.QtCore import (QCoreApplication, QMetaObject, QRect, Qt)
 from PySide6.QtGui import (QKeySequence, QShortcut, QTextCursor)
 from PySide6.QtWidgets import (QApplication, QMainWindow, QTextEdit, QWidget, QVBoxLayout)
-
-class RegisterAction(object):
-    actions = []
-    def __init__(self, action):
-        RegisterAction.actions.append(action())
-
-class BaseMovement:
-    def moveCursor(self, cursor):
-        if isinstance(self.movement, list):
-            for m in self.movement:
-                cursor.movePosition(m, cursor.MoveMode.MoveAnchor, 1)
-        else:
-            cursor.movePosition(self.movement, cursor.MoveMode.MoveAnchor, 1)
-            
-@RegisterAction
-class MoveLeft(BaseMovement):
-    def __init__(self):
-        self.key = [Qt.Key_H]
-        self.movement = QTextCursor.MoveOperation.PreviousCharacter
-
-@RegisterAction
-class MoveDown(BaseMovement):
-    def __init__(self):
-        self.key = [Qt.Key_J]
-        self.movement = QTextCursor.MoveOperation.Down
-
-@RegisterAction
-class MoveUp(BaseMovement):
-    def __init__(self):
-        self.key = [Qt.Key_K]
-        self.movement = QTextCursor.MoveOperation.Up
-        
-@RegisterAction
-class MoveRight(BaseMovement):
-    def __init__(self):
-        self.key = [Qt.Key_L]
-        self.movement = QTextCursor.MoveOperation.Right
-
-@RegisterAction
-class MoveWordBegin(BaseMovement):
-    def __init__(self):
-        self.key = [Qt.Key_W]
-        self.movement = QTextCursor.MoveOperation.NextWord
-        
-        
-@RegisterAction
-class MoveBeginningWord(BaseMovement):
-    def __init__(self):
-        self.key = [Qt.Key_B]
-        self.movement = QTextCursor.MoveOperation.PreviousWord
-
-@RegisterAction
-class MoveWordEnd(BaseMovement):
-    def __init__(self):
-        self.key = [Qt.Key_E]
-        self.movement = [
-    QTextCursor.MoveOperation.NextWord, 
-    QTextCursor.MoveOperation.EndOfWord, 
-    #  QTextCursor.MoveOperation.PreviousCharacter
-    ]
+from motion import RegisterAction
 
 class MyTextEdit(QTextEdit):
     def __init__(self):
