@@ -1,4 +1,4 @@
-from base import RegisterAction, BaseMovement
+from base import RegisterAction, BaseMovement, KeyCombination
 from PySide6.QtGui import QTextCursor
 from PySide6.QtGui import Qt
 

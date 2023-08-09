@@ -3,6 +3,7 @@ from PySide6.QtCore import (QCoreApplication, QMetaObject, QRect, Qt)
 from PySide6.QtGui import (QKeySequence, QShortcut, QTextCursor)
 from PySide6.QtWidgets import (QApplication, QMainWindow, QTextEdit, QWidget, QVBoxLayout)
 from motion import RegisterAction
+from base import KeyCombination
 
 class MyTextEdit(QTextEdit):
     def __init__(self):
@@ -25,13 +26,17 @@ class MyTextEdit(QTextEdit):
                 self.enterInsertMode()
             else:
                 actions = RegisterAction.actions
-                self.storedKeys.append(event.key())
-                for action in actions:
-                    if action.key == self.storedKeys:
-                        action.moveCursor(self.cursor)
-                        self.setTextCursor(self.cursor)
-                        self.storedKeys = []
-                        break
+                if event.key() not in [Qt.Key_Control, Qt.Key_Shift, Qt.Key_Alt]:
+                    if event.modifiers() == Qt.NoModifier:
+                        self.storedKeys.append(event.key())
+                    else:
+                        self.storedKeys.append(KeyCombination(event.modifiers(), event.key()))
+                    for action in actions:
+                        if action.key == self.storedKeys:
+                            action.moveCursor(self.cursor)
+                            self.setTextCursor(self.cursor)
+                            self.storedKeys = []
+                            break
 
     def enterInsertMode(self):
         self.insertMode = True
