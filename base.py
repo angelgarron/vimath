@@ -13,9 +13,10 @@ class RegisterAction:
         RegisterAction.actions.append(action())
 
 class BaseMovement:
-    def moveCursor(self, cursor):
+    def moveCursor(self, other):
         if isinstance(self.movement, list):
             for m in self.movement:
-                cursor.movePosition(m, cursor.MoveMode.MoveAnchor, 1)
+                other.cursor.movePosition(m, other.cursor.MoveMode.MoveAnchor, 1)
         else:
-            cursor.movePosition(self.movement, cursor.MoveMode.MoveAnchor, 1)
+            other.cursor.movePosition(self.movement, other.cursor.MoveMode.MoveAnchor, 1)
+        other.setTextCursor(other.cursor)

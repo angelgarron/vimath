@@ -33,8 +33,7 @@ class MyTextEdit(QTextEdit):
                         self.storedKeys.append(KeyCombination(event.modifiers(), event.key()))
                     for action in actions:
                         if action.key == self.storedKeys:
-                            action.moveCursor(self.cursor)
-                            self.setTextCursor(self.cursor)
+                            action.moveCursor(self)
                             self.storedKeys = []
                             break
 
