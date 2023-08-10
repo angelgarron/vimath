@@ -5,25 +5,25 @@ from PySide6.QtGui import Qt
 @RegisterAction
 class MoveLeft(BaseMovement):
     def __init__(self):
-        self.key = [Qt.Key_H]
+        self.key = [[Qt.Key_H], [Qt.Key_Left]]
         self.movement = QTextCursor.MoveOperation.PreviousCharacter
 
 @RegisterAction
 class MoveDown(BaseMovement):
     def __init__(self):
-        self.key = [Qt.Key_J]
+        self.key = [[Qt.Key_J], [Qt.Key_Down]]
         self.movement = QTextCursor.MoveOperation.Down
 
 @RegisterAction
 class MoveUp(BaseMovement):
     def __init__(self):
-        self.key = [Qt.Key_K]
+        self.key = [[Qt.Key_K], [Qt.Key_Up]]
         self.movement = QTextCursor.MoveOperation.Up
         
 @RegisterAction
 class MoveRight(BaseMovement):
     def __init__(self):
-        self.key = [Qt.Key_L]
+        self.key = [[Qt.Key_L], [Qt.Key_Right]]
         self.movement = QTextCursor.MoveOperation.Right
 
 @RegisterAction

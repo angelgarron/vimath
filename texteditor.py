@@ -30,10 +30,17 @@ class MyTextEdit(QTextEdit):
                     else:
                         self.storedKeys.append(KeyCombination(event.modifiers(), event.key()))
                     for action in self.actions:
-                        if action.key == self.storedKeys:
-                            action.performAction(self)
-                            self.storedKeys = []
-                            break
+                        if isinstance(action.key[0], list):
+                            for key in action.key:
+                                if key == self.storedKeys:
+                                    action.performAction(self)
+                                    self.storedKeys = []
+                                    break
+                        else:
+                            if action.key == self.storedKeys:
+                                action.performAction(self)
+                                self.storedKeys = []
+                                break
 
     def enterInsertMode(self):
         self.insertMode = True
