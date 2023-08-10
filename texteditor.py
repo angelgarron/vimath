@@ -16,14 +16,12 @@ class MyTextEdit(QTextEdit):
         self.storedKeys = []
 
     def keyPressEvent(self, event):
-        if self.insertMode:
-            if event.modifiers() == Qt.ControlModifier and event.key() == Qt.Key_C:
-                self.exitInsertMode()
-            else:
-                super().keyPressEvent(event)
+        if event.modifiers() == Qt.ControlModifier and event.key() == Qt.Key_C:
+            self.exitInsertMode()
+            self.storedKeys = []
         else:
-            if event.key() == Qt.Key_I and not self.insertMode:
-                self.enterInsertMode()
+            if self.insertMode:
+                super().keyPressEvent(event)
             else:
                 actions = RegisterAction.actions
                 if event.key() not in [Qt.Key_Control, Qt.Key_Shift, Qt.Key_Alt]:
@@ -33,7 +31,7 @@ class MyTextEdit(QTextEdit):
                         self.storedKeys.append(KeyCombination(event.modifiers(), event.key()))
                     for action in actions:
                         if action.key == self.storedKeys:
-                            action.moveCursor(self)
+                            action.performAction(self)
                             self.storedKeys = []
                             break
 
