@@ -50,7 +50,25 @@ class MoveWordEnd(BaseMovement):
     ]
 
 @RegisterAction
-class MoveNonBlankFirst(BaseMovement):
+class MoveStartDocument(BaseMovement):
     def __init__(self):
         self.key = [Qt.Key_G, Qt.Key_G]
-        self.movement = QTextCursor.MoveOperation.StartOfBlock
+        self.movement = QTextCursor.MoveOperation.Start
+
+@RegisterAction
+class MoveEndDocument(BaseMovement):
+    def __init__(self):
+        self.key = [KeyCombination(Qt.ShiftModifier, Qt.Key_G)]
+        self.movement = QTextCursor.MoveOperation.End
+
+@RegisterAction
+class MoveStartOfLine(BaseMovement):
+    def __init__(self):
+        self.key = [KeyCombination(Qt.ShiftModifier, Qt.Key_Underscore)]
+        self.movement = QTextCursor.MoveOperation.StartOfLine
+
+@RegisterAction
+class MoveEndOfLine(BaseMovement):
+    def __init__(self):
+        self.key = [KeyCombination(Qt.ShiftModifier, Qt.Key_Dollar)]
+        self.movement = QTextCursor.MoveOperation.EndOfLine
