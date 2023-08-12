@@ -1,4 +1,4 @@
-from base import RegisterAction, BaseMovement, KeyCombination
+from base import RegisterAction, BaseMovement, KeyCombination, actions
 from PySide6.QtGui import QTextCursor
 from PySide6.QtGui import Qt
 
@@ -72,3 +72,15 @@ class MoveEndOfLine(BaseMovement):
     def __init__(self):
         self.key = [KeyCombination(Qt.ShiftModifier, Qt.Key_Dollar)]
         self.movement = QTextCursor.MoveOperation.EndOfLine
+
+@RegisterAction
+class ChangeInnerWord:
+    def __init__(self):
+        self.key = [Qt.Key_C, Qt.Key_I, Qt.Key_W]
+
+    def performAction(self, other):
+        actions["MoveBeginningWord"].performAction(other)
+        actions["EnterInsertMode"].performAction(other)
+        # other.cursor.movePosition(QTextCursor.MoveOperation.EndOfLine, other.cursor.MoveMode.MoveAnchor, 1)
+        other.setTextCursor(other.cursor)
+        other.enterInsertMode()

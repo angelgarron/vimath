@@ -1,9 +1,8 @@
 import sys
-from PySide6.QtCore import (QCoreApplication, QMetaObject, QRect, Qt)
-from PySide6.QtGui import (QKeySequence, QShortcut, QTextCursor)
+from PySide6.QtCore import (Qt)
 from PySide6.QtWidgets import (QApplication, QMainWindow, QTextEdit, QWidget, QVBoxLayout)
-from motion import RegisterAction
-from base import KeyCombination
+import motion
+from base import KeyCombination, actions
 
 class MyTextEdit(QTextEdit):
     def __init__(self):
@@ -14,7 +13,7 @@ class MyTextEdit(QTextEdit):
         self.setCursorWidth(8)
         self.insertMode = False
         self.storedKeys = []
-        self.actions = RegisterAction.actions
+        self.actions = actions
 
     def keyPressEvent(self, event):
         if event.modifiers() == Qt.ControlModifier and event.key() == Qt.Key_C:
@@ -29,7 +28,7 @@ class MyTextEdit(QTextEdit):
                         self.storedKeys.append(event.key())
                     else:
                         self.storedKeys.append(KeyCombination(event.modifiers(), event.key()))
-                    for action in self.actions:
+                    for action in self.actions.values():
                         if isinstance(action.key[0], list):
                             for key in action.key:
                                 if key == self.storedKeys:

@@ -9,10 +9,10 @@ class KeyCombination:
             return False
         return self.key == other.key and self.modifier == other.modifier
 
-class RegisterAction:
-    actions = []
-    def __init__(self, action):
-        RegisterAction.actions.append(action())
+actions = {}
+def RegisterAction(f):
+    actions.update({f.__name__:f()})
+    return None
 
 class BaseMovement:
     def performAction(self, other):
