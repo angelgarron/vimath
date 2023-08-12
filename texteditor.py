@@ -49,6 +49,10 @@ class MyTextEdit(QTextEdit):
     def exitInsertMode(self):
         self.mode = 0
         self.setCursorWidth(8)
+
+    def enterVisualMode(self):
+        self.mode = 2
+        self.setCursorWidth(8)
     
 class MyMainWindow(QMainWindow):
     def __init__(self):

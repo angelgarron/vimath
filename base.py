@@ -36,3 +36,13 @@ class EnterInsertMode:
     def performAction(self, other):
         other.enterInsertMode()
         other.storedKeys = []
+
+@RegisterAction
+class EnterVisualMode:
+    def __init__(self):
+        self.key = [Qt.Key_V]
+
+    def performAction(self, other):
+        other.enterVisualMode()
+        other.storedKeys = []
+        print("entering visual mode")
