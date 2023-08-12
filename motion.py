@@ -83,3 +83,13 @@ class ChangeInnerWord:
         actions["MoveWordEnd"].performAction(other, moveAnchor=False)
         other.cursor.removeSelectedText()
         actions["EnterInsertMode"].performAction(other)
+
+@RegisterAction
+class DeleteInnerWord:
+    def __init__(self):
+        self.key = [Qt.Key_D, Qt.Key_I, Qt.Key_W]
+
+    def performAction(self, other):
+        actions["MoveBeginningWord"].performAction(other)
+        actions["MoveWordEnd"].performAction(other, moveAnchor=False)
+        other.cursor.removeSelectedText()
