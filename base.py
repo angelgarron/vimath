@@ -15,12 +15,17 @@ def RegisterAction(f):
     return None
 
 class BaseMovement:
-    def performAction(self, other):
+    def performAction(self, other, moveAnchor=True):
+        if moveAnchor:
+            moveAnchor = other.cursor.MoveMode.MoveAnchor
+        else:
+            moveAnchor = other.cursor.MoveMode.KeepAnchor
+
         if isinstance(self.movement, list):
             for m in self.movement:
-                other.cursor.movePosition(m, other.cursor.MoveMode.MoveAnchor, 1)
+                other.cursor.movePosition(m, moveAnchor, 1)
         else:
-            other.cursor.movePosition(self.movement, other.cursor.MoveMode.MoveAnchor, 1)
+            other.cursor.movePosition(self.movement, moveAnchor, 1)
         other.setTextCursor(other.cursor)
 
 @RegisterAction

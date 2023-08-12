@@ -80,7 +80,6 @@ class ChangeInnerWord:
 
     def performAction(self, other):
         actions["MoveBeginningWord"].performAction(other)
+        actions["MoveWordEnd"].performAction(other, moveAnchor=False)
+        other.cursor.removeSelectedText()
         actions["EnterInsertMode"].performAction(other)
-        # other.cursor.movePosition(QTextCursor.MoveOperation.EndOfLine, other.cursor.MoveMode.MoveAnchor, 1)
-        other.setTextCursor(other.cursor)
-        other.enterInsertMode()
