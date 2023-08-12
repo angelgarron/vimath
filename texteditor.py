@@ -11,7 +11,8 @@ class MyTextEdit(QTextEdit):
         self.cursor.insertText("one two three\nfour five six")
         self.setFont("monospace")
         self.setCursorWidth(8)
-        self.insertMode = False
+        # normal:0, insert:1, visual:2
+        self.mode = 0
         self.storedKeys = []
         self.actions = actions
 
@@ -20,7 +21,7 @@ class MyTextEdit(QTextEdit):
             self.exitInsertMode()
             self.storedKeys = []
         else:
-            if self.insertMode:
+            if self.mode == 1:
                 super().keyPressEvent(event)
             else:
                 if event.key() not in [Qt.Key_Control, Qt.Key_Shift, Qt.Key_Alt]:
@@ -42,14 +43,13 @@ class MyTextEdit(QTextEdit):
                                 break
 
     def enterInsertMode(self):
-        self.insertMode = True
+        self.mode = 1
         self.setCursorWidth(1)
 
     def exitInsertMode(self):
-        self.insertMode = False
+        self.mode = 0
         self.setCursorWidth(8)
-
-
+    
 class MyMainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
