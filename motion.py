@@ -72,24 +72,3 @@ class MoveEndOfLine(BaseMovement):
     def __init__(self):
         self.key = [KeyCombination(Qt.ShiftModifier, Qt.Key_Dollar)]
         self.movement = QTextCursor.MoveOperation.EndOfLine
-
-@RegisterAction
-class ChangeInnerWord:
-    def __init__(self):
-        self.key = [Qt.Key_C, Qt.Key_I, Qt.Key_W]
-
-    def performAction(self, other):
-        actions["MoveBeginningWord"].performAction(other)
-        actions["MoveWordEnd"].performAction(other, moveAnchor=False)
-        other.cursor.removeSelectedText()
-        actions["EnterInsertMode"].performAction(other)
-
-@RegisterAction
-class DeleteInnerWord:
-    def __init__(self):
-        self.key = [Qt.Key_D, Qt.Key_I, Qt.Key_W]
-
-    def performAction(self, other):
-        actions["MoveBeginningWord"].performAction(other)
-        actions["MoveWordEnd"].performAction(other, moveAnchor=False)
-        other.cursor.removeSelectedText()

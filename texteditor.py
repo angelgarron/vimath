@@ -1,7 +1,7 @@
 import sys
 from PySide6.QtCore import (Qt)
 from PySide6.QtWidgets import (QApplication, QMainWindow, QTextEdit, QWidget, QVBoxLayout)
-import motion
+import motion, operators
 from base import KeyCombination, actions
 
 class MyTextEdit(QTextEdit):
