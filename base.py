@@ -35,7 +35,6 @@ class EnterInsertMode:
 
     def performAction(self, other):
         other.enterInsertMode()
-        other.storedKeys = []
 
 @RegisterAction
 class EnterVisualMode:
@@ -44,5 +43,4 @@ class EnterVisualMode:
 
     def performAction(self, other):
         other.enterVisualMode()
-        other.storedKeys = []
         print("entering visual mode")
