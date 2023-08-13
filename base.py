@@ -10,9 +10,17 @@ class KeyCombination:
         return self.key == other.key and self.modifier == other.modifier
 
 actions = {}
-def RegisterAction(f):
-    actions.update({f.__name__:f()})
-    return None
+actionsVisual = {}
+def RegisterAction(whichMode="normal"):
+    def wrapper(f):
+        if whichMode == "normal":
+            actions.update({f.__name__:f()})
+        elif whichMode == "visual": 
+            actionsVisual.update({f.__name__:f()})
+        elif whichMode == "both":
+            actions.update({f.__name__:f()})
+            actionsVisual.update({f.__name__:f()})
+    return wrapper
 
 class BaseMovement:
     def performAction(self, other, moveAnchor=True):
@@ -28,7 +36,7 @@ class BaseMovement:
             other.cursor.movePosition(self.movement, moveAnchor, 1)
         other.setTextCursor(other.cursor)
 
-@RegisterAction
+@RegisterAction("normal")
 class EnterInsertMode:
     def __init__(self):
         self.key = [Qt.Key_I]
@@ -36,7 +44,7 @@ class EnterInsertMode:
     def performAction(self, other):
         other.enterInsertMode()
 
-@RegisterAction
+@RegisterAction("normal")
 class EnterVisualMode:
     def __init__(self):
         self.key = [Qt.Key_V]

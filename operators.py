@@ -9,7 +9,7 @@ class BaseInnerWord:
         other.cursor.removeSelectedText()
         self.lastAction(other)
 
-@RegisterAction
+@RegisterAction("normal")
 class ChangeInnerWord(BaseInnerWord):
     def __init__(self):
         self.key = [Qt.Key_C, Qt.Key_I, Qt.Key_W]
@@ -17,7 +17,7 @@ class ChangeInnerWord(BaseInnerWord):
     def lastAction(self, other):
         actions["EnterInsertMode"].performAction(other)
 
-@RegisterAction
+@RegisterAction("normal")
 class DeleteInnerWord(BaseInnerWord):
     def __init__(self):
         self.key = [Qt.Key_D, Qt.Key_I, Qt.Key_W]

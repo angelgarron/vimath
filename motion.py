@@ -2,44 +2,44 @@ from base import RegisterAction, BaseMovement, KeyCombination, actions
 from PySide6.QtGui import QTextCursor
 from PySide6.QtGui import Qt
 
-@RegisterAction
+@RegisterAction("both")
 class MoveLeft(BaseMovement):
     def __init__(self):
         self.key = [[Qt.Key_H], [Qt.Key_Left]]
         self.movement = QTextCursor.MoveOperation.PreviousCharacter
 
-@RegisterAction
+@RegisterAction("both")
 class MoveDown(BaseMovement):
     def __init__(self):
         self.key = [[Qt.Key_J], [Qt.Key_Down]]
         self.movement = QTextCursor.MoveOperation.Down
 
-@RegisterAction
+@RegisterAction("both")
 class MoveUp(BaseMovement):
     def __init__(self):
         self.key = [[Qt.Key_K], [Qt.Key_Up]]
         self.movement = QTextCursor.MoveOperation.Up
         
-@RegisterAction
+@RegisterAction("both")
 class MoveRight(BaseMovement):
     def __init__(self):
         self.key = [[Qt.Key_L], [Qt.Key_Right]]
         self.movement = QTextCursor.MoveOperation.Right
 
-@RegisterAction
+@RegisterAction("both")
 class MoveWordBegin(BaseMovement):
     def __init__(self):
         self.key = [Qt.Key_W]
         self.movement = QTextCursor.MoveOperation.NextWord
         
         
-@RegisterAction
+@RegisterAction("both")
 class MoveBeginningWord(BaseMovement):
     def __init__(self):
         self.key = [Qt.Key_B]
         self.movement = QTextCursor.MoveOperation.PreviousWord
 
-@RegisterAction
+@RegisterAction("both")
 class MoveWordEnd(BaseMovement):
     def __init__(self):
         self.key = [Qt.Key_E]
@@ -49,25 +49,25 @@ class MoveWordEnd(BaseMovement):
     #  QTextCursor.MoveOperation.PreviousCharacter
     ]
 
-@RegisterAction
+@RegisterAction("both")
 class MoveStartDocument(BaseMovement):
     def __init__(self):
         self.key = [Qt.Key_G, Qt.Key_G]
         self.movement = QTextCursor.MoveOperation.Start
 
-@RegisterAction
+@RegisterAction("both")
 class MoveEndDocument(BaseMovement):
     def __init__(self):
         self.key = [KeyCombination(Qt.ShiftModifier, Qt.Key_G)]
         self.movement = QTextCursor.MoveOperation.End
 
-@RegisterAction
+@RegisterAction("both")
 class MoveStartOfLine(BaseMovement):
     def __init__(self):
         self.key = [KeyCombination(Qt.ShiftModifier, Qt.Key_Underscore)]
         self.movement = QTextCursor.MoveOperation.StartOfLine
 
-@RegisterAction
+@RegisterAction("both")
 class MoveEndOfLine(BaseMovement):
     def __init__(self):
         self.key = [KeyCombination(Qt.ShiftModifier, Qt.Key_Dollar)]
