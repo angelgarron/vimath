@@ -42,3 +42,21 @@ class DeleteInVisual:
     def performAction(self, other):
         other.cursor.removeSelectedText()
         other.enterNormalMode()
+
+@RegisterAction("normal")
+class InsertBeginningLine:
+    def __init__(self):
+        self.key = [KeyCombination(Qt.ShiftModifier, Qt.Key_I)]
+
+    def performAction(self, other):
+        actions["MoveStartOfLine"].performAction(other)
+        actions["EnterInsertMode"].performAction(other)
+
+@RegisterAction("normal")
+class InsertEndLine:
+    def __init__(self):
+        self.key = [KeyCombination(Qt.ShiftModifier, Qt.Key_A)]
+
+    def performAction(self, other):
+        actions["MoveEndOfLine"].performAction(other)
+        actions["EnterInsertMode"].performAction(other)
