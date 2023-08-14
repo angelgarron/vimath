@@ -3,6 +3,9 @@ from PySide6.QtGui import QTextCursor
 from PySide6.QtGui import Qt
 
 class BaseInnerWord:
+    def __init__(self):
+        self.key = [Qt.Key_I, Qt.Key_W]
+
     def performAction(self, other):
         actions["MoveBeginningWord"].performAction(other)
         actions["MoveWordEnd"].performAction(other, moveAnchor=False)
@@ -12,7 +15,8 @@ class BaseInnerWord:
 @RegisterAction("normal")
 class ChangeInnerWord(BaseInnerWord):
     def __init__(self):
-        self.key = [Qt.Key_C, Qt.Key_I, Qt.Key_W]
+        super().__init__()
+        self.key.insert(0, Qt.Key_C)
 
     def lastAction(self, other):
         actions["EnterInsertMode"].performAction(other)
@@ -20,7 +24,8 @@ class ChangeInnerWord(BaseInnerWord):
 @RegisterAction("normal")
 class DeleteInnerWord(BaseInnerWord):
     def __init__(self):
-        self.key = [Qt.Key_D, Qt.Key_I, Qt.Key_W]
+        super().__init__()
+        self.key.insert(0, Qt.Key_D)
 
     def lastAction(self, other):
         other.cursor.removeSelectedText()
