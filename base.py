@@ -24,10 +24,10 @@ def RegisterAction(whichMode="normal"):
 
 class BaseMovement:
     def performAction(self, other, moveAnchor=True):
-        if moveAnchor:
-            moveAnchor = other.cursor.MoveMode.MoveAnchor
-        else:
+        if other.mode == 2 or not moveAnchor:
             moveAnchor = other.cursor.MoveMode.KeepAnchor
+        else:
+            moveAnchor = other.cursor.MoveMode.MoveAnchor
 
         if isinstance(self.movement, list):
             for m in self.movement:
@@ -51,4 +51,3 @@ class EnterVisualMode:
 
     def performAction(self, other):
         other.enterVisualMode()
-        print("entering visual mode")
