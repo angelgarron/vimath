@@ -24,3 +24,21 @@ class DeleteInnerWord(BaseInnerWord):
 
     def lastAction(self, other):
         other.cursor.removeSelectedText()
+
+@RegisterAction("visual")
+class ChangeInVisual:
+    def __init__(self):
+        self.key = [Qt.Key_C]
+
+    def performAction(self, other):
+        other.cursor.removeSelectedText()
+        actions["EnterInsertMode"].performAction(other)
+
+@RegisterAction("visual")
+class DeleteInVisual:
+    def __init__(self):
+        self.key = [Qt.Key_D]
+
+    def performAction(self, other):
+        other.cursor.removeSelectedText()
+        other.enterNormalMode()
