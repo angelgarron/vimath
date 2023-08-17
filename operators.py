@@ -66,6 +66,69 @@ class InsertEndLine:
         actions["MoveEndOfLine"].performAction(other)
         actions["EnterInsertMode"].performAction(other)
 
+def findClosingParenthesis(s, cursorPosition):
+    closingParenthesisPosition = 0
+    for char in s[cursorPosition:]:
+        if char == "(":
+            closingParenthesisPosition = -1
+            return closingParenthesisPosition
+        elif char == ")":
+            closingParenthesisPosition = cursorPosition+closingParenthesisPosition
+            return closingParenthesisPosition
+        closingParenthesisPosition += 1
+    closingParenthesisPosition = -1
+    return closingParenthesisPosition
+
+def findOpeningParenthesis(s, cursorPosition):
+    openingParenthesisPosition = 0
+    for c in reversed(s[:cursorPosition+1]):
+        openingParenthesisPosition += 1
+        if c == "(":
+            openingParenthesisPosition = cursorPosition+1-openingParenthesisPosition
+            return openingParenthesisPosition
+        elif c == ")":
+            openingParenthesisPosition = -1
+            return openingParenthesisPosition
+    openingParenthesisPosition = -1
+    return openingParenthesisPosition
+
+def findOtherClosingParenthesis(s, cursorPosition):
+    parenthesisCounter = 1
+    closingParenthesisPosition = 0
+    for c in s[cursorPosition+1:]:
+        if c == "(":
+            parenthesisCounter += 1
+        elif c == ")":
+            parenthesisCounter -= 1
+        if parenthesisCounter == 0:
+            closingParenthesisPosition = closingParenthesisPosition+cursorPosition+1
+            return closingParenthesisPosition
+        closingParenthesisPosition += 1
+    closingParenthesisPosition = -1
+    return closingParenthesisPosition
+
+def findOtherOpeningParenthesis(s, cursorPosition):
+    parenthesisCounter = 1
+    openingParenthesisPosition = 0
+    for c in reversed(s[:cursorPosition]):
+        openingParenthesisPosition += 1
+        if c == "(":
+            parenthesisCounter -= 1
+        elif c == ")":
+            parenthesisCounter += 1
+        if parenthesisCounter == 0:
+            openingParenthesisPosition = cursorPosition - openingParenthesisPosition
+            return openingParenthesisPosition
+    openingParenthesisPosition = -1
+    return openingParenthesisPosition
+
+def findOtherParenthesis(s, openingParenthesisPosition, closingParenthesisPosition, cursorPosition):
+    if openingParenthesisPosition == -1:
+        openingParenthesisPosition = findOtherOpeningParenthesis(s, cursorPosition)
+    else:
+        closingParenthesisPosition = findOtherClosingParenthesis(s, cursorPosition)
+    return openingParenthesisPosition, closingParenthesisPosition
+
 @RegisterAction("normal")
 class InsertEndLine:
     def __init__(self):
@@ -75,46 +138,13 @@ class InsertEndLine:
         plainText = other.toPlainText()
         cursorPosition = other.cursor.position()
 
-        openBracketPosition = 0
-        closeBracketPosition = 0
-        for i, c in enumerate(plainText[cursorPosition:]):
-            if c == "(":
-                closeBracketPosition = -1
-                break
-            elif c == ")":
-                closeBracketPosition = cursorPosition+closeBracketPosition
-                break
-            closeBracketPosition += 1
+        openingParenthesisPosition = findOpeningParenthesis(plainText, cursorPosition)
+        closingParenthesisPosition = findClosingParenthesis(plainText, cursorPosition)
 
-        for i, c in reversed(list(enumerate(plainText[:cursorPosition]))):
-            openBracketPosition += 1
-            if c == "(":
-                break
-            elif c == ")":
-                openBracketPosition = -1
-                break
-        closeBracketPosition_other = -1
-        openBracketPosition_other = -1
-        if openBracketPosition != -1:
-            openBracketPosition = cursorPosition-openBracketPosition
-            counter = 1
-            for i, c in enumerate(plainText[cursorPosition:]):
-                if c == "(":
-                    counter += 1
-                elif c == ")":
-                    counter -= 1
-                if counter == 0:
-                    closeBracketPosition_other = i+cursorPosition
-                    break
-        else:
-            counter = 1
-            for i, c in reversed(list(enumerate(plainText[:cursorPosition]))):
-                if c == "(":
-                    counter -= 1
-                elif c == ")":
-                    counter += 1
-                if counter == 0:
-                    openBracketPosition_other = i
-                    break
-        print(plainText, cursorPosition, openBracketPosition, closeBracketPosition, 
-              openBracketPosition_other, closeBracketPosition_other)
+        if not (closingParenthesisPosition == -1 and openingParenthesisPosition == -1):
+            openingParenthesisPosition, closingParenthesisPosition = findOtherParenthesis(plainText,
+                                                                                          openingParenthesisPosition, 
+                                                                                          closingParenthesisPosition, 
+                                                                                          cursorPosition)
+
+        print(plainText, cursorPosition, openingParenthesisPosition, closingParenthesisPosition)
