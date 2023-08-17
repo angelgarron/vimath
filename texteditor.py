@@ -21,31 +21,37 @@ class MyTextEdit(QTextEdit):
         if event.modifiers() == Qt.ControlModifier and event.key() == Qt.Key_C:
             self.enterNormalMode()
             self.storedKeys = []
+            return
+
+        if self.mode == 1:
+            super().keyPressEvent(event)
+            return
+
+        if self.mode == 0:
+            actions = self.actions
         else:
-            if self.mode == 1:
-                super().keyPressEvent(event)
+            actions = self.actionsVisual
+
+        if event.key() in [Qt.Key_Control, Qt.Key_Shift, Qt.Key_Alt]:
+            return
+
+        if event.modifiers() == Qt.NoModifier:
+            self.storedKeys.append(event.key())
+        else:
+            self.storedKeys.append(KeyCombination(event.modifiers(), event.key()))
+
+        for action in actions.values():
+            if isinstance(action.key[0], list):
+                for key in action.key:
+                    if key == self.storedKeys:
+                        action.performAction(self)
+                        self.storedKeys = []
+                        break
             else:
-                if self.mode == 0:
-                    actions = self.actions
-                else:
-                    actions = self.actionsVisual
-                if event.key() not in [Qt.Key_Control, Qt.Key_Shift, Qt.Key_Alt]:
-                    if event.modifiers() == Qt.NoModifier:
-                        self.storedKeys.append(event.key())
-                    else:
-                        self.storedKeys.append(KeyCombination(event.modifiers(), event.key()))
-                    for action in actions.values():
-                        if isinstance(action.key[0], list):
-                            for key in action.key:
-                                if key == self.storedKeys:
-                                    action.performAction(self)
-                                    self.storedKeys = []
-                                    break
-                        else:
-                            if action.key == self.storedKeys:
-                                action.performAction(self)
-                                self.storedKeys = []
-                                break
+                if action.key == self.storedKeys:
+                    action.performAction(self)
+                    self.storedKeys = []
+                    break
 
     def enterInsertMode(self):
         self.mode = 1
