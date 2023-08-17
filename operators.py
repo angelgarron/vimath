@@ -73,7 +73,7 @@ def findClosingParenthesis(s, cursorPosition):
             closingParenthesisPosition = -1
             return closingParenthesisPosition
         elif char == ")":
-            closingParenthesisPosition = cursorPosition+closingParenthesisPosition
+            closingParenthesisPosition = cursorPosition + closingParenthesisPosition
             return closingParenthesisPosition
         closingParenthesisPosition += 1
     closingParenthesisPosition = -1
@@ -84,7 +84,7 @@ def findOpeningParenthesis(s, cursorPosition):
     for c in reversed(s[:cursorPosition+1]):
         openingParenthesisPosition += 1
         if c == "(":
-            openingParenthesisPosition = cursorPosition+1-openingParenthesisPosition
+            openingParenthesisPosition = cursorPosition + 1 - openingParenthesisPosition
             return openingParenthesisPosition
         elif c == ")":
             openingParenthesisPosition = -1
@@ -101,7 +101,7 @@ def findOtherClosingParenthesis(s, cursorPosition):
         elif c == ")":
             parenthesisCounter -= 1
         if parenthesisCounter == 0:
-            closingParenthesisPosition = closingParenthesisPosition+cursorPosition+1
+            closingParenthesisPosition = closingParenthesisPosition + cursorPosition + 1
             return closingParenthesisPosition
         closingParenthesisPosition += 1
     closingParenthesisPosition = -1

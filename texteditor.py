@@ -8,7 +8,7 @@ class MyTextEdit(QTextEdit):
     def __init__(self):
         super().__init__()
         self.cursor = self.textCursor()
-        self.cursor.insertText("one two three\nfour (five) six seven eight\n(nine ((ten) eleven)) ()twelve")
+        self.cursor.insertText("one two three\nfour (five) six seven eight\n(nine ((ten) eleven)) () (())twelve")
         self.setFont("monospace")
         self.setCursorWidth(8)
         # normal:0, insert:1, visual:2
