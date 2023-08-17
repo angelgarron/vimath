@@ -132,7 +132,8 @@ def findOtherParenthesis(s, openingParenthesisPosition, closingParenthesisPositi
 @RegisterAction("normal")
 class ChangeInsideParenthesis:
     def __init__(self):
-        self.key = [[Qt.Key_C, Qt.Key_I, KeyCombination(Qt.ShiftModifier, Qt.Key_ParenRight)]]
+        self.key = [[Qt.Key_C, Qt.Key_I, KeyCombination(Qt.ShiftModifier, Qt.Key_ParenRight)], 
+                    [Qt.Key_C, Qt.Key_I, KeyCombination(Qt.ShiftModifier, Qt.Key_ParenLeft)]]
 
     def performAction(self, other):
         plainText = other.toPlainText()
