@@ -130,9 +130,9 @@ def findOtherParenthesis(s, openingParenthesisPosition, closingParenthesisPositi
     return openingParenthesisPosition, closingParenthesisPosition
 
 @RegisterAction("normal")
-class InsertEndLine:
+class ChangeInsideParenthesis:
     def __init__(self):
-        self.key = [Qt.Key_A]
+        self.key = [[Qt.Key_C, Qt.Key_I, KeyCombination(Qt.ShiftModifier, Qt.Key_ParenRight)]]
 
     def performAction(self, other):
         plainText = other.toPlainText()
@@ -147,4 +147,8 @@ class InsertEndLine:
                                                                                           closingParenthesisPosition, 
                                                                                           cursorPosition)
 
+            other.cursor.setPosition(openingParenthesisPosition+1, other.cursor.MoveMode.MoveAnchor)
+            other.cursor.setPosition(closingParenthesisPosition, other.cursor.MoveMode.KeepAnchor)
+            other.cursor.removeSelectedText()
+            actions["EnterInsertMode"].performAction(other)
         print(plainText, cursorPosition, openingParenthesisPosition, closingParenthesisPosition)
