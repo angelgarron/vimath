@@ -129,11 +129,10 @@ def findOtherParenthesis(s, openingParenthesisPosition, closingParenthesisPositi
         closingParenthesisPosition = findOtherClosingParenthesis(s, cursorPosition)
     return openingParenthesisPosition, closingParenthesisPosition
 
-@RegisterAction("normal")
-class ChangeInsideParenthesis:
+class BaseInnerParenthesis:
     def __init__(self):
-        self.key = [[Qt.Key_C, Qt.Key_I, KeyCombination(Qt.ShiftModifier, Qt.Key_ParenRight)], 
-                    [Qt.Key_C, Qt.Key_I, KeyCombination(Qt.ShiftModifier, Qt.Key_ParenLeft)]]
+        self.key = [[Qt.Key_I, KeyCombination(Qt.ShiftModifier, Qt.Key_ParenRight)], 
+                    [Qt.Key_I, KeyCombination(Qt.ShiftModifier, Qt.Key_ParenLeft)]]
 
     def performAction(self, other):
         plainText = other.toPlainText()
@@ -150,6 +149,15 @@ class ChangeInsideParenthesis:
 
             other.cursor.setPosition(openingParenthesisPosition+1, other.cursor.MoveMode.MoveAnchor)
             other.cursor.setPosition(closingParenthesisPosition, other.cursor.MoveMode.KeepAnchor)
-            other.cursor.removeSelectedText()
-            actions["EnterInsertMode"].performAction(other)
-        print(plainText, cursorPosition, openingParenthesisPosition, closingParenthesisPosition)
+            self.lastAction(other)
+
+@RegisterAction("normal")
+class ChangeInsideParenthesis(BaseInnerParenthesis):
+    def __init__(self):
+        super().__init__()
+        for key in self.key:
+            key.insert(0, Qt.Key_C)
+
+    def lastAction(self, other):
+        other.cursor.removeSelectedText()
+        actions["EnterInsertMode"].performAction(other)
