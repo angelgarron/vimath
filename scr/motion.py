@@ -1,4 +1,4 @@
-from base import RegisterAction, BaseMovement, KeyCombination, actions
+from base import RegisterAction, BaseMovement, actions
 from PySide6.QtGui import QTextCursor
 from PySide6.QtGui import Qt
 
@@ -58,17 +58,17 @@ class MoveStartDocument(BaseMovement):
 @RegisterAction("both")
 class MoveEndDocument(BaseMovement):
     def __init__(self):
-        self.key = [KeyCombination(Qt.ShiftModifier, Qt.Key_G)]
+        self.key = [Qt.ShiftModifier | Qt.Key_G]
         self.movement = QTextCursor.MoveOperation.End
 
 @RegisterAction("both")
 class MoveStartOfLine(BaseMovement):
     def __init__(self):
-        self.key = [KeyCombination(Qt.ShiftModifier, Qt.Key_Underscore)]
+        self.key = [Qt.ShiftModifier | Qt.Key_Underscore]
         self.movement = QTextCursor.MoveOperation.StartOfLine
 
 @RegisterAction("both")
 class MoveEndOfLine(BaseMovement):
     def __init__(self):
-        self.key = [KeyCombination(Qt.ShiftModifier, Qt.Key_Dollar)]
+        self.key = [Qt.ShiftModifier | Qt.Key_Dollar]
         self.movement = QTextCursor.MoveOperation.EndOfLine

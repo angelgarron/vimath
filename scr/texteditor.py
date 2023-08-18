@@ -2,7 +2,7 @@ import sys
 from PySide6.QtCore import (Qt)
 from PySide6.QtWidgets import (QApplication, QMainWindow, QTextEdit, QWidget, QVBoxLayout)
 import motion, operators
-from base import KeyCombination, actions, actionsVisual
+from base import actions, actionsVisual
 
 class MyTextEdit(QTextEdit):
     def __init__(self):
@@ -18,7 +18,7 @@ class MyTextEdit(QTextEdit):
         self.actionsVisual = actionsVisual
 
     def keyPressEvent(self, event):
-        if event.modifiers() == Qt.ControlModifier and event.key() == Qt.Key_C:
+        if event.keyCombination() == Qt.ControlModifier | Qt.Key_C:
             self.enterNormalMode()
             self.storedKeys = []
             return
@@ -35,10 +35,7 @@ class MyTextEdit(QTextEdit):
         if event.key() in [Qt.Key_Control, Qt.Key_Shift, Qt.Key_Alt]:
             return
 
-        if event.modifiers() == Qt.NoModifier:
-            self.storedKeys.append(event.key())
-        else:
-            self.storedKeys.append(KeyCombination(event.modifiers(), event.key()))
+        self.storedKeys.append(event.keyCombination())
 
         for action in actions.values():
             if isinstance(action.key[0], list):

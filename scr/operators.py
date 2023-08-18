@@ -1,4 +1,4 @@
-from base import RegisterAction, BaseMovement, KeyCombination, actions
+from base import RegisterAction, BaseMovement, actions
 from PySide6.QtGui import QTextCursor
 from PySide6.QtGui import Qt
 
@@ -56,7 +56,7 @@ class DeleteInVisual:
 @RegisterAction("normal")
 class InsertBeginningLine:
     def __init__(self):
-        self.key = [KeyCombination(Qt.ShiftModifier, Qt.Key_I)]
+        self.key = [Qt.ShiftModifier | Qt.Key_I]
 
     def performAction(self, other):
         actions["MoveStartOfLine"].performAction(other)
@@ -65,7 +65,7 @@ class InsertBeginningLine:
 @RegisterAction("normal")
 class InsertEndLine:
     def __init__(self):
-        self.key = [KeyCombination(Qt.ShiftModifier, Qt.Key_A)]
+        self.key = [Qt.ShiftModifier | Qt.Key_A]
 
     def performAction(self, other):
         actions["MoveEndOfLine"].performAction(other)
@@ -136,8 +136,8 @@ def findOtherParenthesis(s, openingParenthesisPosition, closingParenthesisPositi
 
 class BaseInnerParenthesis:
     def __init__(self):
-        self.key = [[Qt.Key_I, KeyCombination(Qt.ShiftModifier, Qt.Key_ParenRight)], 
-                    [Qt.Key_I, KeyCombination(Qt.ShiftModifier, Qt.Key_ParenLeft)]]
+        self.key = [[Qt.Key_I, Qt.ShiftModifier | Qt.Key_ParenRight], 
+                    [Qt.Key_I, Qt.ShiftModifier | Qt.Key_ParenLeft]]
 
     def performAction(self, other):
         plainText = other.toPlainText()

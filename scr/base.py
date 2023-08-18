@@ -1,14 +1,5 @@
 from PySide6.QtCore import Qt
 
-class KeyCombination:
-    def __init__(self, modifier, key):
-        self.modifier = modifier
-        self.key = key
-    def __eq__(self, other):
-        if not isinstance(other, KeyCombination):
-            return False
-        return self.key == other.key and self.modifier == other.modifier
-
 actions = {}
 actionsVisual = {}
 def RegisterAction(whichMode="normal"):
