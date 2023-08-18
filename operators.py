@@ -9,7 +9,6 @@ class BaseInnerWord:
     def performAction(self, other):
         actions["MoveBeginningWord"].performAction(other)
         actions["MoveWordEnd"].performAction(other, moveAnchor=False)
-        other.cursor.removeSelectedText()
         self.lastAction(other)
 
 @RegisterAction("normal")
@@ -19,6 +18,7 @@ class ChangeInnerWord(BaseInnerWord):
         self.key.insert(0, Qt.Key_C)
 
     def lastAction(self, other):
+        other.cursor.removeSelectedText()
         actions["EnterInsertMode"].performAction(other)
 
 @RegisterAction("normal")
@@ -161,3 +161,13 @@ class ChangeInsideParenthesis(BaseInnerParenthesis):
     def lastAction(self, other):
         other.cursor.removeSelectedText()
         actions["EnterInsertMode"].performAction(other)
+
+@RegisterAction("normal")
+class DeleteInsideParenthesis(BaseInnerParenthesis):
+    def __init__(self):
+        super().__init__()
+        for key in self.key:
+            key.insert(0, Qt.Key_D)
+
+    def lastAction(self, other):
+        other.cursor.removeSelectedText()
