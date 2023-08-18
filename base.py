@@ -50,6 +50,15 @@ class EnterInsertMode:
         other.enterInsertMode()
 
 @RegisterAction("normal")
+class EnterInsertModeAppend:
+    def __init__(self):
+        self.key = [Qt.Key_A]
+
+    def performAction(self, other):
+        actions["MoveRight"].performAction(other)
+        other.enterInsertMode()
+
+@RegisterAction("normal")
 class EnterVisualMode:
     def __init__(self):
         self.key = [Qt.Key_V]
