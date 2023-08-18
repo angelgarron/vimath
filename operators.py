@@ -31,6 +31,11 @@ class DeleteInnerWord(BaseInnerWord):
         other.cursor.removeSelectedText()
 
 @RegisterAction("visual")
+class VisualInnerWord(BaseInnerWord):
+    def lastAction(self, other):
+        pass
+
+@RegisterAction("visual")
 class ChangeInVisual:
     def __init__(self):
         self.key = [Qt.Key_C]
@@ -171,3 +176,8 @@ class DeleteInsideParenthesis(BaseInnerParenthesis):
 
     def lastAction(self, other):
         other.cursor.removeSelectedText()
+
+@RegisterAction("visual")
+class VisualInsideParenthesis(BaseInnerParenthesis):
+    def lastAction(self, other):
+        pass
