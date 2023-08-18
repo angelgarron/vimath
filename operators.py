@@ -7,7 +7,7 @@ class BaseInnerWord:
         self.key = [Qt.Key_I, Qt.Key_W]
 
     def performAction(self, other):
-        actions["MoveBeginningWord"].performAction(other)
+        actions["MoveBeginningWord"].performAction(other, moveAnchor=True)
         actions["MoveWordEnd"].performAction(other, moveAnchor=False)
         self.lastAction(other)
 

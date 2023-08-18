@@ -23,11 +23,16 @@ def RegisterAction(whichMode="normal"):
     return wrapper
 
 class BaseMovement:
-    def performAction(self, other, moveAnchor=True):
-        if other.mode == 2 or not moveAnchor:
+    def performAction(self, other, moveAnchor="default"):
+        if other.mode == 2:
             moveMode = other.cursor.MoveMode.KeepAnchor
         else:
             moveMode = other.cursor.MoveMode.MoveAnchor
+        
+        if moveAnchor == True:
+            moveMode = other.cursor.MoveMode.MoveAnchor
+        elif moveAnchor == False:
+            moveMode = other.cursor.MoveMode.KeepAnchor
 
         if isinstance(self.movement, list):
             for m in self.movement:
