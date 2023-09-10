@@ -1,5 +1,4 @@
 from base import RegisterAction, BaseMovement, actions
-from PySide6.QtGui import QTextCursor
 from PySide6.QtGui import Qt
 
 class BaseInnerWord:
@@ -18,7 +17,7 @@ class ChangeInnerWord(BaseInnerWord):
         self.key.insert(0, Qt.Key_C)
 
     def lastAction(self, other):
-        other.cursor.removeSelectedText()
+        other.del_()
         actions["EnterInsertMode"].performAction(other)
 
 @RegisterAction("normal")
@@ -28,7 +27,7 @@ class DeleteInnerWord(BaseInnerWord):
         self.key.insert(0, Qt.Key_D)
 
     def lastAction(self, other):
-        other.cursor.removeSelectedText()
+        other.del_()
 
 @RegisterAction("visual")
 class VisualInnerWord(BaseInnerWord):
@@ -41,7 +40,7 @@ class ChangeInVisual:
         self.key = [Qt.Key_C]
 
     def performAction(self, other):
-        other.cursor.removeSelectedText()
+        other.del_()
         actions["EnterInsertMode"].performAction(other)
 
 @RegisterAction("visual")
@@ -50,7 +49,7 @@ class DeleteInVisual:
         self.key = [Qt.Key_D]
 
     def performAction(self, other):
-        other.cursor.removeSelectedText()
+        other.del_()
         other.enterNormalMode()
 
 @RegisterAction("normal")
@@ -140,8 +139,8 @@ class BaseInnerParenthesis:
                     [Qt.Key_I, Qt.ShiftModifier | Qt.Key_ParenLeft]]
 
     def performAction(self, other):
-        plainText = other.toPlainText()
-        cursorPosition = other.cursor.position()
+        plainText = other.text()
+        cursorPosition = other.cursorPosition()
 
         openingParenthesisPosition = findOpeningParenthesis(plainText, cursorPosition)
         closingParenthesisPosition = findClosingParenthesis(plainText, cursorPosition)
@@ -152,8 +151,7 @@ class BaseInnerParenthesis:
                                                                                           closingParenthesisPosition, 
                                                                                           cursorPosition)
 
-            other.cursor.setPosition(openingParenthesisPosition+1, other.cursor.MoveMode.MoveAnchor)
-            other.cursor.setPosition(closingParenthesisPosition, other.cursor.MoveMode.KeepAnchor)
+            other.setSelection(openingParenthesisPosition+1, closingParenthesisPosition-openingParenthesisPosition-1)
             self.lastAction(other)
 
 @RegisterAction("normal")
@@ -164,7 +162,7 @@ class ChangeInsideParenthesis(BaseInnerParenthesis):
             key.insert(0, Qt.Key_C)
 
     def lastAction(self, other):
-        other.cursor.removeSelectedText()
+        other.del_()
         actions["EnterInsertMode"].performAction(other)
 
 @RegisterAction("normal")
@@ -175,7 +173,7 @@ class DeleteInsideParenthesis(BaseInnerParenthesis):
             key.insert(0, Qt.Key_D)
 
     def lastAction(self, other):
-        other.cursor.removeSelectedText()
+        other.del_()
 
 @RegisterAction("visual")
 class VisualInsideParenthesis(BaseInnerParenthesis):

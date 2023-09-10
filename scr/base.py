@@ -16,21 +16,21 @@ def RegisterAction(whichMode="normal"):
 class BaseMovement:
     def performAction(self, other, moveAnchor="default"):
         if other.mode == 2:
-            moveMode = other.cursor.MoveMode.KeepAnchor
+            mark = True
         else:
-            moveMode = other.cursor.MoveMode.MoveAnchor
+            mark = False
         
         if moveAnchor == True:
-            moveMode = other.cursor.MoveMode.MoveAnchor
+            mark = False
         elif moveAnchor == False:
-            moveMode = other.cursor.MoveMode.KeepAnchor
+            mark = True
 
         if isinstance(self.movement, list):
             for m in self.movement:
-                other.cursor.movePosition(m, moveMode, 1)
+                m(other, mark)
         else:
-            other.cursor.movePosition(self.movement, moveMode, 1)
-        other.setTextCursor(other.cursor)
+            self.movement(other, mark)
+
 
 @RegisterAction("normal")
 class EnterInsertMode:

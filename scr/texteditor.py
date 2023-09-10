@@ -1,16 +1,23 @@
 import sys
 from PySide6.QtCore import (Qt)
-from PySide6.QtWidgets import (QApplication, QMainWindow, QTextEdit, QWidget, QVBoxLayout)
+from PySide6.QtWidgets import (QApplication, QMainWindow, QLineEdit, QWidget, QVBoxLayout,
+                               QProxyStyle)
 import motion, operators
 from base import actions, actionsVisual
 
-class MyTextEdit(QTextEdit):
+class ThickCursorStyle(QProxyStyle):
+    def pixelMetric(self, metric, option=None, widget=None):
+        if metric == QProxyStyle.PM_TextCursorWidth:
+            return 8
+
+        return super().pixelMetric(metric, option, widget)
+        
+class MyTextEdit(QLineEdit):
     def __init__(self):
         super().__init__()
-        self.cursor = self.textCursor()
-        self.cursor.insertText("one two three\nfour (five) six seven eight\n(nine ((ten) eleven)) () (())twelve")
+        self.setText("one two three\nfour (five) six seven eight\n(nine ((ten) eleven)) () (())twelve")
         self.setFont("monospace")
-        self.setCursorWidth(8)
+        self.setStyle(ThickCursorStyle())
         # normal:0, insert:1, visual:2
         self.mode = 0
         self.storedKeys = []
@@ -52,15 +59,15 @@ class MyTextEdit(QTextEdit):
 
     def enterInsertMode(self):
         self.mode = 1
-        self.setCursorWidth(1)
+        self.setStyle(QProxyStyle())
 
     def enterNormalMode(self):
         self.mode = 0
-        self.setCursorWidth(8)
+        self.setStyle(ThickCursorStyle())
 
     def enterVisualMode(self):
         self.mode = 2
-        self.setCursorWidth(8)
+        self.setStyle(ThickCursorStyle())
     
 class MyMainWindow(QMainWindow):
     def __init__(self):
