@@ -13,6 +13,7 @@ def RegisterAction(whichMode="normal"):
             actionsVisual.update({f.__name__:f()})
     return wrapper
 
+
 class BaseMovement:
     def performAction(self, other, moveAnchor="default"):
         if other.mode == 2:
@@ -37,22 +38,27 @@ class EnterInsertMode:
     def __init__(self):
         self.key = [Qt.Key_I]
 
+
     def performAction(self, other):
         other.enterInsertMode()
+
 
 @RegisterAction("normal")
 class EnterInsertModeAppend:
     def __init__(self):
         self.key = [Qt.Key_A]
 
+
     def performAction(self, other):
         actions["MoveRight"].performAction(other)
         other.enterInsertMode()
+
 
 @RegisterAction("normal")
 class EnterVisualMode:
     def __init__(self):
         self.key = [Qt.Key_V]
+
 
     def performAction(self, other):
         other.enterVisualMode()

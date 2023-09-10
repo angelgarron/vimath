@@ -2,11 +2,13 @@ from base import RegisterAction, BaseMovement, actions
 from PySide6.QtGui import Qt
 from PySide6.QtWidgets import QLineEdit
 
+
 @RegisterAction("both")
 class MoveLeft(BaseMovement):
     def __init__(self):
         self.key = [[Qt.Key_H], [Qt.Key_Left]]
         self.movement = QLineEdit.cursorBackward
+
 
 # @RegisterAction("both")
 # class MoveDown(BaseMovement):
@@ -26,6 +28,7 @@ class MoveRight(BaseMovement):
         self.key = [[Qt.Key_L], [Qt.Key_Right]]
         self.movement = QLineEdit.cursorForward
 
+
 @RegisterAction("both")
 class MoveWordBegin(BaseMovement):
     def __init__(self):
@@ -39,6 +42,7 @@ class MoveBeginningWord(BaseMovement):
         self.key = [Qt.Key_B]
         self.movement = QLineEdit.cursorWordBackward
 
+
 @RegisterAction("both")
 class MoveWordEnd(BaseMovement):
     def __init__(self):
@@ -50,11 +54,13 @@ class MoveWordEnd(BaseMovement):
     QLineEdit.cursorBackward, 
     ]
 
+
 @RegisterAction("both")
 class MoveStartDocument(BaseMovement):
     def __init__(self):
         self.key = [Qt.Key_G, Qt.Key_G]
         self.movement = QLineEdit.home
+
 
 @RegisterAction("both")
 class MoveEndDocument(BaseMovement):
@@ -62,11 +68,13 @@ class MoveEndDocument(BaseMovement):
         self.key = [Qt.ShiftModifier | Qt.Key_G]
         self.movement = QLineEdit.end
 
+
 @RegisterAction("both")
 class MoveStartOfLine(BaseMovement):
     def __init__(self):
         self.key = [Qt.ShiftModifier | Qt.Key_Underscore]
         self.movement = QLineEdit.home
+
 
 @RegisterAction("both")
 class MoveEndOfLine(BaseMovement):
