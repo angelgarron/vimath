@@ -45,6 +45,7 @@ class MoveBeginningWord(BaseMovement):
 
 @RegisterAction("both")
 class MoveWordEnd(BaseMovement):
+    # FIXME
     def __init__(self):
         self.key = [Qt.Key_E]
         self.movement = [

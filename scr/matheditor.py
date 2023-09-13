@@ -100,6 +100,7 @@ class BaseFrame(QFrame):
 
         
     def createFrameMiddle(self, pos, FrameConstructor):
+        # FIXME could be more than one linedit
         currentLineEdit = self.findChild(MyLineEdit)
         newFrame = FrameConstructor(self)
         self.children.insert(0, newFrame)
