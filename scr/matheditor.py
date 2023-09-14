@@ -161,6 +161,8 @@ class Fraction(BaseFrame):
         self.denominator = MyFrame(self)
         self.children.append(self.numerator)
         self.children.append(self.denominator)
+        self.numerator.children[0].bottomLinedit = self.denominator.children[0]
+        self.denominator.children[0].topLinedit = self.numerator.children[0]
 
 
     def updateFrameSizeAndPosition(self):

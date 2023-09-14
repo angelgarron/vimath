@@ -15,24 +15,15 @@ def RegisterAction(whichMode="normal"):
 
 
 class BaseMovement:
-    def performAction(self, other, moveAnchor="default"):
+    def checkmark(self, other):
         if other.mode == 2:
             mark = True
         else:
             mark = False
-        
-        if moveAnchor == True:
-            mark = False
-        elif moveAnchor == False:
-            mark = True
 
-        if isinstance(self.movement, list):
-            for m in self.movement:
-                m(other, mark)
-        else:
-            self.movement(other, mark)
+        return mark
 
-
+                
 @RegisterAction("normal")
 class EnterInsertMode:
     def __init__(self):
@@ -50,7 +41,7 @@ class EnterInsertModeAppend:
 
 
     def performAction(self, other):
-        actions["MoveRight"].performAction(other)
+        other.cursorForward(self.checkmark(other))
         other.enterInsertMode()
 
 

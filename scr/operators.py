@@ -7,8 +7,18 @@ class BaseInnerWord:
 
 
     def performAction(self, other):
-        actions["MoveBeginningWord"].performAction(other, moveAnchor=True)
-        actions["MoveWordEnd"].performAction(other, moveAnchor=False)
+        other.cursorWordBackward(True)
+        movements = [
+                    other.cursorWordForward, 
+                    other.cursorWordForward, 
+                    other.cursorBackward, 
+                    other.cursorBackward, 
+                    ]
+
+        for movement in movements:
+            movement(False)
+        
+
         self.lastAction(other)
 
 
@@ -21,7 +31,7 @@ class ChangeInnerWord(BaseInnerWord):
 
     def lastAction(self, other):
         other.del_()
-        actions["EnterInsertMode"].performAction(other)
+        other.enterInsertMode()
 
 
 @RegisterAction("normal")
@@ -49,7 +59,7 @@ class ChangeInVisual:
 
     def performAction(self, other):
         other.del_()
-        actions["EnterInsertMode"].performAction(other)
+        other.enterInsertMode()
 
 
 @RegisterAction("visual")
@@ -70,8 +80,8 @@ class InsertBeginningLine:
 
 
     def performAction(self, other):
-        actions["MoveStartOfLine"].performAction(other)
-        actions["EnterInsertMode"].performAction(other)
+        other.home(False)
+        other.enterInsertMode()
 
 
 @RegisterAction("normal")
@@ -81,8 +91,8 @@ class InsertEndLine:
 
 
     def performAction(self, other):
-        actions["MoveEndOfLine"].performAction(other)
-        actions["EnterInsertMode"].performAction(other)
+        other.end(False)
+        other.enterInsertMode()
 
 
 def findClosingParenthesis(s, cursorPosition):
@@ -186,7 +196,7 @@ class ChangeInsideParenthesis(BaseInnerParenthesis):
 
     def lastAction(self, other):
         other.del_()
-        actions["EnterInsertMode"].performAction(other)
+        other.enterInsertMode()
 
 
 @RegisterAction("normal")
