@@ -105,7 +105,8 @@ class BaseFrame(QFrame):
         currentLineEdit = self.findChild(MyLineEdit)
         newFrame = FrameConstructor(self)
         self.children.insert(0, newFrame)
-        self.createLineEdit().setText(currentLineEdit.text()[:pos])
+        newLinedit = self.createLineEdit()
+        newLinedit.setText(currentLineEdit.text()[:pos])
         currentLineEdit.setText(currentLineEdit.text()[pos:])
         return newFrame
 
@@ -150,7 +151,7 @@ class BaseFrame(QFrame):
 class MyFrame(BaseFrame):
     def __init__(self, parent):
         super().__init__(parent)
-        self.createLineEdit()
+        newLinedit = self.createLineEdit()
     
 
 class Fraction(BaseFrame):
