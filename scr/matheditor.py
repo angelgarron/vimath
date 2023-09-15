@@ -133,9 +133,9 @@ class BaseFrame(QFrame):
     
 
     def createLineEdit(self, pos=0):
-        newLineEdit = MyLineEdit(self)
-        self.children.insert(pos, newLineEdit)
-        return newLineEdit
+        newLinedit = MyLineEdit(self)
+        self.children.insert(pos, newLinedit)
+        return newLinedit
     
 
     def createPainter(self):
