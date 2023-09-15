@@ -79,6 +79,7 @@ class MyLineEdit(QLineEdit):
 
     def enterNormalMode(self):
         self.mode = 0
+        self.cursorBackward(False)
         self.setStyle(ThickCursorStyle())
 
     def enterVisualMode(self):
