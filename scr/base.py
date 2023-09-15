@@ -41,7 +41,7 @@ class EnterInsertModeAppend:
 
 
     def performAction(self, other):
-        other.cursorForward(self.checkmark(other))
+        other.cursorForward(False)
         other.enterInsertMode()
 
 
