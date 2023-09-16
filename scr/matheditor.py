@@ -114,10 +114,10 @@ class BaseFrame(QFrame):
         newLinedit.setText(currentLineEdit.text()[:pos])
         currentLineEdit.setText(currentLineEdit.text()[pos:])
         newLinedit.previousLinedit = currentLineEdit.previousLinedit
-        currentLineEdit.previousLinedit = newFrame.children[0]
-        newFrame.children[0].nextLinedit = currentLineEdit
-        newFrame.children[0].previousLinedit = newLinedit
-        newLinedit.nextLinedit = newFrame.children[0]
+        currentLineEdit.previousLinedit = newFrame.firstLinedit
+        newFrame.firstLinedit.nextLinedit = currentLineEdit
+        newFrame.firstLinedit.previousLinedit = newLinedit
+        newLinedit.nextLinedit = newFrame.firstLinedit
         return newFrame
 
 
@@ -161,7 +161,7 @@ class BaseFrame(QFrame):
 class MyFrame(BaseFrame):
     def __init__(self, parent):
         super().__init__(parent)
-        newLinedit = self.createLineEdit()
+        self.firstLinedit = self.createLineEdit()
     
 
 class Fraction(BaseFrame):
@@ -173,6 +173,7 @@ class Fraction(BaseFrame):
         self.denominator = MyFrame(self)
         self.children.append(self.numerator)
         self.children.append(self.denominator)
+        self.firstLinedit = self.numerator.children[0]
         self.numerator.children[0].bottomLinedit = self.denominator.children[0]
         self.denominator.children[0].topLinedit = self.numerator.children[0]
 
@@ -206,6 +207,7 @@ class SquareRoot(BaseFrame):
         super().__init__(parent)
         self.squareRootArgumentFrame = MyFrame(self)
         self.children.append(self.squareRootArgumentFrame)
+        self.firstLinedit = self.squareRootArgumentFrame.children[0]
 
 
     def updateFrameSizeAndPosition(self):
