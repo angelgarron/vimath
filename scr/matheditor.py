@@ -31,6 +31,11 @@ class MyLineEdit(QLineEdit):
         self.u = self.height()/2
         self.d = self.height()/2
 
+        self.nextLinedit = None
+        self.previousLinedit = None
+        self.upperLinedit = None
+        self.lowerLinedit = None
+
         self.textChanged.connect(self.updateWidth)
 
 
@@ -108,6 +113,11 @@ class BaseFrame(QFrame):
         newLinedit = self.createLineEdit()
         newLinedit.setText(currentLineEdit.text()[:pos])
         currentLineEdit.setText(currentLineEdit.text()[pos:])
+        newLinedit.previousLinedit = currentLineEdit.previousLinedit
+        currentLineEdit.previousLinedit = newFrame.children[0]
+        newFrame.children[0].nextLinedit = currentLineEdit
+        newFrame.children[0].previousLinedit = newLinedit
+        newLinedit.nextLinedit = newFrame.children[0]
         return newFrame
 
 
