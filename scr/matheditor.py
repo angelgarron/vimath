@@ -186,6 +186,8 @@ class Fraction(BaseFrame):
         self.denominator.children[0].previousLinedit = newLinedit
         self.numerator.children[0].lowerLinedit = self.denominator.children[0]
         self.denominator.children[0].upperLinedit = self.numerator.children[0]
+        self.denominator.children[0].lowerLinedit = currentLinedit.lowerLinedit
+        newLinedit.lowerLinedit = currentLinedit.lowerLinedit
 
 
     def updateFrameSizeAndPosition(self):
