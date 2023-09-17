@@ -248,3 +248,39 @@ class SquareRoot(BaseFrame):
         painter.drawLine(0, 2*self.height()/3, 2*SquareRoot.LHSPACE/3, self.height())
         painter.drawLine(2*SquareRoot.LHSPACE/3, self.height(), SquareRoot.LHSPACE, SquareRoot.VSPACE)
         painter.drawLine(SquareRoot.LHSPACE, SquareRoot.VSPACE, self.width(), SquareRoot.VSPACE)
+
+
+class Subscript(BaseFrame):
+    VSPACE = 1
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.baseCharacter = MyFrame(self)
+        self.subscript = MyFrame(self)
+        self.children.append(self.baseCharacter)
+        self.children.append(self.subscript)
+        self.firstLinedit = self.baseCharacter.children[0]
+        
+        
+    def createLinks(self, newLinedit, currentLinedit):
+        super().createLinks(newLinedit, currentLinedit)
+        self.subscript.children[0].nextLinedit = currentLinedit
+        self.subscript.children[0].previousLinedit = newLinedit
+        self.baseCharacter.children[0].lowerLinedit = self.subscript.children[0]
+        self.subscript.children[0].upperLinedit = self.baseCharacter.children[0]
+        self.subscript.children[0].lowerLinedit = currentLinedit.lowerLinedit
+        newLinedit.lowerLinedit = currentLinedit.lowerLinedit
+        self.baseCharacter.children[0].upperLinedit = currentLinedit.upperLinedit
+        newLinedit.upperLinedit = currentLinedit.upperLinedit
+
+
+    def updateFrameSizeAndPosition(self):
+        self.baseCharacter.updateFrameSizeAndPosition()
+        self.subscript.updateFrameSizeAndPosition()
+        self.u = self.baseCharacter.u
+        self.d = self.baseCharacter.d+Subscript.VSPACE+self.subscript.d
+        width = self.baseCharacter.width()+self.subscript.width()
+        self.setGeometry(QRect(self.x(), self.y(), width, self.u+self.d))
+        xi = self.baseCharacter.width()
+        yi = self.baseCharacter.height()+Subscript.VSPACE-self.subscript.u
+        self.baseCharacter.setGeometry(QRect(0, 0, self.baseCharacter.width(), self.baseCharacter.height()))
+        self.subscript.setGeometry(QRect(xi, yi, self.subscript.width(), self.subscript.height()))
