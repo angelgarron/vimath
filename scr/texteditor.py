@@ -1,6 +1,6 @@
 import sys
 from PySide6.QtWidgets import (QApplication, QMainWindow, QVBoxLayout)
-import motion, operators
+import motion, operators, addconstructor
 from matheditor import MyFrame, Fraction, SquareRoot, MyLineEdit
 
     

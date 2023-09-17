@@ -150,6 +150,7 @@ class BaseFrame(QFrame):
 
     def createLineEdit(self, pos=0):
         newLinedit = MyLineEdit(self)
+        newLinedit.show()
         self.children.insert(pos, newLinedit)
         return newLinedit
     
