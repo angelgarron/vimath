@@ -107,18 +107,22 @@ class BaseFrame(QFrame):
         
     def createFrameMiddle(self, pos, FrameConstructor):
         # FIXME could be more than one linedit
-        currentLineEdit = self.findChild(MyLineEdit)
+        currentLinedit = self.findChild(MyLineEdit)
         newFrame = FrameConstructor(self)
         self.children.insert(0, newFrame)
         newLinedit = self.createLineEdit()
-        newLinedit.setText(currentLineEdit.text()[:pos])
-        currentLineEdit.setText(currentLineEdit.text()[pos:])
-        newLinedit.previousLinedit = currentLineEdit.previousLinedit
-        currentLineEdit.previousLinedit = newFrame.firstLinedit
-        newFrame.firstLinedit.nextLinedit = currentLineEdit
+        newLinedit.setText(currentLinedit.text()[:pos])
+        currentLinedit.setText(currentLinedit.text()[pos:])
+        self.createLinks(newLinedit, currentLinedit, newFrame)
+        return newFrame
+        
+
+    def createLinks(self, newLinedit, currentLinedit, newFrame):
+        newLinedit.previousLinedit = currentLinedit.previousLinedit
+        currentLinedit.previousLinedit = newFrame.firstLinedit
+        newFrame.firstLinedit.nextLinedit = currentLinedit
         newFrame.firstLinedit.previousLinedit = newLinedit
         newLinedit.nextLinedit = newFrame.firstLinedit
-        return newFrame
 
 
     @classmethod
