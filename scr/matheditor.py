@@ -178,14 +178,14 @@ class Fraction(BaseFrame):
         self.children.append(self.numerator)
         self.children.append(self.denominator)
         self.firstLinedit = self.numerator.children[0]
-        self.numerator.children[0].lowerLinedit = self.denominator.children[0]
-        self.denominator.children[0].upperLinedit = self.numerator.children[0]
         
         
     def createLinks(self, newLinedit, currentLinedit):
         super().createLinks(newLinedit, currentLinedit)
         self.denominator.children[0].nextLinedit = currentLinedit
         self.denominator.children[0].previousLinedit = newLinedit
+        self.numerator.children[0].lowerLinedit = self.denominator.children[0]
+        self.denominator.children[0].upperLinedit = self.numerator.children[0]
 
 
     def updateFrameSizeAndPosition(self):
