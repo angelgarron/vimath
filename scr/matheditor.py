@@ -113,16 +113,16 @@ class BaseFrame(QFrame):
         newLinedit = self.createLineEdit()
         newLinedit.setText(currentLinedit.text()[:pos])
         currentLinedit.setText(currentLinedit.text()[pos:])
-        self.createLinks(newLinedit, currentLinedit, newFrame)
+        newFrame.createLinks(newLinedit, currentLinedit)
         return newFrame
         
 
-    def createLinks(self, newLinedit, currentLinedit, newFrame):
+    def createLinks(self, newLinedit, currentLinedit):
         newLinedit.previousLinedit = currentLinedit.previousLinedit
-        currentLinedit.previousLinedit = newFrame.firstLinedit
-        newFrame.firstLinedit.nextLinedit = currentLinedit
-        newFrame.firstLinedit.previousLinedit = newLinedit
-        newLinedit.nextLinedit = newFrame.firstLinedit
+        currentLinedit.previousLinedit = self.firstLinedit
+        self.firstLinedit.nextLinedit = currentLinedit
+        self.firstLinedit.previousLinedit = newLinedit
+        newLinedit.nextLinedit = self.firstLinedit
 
 
     @classmethod
@@ -180,6 +180,12 @@ class Fraction(BaseFrame):
         self.firstLinedit = self.numerator.children[0]
         self.numerator.children[0].lowerLinedit = self.denominator.children[0]
         self.denominator.children[0].upperLinedit = self.numerator.children[0]
+        
+        
+    def createLinks(self, newLinedit, currentLinedit):
+        super().createLinks(newLinedit, currentLinedit)
+        self.denominator.children[0].nextLinedit = currentLinedit
+        self.denominator.children[0].previousLinedit = newLinedit
 
 
     def updateFrameSizeAndPosition(self):
