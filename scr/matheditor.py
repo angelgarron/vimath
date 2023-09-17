@@ -5,12 +5,17 @@ from PySide6.QtCore import QRect, Qt, QSize
 
 LINEDIT_SIZE = (8, 20)
 FONTSIZE = 15
-
+CURSOR_WIDTH = 12
+LINEDIT_STYLESHEET = """
+color: black;
+border: 1px solid gray;
+border-radius: 4px;
+"""
 
 class ThickCursorStyle(QProxyStyle):
     def pixelMetric(self, metric, option=None, widget=None):
         if metric == QProxyStyle.PM_TextCursorWidth:
-            return 8
+            return CURSOR_WIDTH
 
         return super().pixelMetric(metric, option, widget)
         
@@ -20,6 +25,7 @@ class MyLineEdit(QLineEdit):
         super().__init__(parent)
         self.parent = parent
         self.setStyle(ThickCursorStyle())
+        self.setStyleSheet(LINEDIT_STYLESHEET)
         # normal:0, insert:1, visual:2
         self.mode = 0
         self.storedKeys = []
@@ -103,6 +109,7 @@ class BaseFrame(QFrame):
         self.u = 0
         self.d = 0
         self.setFrameShape(QFrame.Box)
+        self.setStyleSheet("border:1px dashed red")
 
         
     def createFrameMiddle(self, pos, FrameConstructor):
@@ -158,7 +165,7 @@ class BaseFrame(QFrame):
     def createPainter(self):
         painter = QPainter(self)
         pen = QPen()
-        pen.setColor("red")
+        pen.setColor("black")
         painter.setPen(pen)
         return painter
 
