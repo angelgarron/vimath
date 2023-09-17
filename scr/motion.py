@@ -22,9 +22,8 @@ class MoveDown(BaseMovement):
         
         
     def performAction(self, other):
-        if other.cursorPosition() == len(other.text()) and other.lowerLinedit:
+        if other.lowerLinedit:
             other.lowerLinedit.setFocus()
-            return
 
 
 @RegisterAction("both")
@@ -34,10 +33,10 @@ class MoveUp(BaseMovement):
 
         
     def performAction(self, other):
-        if other.cursorPosition() == 0 and other.upperLinedit:
+        if other.upperLinedit:
             other.upperLinedit.setFocus()
-            return
         
+
 @RegisterAction("both")
 class MoveRight(BaseMovement):
     def __init__(self):
