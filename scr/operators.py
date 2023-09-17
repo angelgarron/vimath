@@ -1,4 +1,4 @@
-from base import RegisterAction, BaseMovement, actions
+from base import RegisterAction, actions
 from PySide6.QtGui import Qt
 
 class BaseInnerWord:

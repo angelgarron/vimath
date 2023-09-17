@@ -1,4 +1,4 @@
-from base import RegisterAction, BaseMovement, actions
+from base import RegisterAction, BaseMovement
 from PySide6.QtGui import Qt
 
 
