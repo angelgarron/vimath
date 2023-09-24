@@ -110,14 +110,14 @@ class MoveEndDocument(BaseMovement):
         other.end(self.checkmark(other))
 
 
-@RegisterAction("both")
-class MoveStartOfLine(BaseMovement):
-    def __init__(self):
-        self.key = [Qt.ShiftModifier | Qt.Key_Underscore]
+# @RegisterAction("both")
+# class MoveStartOfLine(BaseMovement):
+#     def __init__(self):
+#         self.key = [Qt.ShiftModifier | Qt.Key_Underscore]
     
 
-    def performAction(self, other):
-        other.home(self.checkmark(other))
+#     def performAction(self, other):
+#         other.home(self.checkmark(other))
 
 
 @RegisterAction("both")
