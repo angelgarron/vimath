@@ -32,9 +32,9 @@ class MyLineEdit(QLineEdit):
         self.actionsVisual = actionsVisual
 
         self.setFont(QFont("monospace", self.parent.fontSize))
-        self.setGeometry(QRect(0, 0, LINEDIT_SIZE[0], LINEDIT_SIZE[1]))
-        self.u = self.height()/2
-        self.d = self.height()/2
+        self.u = self.parent.fontSize/2+2
+        self.d = self.parent.fontSize/2+2
+        self.setGeometry(QRect(0, 0, LINEDIT_SIZE[0], self.u+self.d))
 
         self.nextLinedit = None
         self.previousLinedit = None
@@ -259,7 +259,7 @@ class SquareRoot(BaseFrame):
 
 
 class Subscript(BaseFrame):
-    VSPACE = 0.5
+    VSPACE = 0.6
     def __init__(self, parent):
         super().__init__(parent)
         self.baseCharacter = MyFrame(self)
