@@ -45,11 +45,14 @@ class EnterInsertModeAppend:
         other.enterInsertMode()
 
 
-@RegisterAction("normal")
-class EnterVisualMode:
+@RegisterAction("both")
+class ToggleVisualMode:
     def __init__(self):
         self.key = [Qt.Key_V]
 
 
     def performAction(self, other):
-        other.enterVisualMode()
+        if other.mode == 0:
+            other.enterVisualMode()
+        else:
+            other.enterNormalMode()

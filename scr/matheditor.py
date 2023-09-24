@@ -52,8 +52,9 @@ class MyLineEdit(QLineEdit):
 
     def keyPressEvent(self, event):
         if event.keyCombination() == Qt.ControlModifier | Qt.Key_C:
-            self.enterNormalMode()
             self.storedKeys = []
+            if self.mode != 0:
+                self.enterNormalMode()
             return
 
         if self.mode == 1:
