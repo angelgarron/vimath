@@ -4,7 +4,6 @@ from PySide6.QtGui import QPainter, QPen, QPainterPath, QColor, QBrush, QFont
 from PySide6.QtCore import QRect, Qt, QSize
 
 LINEDIT_SIZE = (8, 20)
-FONTSIZE = 15
 CURSOR_WIDTH = 12
 LINEDIT_STYLESHEET = """
 color: black;
@@ -32,7 +31,7 @@ class MyLineEdit(QLineEdit):
         self.actions = actions
         self.actionsVisual = actionsVisual
 
-        self.setFont(QFont("monospace", FONTSIZE))
+        self.setFont(QFont("monospace", self.parent.fontSize))
         self.setGeometry(QRect(0, 0, LINEDIT_SIZE[0], LINEDIT_SIZE[1]))
         self.u = self.height()/2
         self.d = self.height()/2
@@ -108,7 +107,8 @@ class BaseFrame(QFrame):
         self.setGeometry(QRect(0, 0, LINEDIT_SIZE[0], LINEDIT_SIZE[1]))
         self.u = 0
         self.d = 0
-        self.setFrameShape(QFrame.Box)
+        self.fontSize = self.parent.fontSize
+        self.setFont(QFont("monospace", self.fontSize))
         self.setStyleSheet("border:1px dashed red")
 
         
@@ -258,10 +258,11 @@ class SquareRoot(BaseFrame):
 
 
 class Subscript(BaseFrame):
-    VSPACE = 1
+    VSPACE = 0.5
     def __init__(self, parent):
         super().__init__(parent)
         self.baseCharacter = MyFrame(self)
+        self.fontSize = 10
         self.subscript = MyFrame(self)
         self.children.append(self.baseCharacter)
         self.children.append(self.subscript)

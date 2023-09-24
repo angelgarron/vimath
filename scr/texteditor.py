@@ -8,6 +8,7 @@ class MyMainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
 
+        self.fontSize = 15
         self.initUI()
 
         self.createMyMath()
@@ -23,10 +24,11 @@ class MyMainWindow(QMainWindow):
         mainMathFrame = MyFrame(self)
         lineEdit = mainMathFrame.findChild(MyLineEdit)
         lineEdit.setText("example")
-        innerFrame = mainMathFrame.createFrameMiddle(2, Subscript)
-        # otherInnerFrame = innerFrame.numerator.createFrameMiddle(2, Fraction)
-        # squareRootFrame = innerFrame.denominator.createFrameMiddle(2, SquareRoot)
-        # fractionInsideSquareFrame = squareRootFrame.squareRootArgumentFrame.createFrameMiddle(2, Fraction)
+        innerFrame = mainMathFrame.createFrameMiddle(2, Fraction)
+        otherInnerFrame = innerFrame.numerator.createFrameMiddle(2, Fraction)
+        squareRootFrame = innerFrame.denominator.createFrameMiddle(2, SquareRoot)
+        fractionInsideSquareFrame = squareRootFrame.squareRootArgumentFrame.createFrameMiddle(2, Fraction)
+        fractionInsideSquareFrame.numerator.createFrameMiddle(2, Subscript)
 
 
 if __name__ == "__main__":
