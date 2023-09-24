@@ -285,10 +285,11 @@ class Subscript(BaseFrame):
         self.baseCharacter.updateFrameSizeAndPosition()
         self.subscript.updateFrameSizeAndPosition()
         self.u = self.baseCharacter.u
-        self.d = self.baseCharacter.d+Subscript.VSPACE+self.subscript.d
+        subscriptGap = max(Subscript.VSPACE, self.subscript.u-self.baseCharacter.d)
+        self.d = self.baseCharacter.d+subscriptGap+self.subscript.d
         width = self.baseCharacter.width()+self.subscript.width()
         self.setGeometry(QRect(self.x(), self.y(), width, self.u+self.d))
         xi = self.baseCharacter.width()
-        yi = self.baseCharacter.height()+Subscript.VSPACE-self.subscript.u
+        yi = self.baseCharacter.height()+subscriptGap-self.subscript.u
         self.baseCharacter.setGeometry(QRect(0, 0, self.baseCharacter.width(), self.baseCharacter.height()))
         self.subscript.setGeometry(QRect(xi, yi, self.subscript.width(), self.subscript.height()))
