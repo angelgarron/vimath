@@ -113,15 +113,16 @@ class BaseFrame(QFrame):
         self.setStyleSheet("border:1px dashed red")
 
         
-    def createFrameMiddle(self, pos, FrameConstructor):
-        # FIXME could be more than one linedit
-        currentLinedit = self.findChild(MyLineEdit)
+    def createFrameMiddle(self, currentLinedit, FrameConstructor):
+        cursorPosition = currentLinedit.cursorPosition()
         newFrame = FrameConstructor(self)
-        self.children.insert(0, newFrame)
-        newLinedit = self.createLineEdit()
-        newLinedit.setText(currentLinedit.text()[:pos])
-        currentLinedit.setText(currentLinedit.text()[pos:])
+        currentLineditPosition = self.children.index(currentLinedit)
+        self.children.insert(currentLineditPosition, newFrame)
+        newLinedit = self.createLineEdit(currentLineditPosition)
+        newLinedit.setText(currentLinedit.text()[:cursorPosition])
+        currentLinedit.setText(currentLinedit.text()[cursorPosition:])
         newFrame.createLinks(newLinedit, currentLinedit)
+        newFrame.firstLinedit.setFocus()
         return newFrame
         
 

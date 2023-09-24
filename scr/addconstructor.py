@@ -10,7 +10,7 @@ class CreateFraction:
 
         
     def performAction(self, other):
-        newFrame = other.parent.createFrameMiddle(2, Fraction)
+        newFrame = other.parent.createFrameMiddle(other, Fraction)
         newFrame.show()
         MyFrame.updateFrames()
 
@@ -22,6 +22,6 @@ class CreateSquareRoot:
 
         
     def performAction(self, other):
-        newFrame = other.parent.createFrameMiddle(2, SquareRoot)
+        newFrame = other.parent.createFrameMiddle(other, SquareRoot)
         newFrame.show()
         MyFrame.updateFrames()
