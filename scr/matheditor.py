@@ -342,9 +342,7 @@ class Superscript(BaseFrame):
         self.baseCharacter.updateFrameSizeAndPosition()
         self.superscript.updateFrameSizeAndPosition()
         self.d = self.baseCharacter.d
-        # FIXME
         subscriptGap = max(Subscript.VSPACE, self.superscript.d-self.baseCharacter.u)
-        subscriptGap = Subscript.VSPACE
         self.u = self.superscript.u+subscriptGap+self.baseCharacter.u
         width = self.baseCharacter.width()+self.superscript.width()
         self.setGeometry(QRect(self.x(), self.y(), width, self.u+self.d))
