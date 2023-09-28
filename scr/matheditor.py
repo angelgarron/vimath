@@ -1,4 +1,4 @@
-from base import actions, actionsVisual
+from base import actions, actionsVisual, actionsInsert
 from PySide6.QtWidgets import (QLineEdit, QFrame, QProxyStyle)
 from PySide6.QtGui import QPainter, QPen, QPainterPath, QColor, QBrush, QFont
 from PySide6.QtCore import QRect, Qt, QSize
@@ -47,18 +47,10 @@ class MyLineEdit(QLineEdit):
         
     def wasEdited(self):
         text = self.text()
-        cursorPosition = text.find("^")
-        if cursorPosition != -1:
-            text = list(text)
-            symbol = text.pop(cursorPosition)
-            character = text.pop(cursorPosition-1)
-            self.setText("".join(text))
-            self.setCursorPosition(cursorPosition-1)
-            newFrame = self.parent.createFrameMiddle(self, Superscript)
-            newFrame.baseCharacter.children[0].setText(character)
-            newFrame.superscript.children[0].setFocus()
-            newFrame.show()
-            MyFrame.updateFrames()
+        for action in actionsInsert.values():
+            cursorPosition = text.find(action.key[0])
+            if cursorPosition != -1:
+                action.performAction(self, cursorPosition, text)
 
 
     def updateWidth(self):

@@ -2,6 +2,7 @@ from PySide6.QtCore import Qt
 
 actions = {}
 actionsVisual = {}
+actionsInsert = {}
 def RegisterAction(whichMode="normal"):
     def wrapper(f):
         if whichMode == "normal":
@@ -11,6 +12,8 @@ def RegisterAction(whichMode="normal"):
         elif whichMode == "both":
             actions.update({f.__name__:f()})
             actionsVisual.update({f.__name__:f()})
+        elif whichMode == "insert":
+            actionsInsert.update({f.__name__:f()})
     return wrapper
 
 
