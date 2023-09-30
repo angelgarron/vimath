@@ -135,6 +135,21 @@ class BaseFrame(QFrame):
         return newFrame
         
 
+    def removeFrame(self):
+        # FIXME "RuntimeError: Internal C++ object (MyLineEdit) already deleted", so qt still knows that it existed
+        # and it should completely forget about it
+        MyFrame.frames.remove(self)
+        indexDeleted = self.parent.children.index(self)
+        leftLinedit = self.parent.children[indexDeleted-1]
+        rightLinedit = self.parent.children[indexDeleted+1]
+        rightLinedit.setText(leftLinedit.text()+rightLinedit.text())
+        rightLinedit.previousLinedit = leftLinedit.previousLinedit
+        self.parent.children.remove(leftLinedit)
+        leftLinedit.deleteLater()
+        self.parent.children.remove(self)
+        self.deleteLater()
+
+
     def createLinks(self, newLinedit, currentLinedit):
         newLinedit.previousLinedit = currentLinedit.previousLinedit
         currentLinedit.previousLinedit = self.firstLinedit
