@@ -142,7 +142,7 @@ class BaseFrame(QFrame):
         rightLinedit = self.parent.children[indexDeleted+1]
         leftText = leftLinedit.text()
         rightText = rightLinedit.text()
-        mergedText = leftLinedit.text()+rightLinedit.text()
+        mergedText = leftText+rightText
         rightLinedit.setText(mergedText)
         # give focus to someone else so it doesn't crush when self is deleted
         rightLinedit.setFocus()
