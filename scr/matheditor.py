@@ -144,6 +144,8 @@ class BaseFrame(QFrame):
         rightText = rightLinedit.text()
         mergedText = leftLinedit.text()+rightLinedit.text()
         rightLinedit.setText(mergedText)
+        # give focus to someone else so it doesn't crush when self is deleted
+        rightLinedit.setFocus()
         rightLinedit.setCursorPosition(len(leftText))
         rightLinedit.previousLinedit = leftLinedit.previousLinedit
         self.parent.children.remove(leftLinedit)
