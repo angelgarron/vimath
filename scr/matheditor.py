@@ -361,11 +361,15 @@ class SuperSubscript(BaseFrame):
         super().createLinks(newLinedit, currentLinedit)
         self.superscript.children[0].nextLinedit = currentLinedit
         self.superscript.children[0].previousLinedit = newLinedit
+        self.subscript.children[0].nextLinedit = currentLinedit
+        self.subscript.children[0].previousLinedit = newLinedit
         self.baseCharacter.children[0].upperLinedit = self.superscript.children[0]
+        self.baseCharacter.children[0].lowerLinedit = self.subscript.children[0]
         self.superscript.children[0].lowerLinedit = self.baseCharacter.children[0]
         self.superscript.children[0].upperLinedit = currentLinedit.upperLinedit
+        self.subscript.children[0].lowerLinedit = currentLinedit.lowerLinedit
+        self.subscript.children[0].upperLinedit = self.baseCharacter.children[0]
         newLinedit.lowerLinedit = currentLinedit.lowerLinedit
-        self.baseCharacter.children[0].lowerLinedit = currentLinedit.lowerLinedit
         newLinedit.upperLinedit = currentLinedit.upperLinedit
 
 
