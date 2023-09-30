@@ -152,6 +152,7 @@ class BaseFrame(QFrame):
         leftLinedit.deleteLater()
         self.parent.children.remove(self)
         self.deleteLater()
+        return rightLinedit
 
 
     def createLinks(self, newLinedit, currentLinedit):

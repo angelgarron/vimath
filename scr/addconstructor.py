@@ -1,5 +1,5 @@
 from base import RegisterAction
-from matheditor import MyFrame, Fraction, SquareRoot, Subscript, Superscript
+from matheditor import MyFrame, Fraction, SquareRoot, Subscript, Superscript, SuperSubscript
 from PySide6.QtGui import Qt
 
 
@@ -34,17 +34,19 @@ class CreateSubscript:
 
         
     def performAction(self, other, cursorPosition, text):
+        if isinstance(other.parent.parent, Superscript):
+            currentLinedit = other.parent.parent.removeFrame()
+
         # need to transform to a list in order to use pop
         text = list(text)
         text.pop(cursorPosition)
         character = text.pop(cursorPosition-1)
-        other.setText("".join(text))
-        other.setCursorPosition(cursorPosition-1)
-        newFrame = other.parent.createFrameMiddle(other, Subscript)
+        currentLinedit.setText("".join(text))
+        currentLinedit.setCursorPosition(cursorPosition-1)
+        newFrame = currentLinedit.parent.createFrameMiddle(currentLinedit, SuperSubscript)
         newFrame.baseCharacter.children[0].setText(character)
         newFrame.subscript.children[0].setFocus()
         newFrame.show()
-        MyFrame.updateFrames()
 
 
 @RegisterAction("insert")
