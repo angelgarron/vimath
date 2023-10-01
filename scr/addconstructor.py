@@ -34,19 +34,30 @@ class CreateSubscript:
 
         
     def performAction(self, other, cursorPosition, text):
+        smallText = other.text()
+        wasSuperscript = False
         if isinstance(other.parent.parent, Superscript):
-            currentLinedit = other.parent.parent.removeFrame()
+            other = other.parent.parent.removeFrame() # the one that we leave after removing
+            longText = other.text()
+            cursorPosition = other.cursorPosition()
 
-        # need to transform to a list in order to use pop
+            text = longText[:cursorPosition]+smallText+longText[cursorPosition:]
+            cursorPosition += 1
+            wasSuperscript = True
+
         text = list(text)
         text.pop(cursorPosition)
         character = text.pop(cursorPosition-1)
-        currentLinedit.setText("".join(text))
-        currentLinedit.setCursorPosition(cursorPosition-1)
-        newFrame = currentLinedit.parent.createFrameMiddle(currentLinedit, SuperSubscript)
+        other.setText("".join(text))
+        other.setCursorPosition(cursorPosition-1)
+        if wasSuperscript:
+            newFrame = other.parent.createFrameMiddle(other, SuperSubscript)
+        else:
+            newFrame = other.parent.createFrameMiddle(other, Subscript)
         newFrame.baseCharacter.children[0].setText(character)
         newFrame.subscript.children[0].setFocus()
         newFrame.show()
+        MyFrame.updateFrames()
 
 
 @RegisterAction("insert")
