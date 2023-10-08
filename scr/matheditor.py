@@ -25,6 +25,7 @@ class MyLineEdit(QLineEdit):
         self.parent = parent
         self.setStyle(ThickCursorStyle())
         self.setStyleSheet(LINEDIT_STYLESHEET)
+        self.setAlignment(Qt.AlignmentFlag.AlignTop)
         # normal:0, insert:1, visual:2
         self.mode = 0
         self.storedKeys = []
@@ -56,6 +57,12 @@ class MyLineEdit(QLineEdit):
     def updateWidth(self):
         width = self.fontMetrics().horizontalAdvance(self.text())
         self.setFixedWidth(width+8)
+        tight = self.fontMetrics().tightBoundingRect(self.text())
+        self.setFixedHeight(tight.height()+6)
+        self.setTextMargins(0, -(tight.top()+17), 0, 0)
+        self.u = -tight.top()+3
+        self.d = self.height()-self.u
+        self.setGeometry(self.x(), self.y(), self.width(), self.u+self.d)
         MyFrame.updateFrames()
         
 
@@ -170,6 +177,8 @@ class BaseFrame(QFrame):
         
 
     def updateFrameSizeAndPosition(self):
+        self.u = 0
+        self.d = 0
         for child in self.children:
             if not isinstance(child, MyLineEdit):
                 child.updateFrameSizeAndPosition()
