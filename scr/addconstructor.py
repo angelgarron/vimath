@@ -72,6 +72,7 @@ class CreateSubscript:
             newFrame = other.parent.createFrameMiddle(other, Subscript)
         newFrame.baseCharacter.children[0].setText(character)
         newFrame.subscript.children[0].setFocus()
+        newFrame.subscript.children[0].enterInsertMode()
         newFrame.show()
         MyFrame.updateFrames()
 
@@ -92,5 +93,6 @@ class CreateSuperscript:
         newFrame = other.parent.createFrameMiddle(other, Superscript)
         newFrame.baseCharacter.children[0].setText(character)
         newFrame.superscript.children[0].setFocus()
+        newFrame.superscript.children[0].enterInsertMode()
         newFrame.show()
         MyFrame.updateFrames()
