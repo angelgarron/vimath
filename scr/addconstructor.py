@@ -27,6 +27,22 @@ class CreateSquareRoot:
         MyFrame.updateFrames()
 
 
+@RegisterAction("normal")
+class CreateIntegral:
+    def __init__(self):
+        self.key = [Qt.AltModifier | Qt.Key_M, Qt.Key_I]
+
+        
+    def performAction(self, other):
+        cursorPosition = other.cursorPosition()
+        text = other.text()
+        text = list(text)
+        text.insert(cursorPosition, "∫")
+        text = "".join(text)
+        other.setText(text)
+        other.setCursorPosition(cursorPosition+1)
+
+
 @RegisterAction("insert")
 class CreateSubscript:
     def __init__(self):
