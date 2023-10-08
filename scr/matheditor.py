@@ -44,6 +44,7 @@ class MyLineEdit(QLineEdit):
 
         self.textChanged.connect(self.updateWidth)
         self.textEdited.connect(self.wasEdited)
+        self.updateWidth()
 
         
     def wasEdited(self):
