@@ -59,8 +59,8 @@ class MyLineEdit(QLineEdit):
         self.setFixedWidth(width+8)
         tight = self.fontMetrics().tightBoundingRect(self.text())
         self.setFixedHeight(tight.height()+6)
-        self.setTextMargins(0, -(tight.top()+17), 0, 0)
-        self.u = -tight.top()+3
+        self.setTextMargins(0, -tight.top()-self.font().pointSize()-2, 0, 0)
+        self.u = -tight.top()
         self.d = self.height()-self.u
         self.setGeometry(self.x(), self.y(), self.width(), self.u+self.d)
         MyFrame.updateFrames()
