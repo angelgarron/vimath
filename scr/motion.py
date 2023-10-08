@@ -117,7 +117,11 @@ class MoveStartOfLine(BaseMovement):
     
 
     def performAction(self, other):
-        other.home(self.checkmark(other))
+        previousLinedit = other
+        while previousLinedit.previousLinedit:
+            previousLinedit = previousLinedit.previousLinedit
+        previousLinedit.home(False)
+        previousLinedit.setFocus()
 
 
 @RegisterAction("both")
@@ -127,4 +131,8 @@ class MoveEndOfLine(BaseMovement):
 
 
     def performAction(self, other):
-        other.end(self.checkmark(other))
+        nextLinedit = other
+        while nextLinedit.nextLinedit:
+            nextLinedit = nextLinedit.nextLinedit
+        nextLinedit.end(False)
+        nextLinedit.setFocus()

@@ -80,8 +80,12 @@ class InsertBeginningLine:
 
 
     def performAction(self, other):
-        other.home(False)
-        other.enterInsertMode()
+        previousLinedit = other
+        while previousLinedit.previousLinedit:
+            previousLinedit = previousLinedit.previousLinedit
+        previousLinedit.home(False)
+        previousLinedit.setFocus()
+        previousLinedit.enterInsertMode()
 
 
 @RegisterAction("normal")
@@ -91,8 +95,12 @@ class InsertEndLine:
 
 
     def performAction(self, other):
-        other.end(False)
-        other.enterInsertMode()
+        nextLinedit = other
+        while nextLinedit.nextLinedit:
+            nextLinedit = nextLinedit.nextLinedit
+        nextLinedit.end(False)
+        nextLinedit.setFocus()
+        nextLinedit.enterInsertMode()
 
 
 def findClosingParenthesis(s, cursorPosition):
