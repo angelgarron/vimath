@@ -223,3 +223,14 @@ class DeleteInsideParenthesis(BaseInnerParenthesis):
 class VisualInsideParenthesis(BaseInnerParenthesis):
     def lastAction(self, other):
         pass
+
+
+@RegisterAction("normal")
+class RemoveFrame:
+    def __init__(self):
+        self.key = [Qt.Key_Backspace]
+
+        
+    def performAction(self, other):
+        if not other.text():
+            other = other.parent.parent.removeFrame()
