@@ -96,3 +96,15 @@ class CreateSuperscript:
         newFrame.superscript.children[0].enterInsertMode()
         newFrame.show()
         MyFrame.updateFrames()
+
+        
+@RegisterAction("normal")
+class CreateParenthesis:
+    def __init__(self):
+        self.key = [Qt.ShiftModifier | Qt.Key_ParenLeft]
+
+        
+    def performAction(self, other):
+        newFrame = other.parent.createFrameMiddle(other, Parenthesis)
+        newFrame.show()
+        MyFrame.updateFrames()
