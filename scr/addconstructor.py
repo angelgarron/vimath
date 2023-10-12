@@ -1,5 +1,5 @@
 from base import RegisterAction
-from matheditor import MyFrame, Fraction, SquareRoot, Subscript, Superscript, SuperSubscript
+from matheditor import MyFrame, Fraction, SquareRoot, Subscript, Superscript, SuperSubscript, Parenthesis
 from PySide6.QtGui import Qt
 
 
