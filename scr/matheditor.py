@@ -68,6 +68,11 @@ class MyLineEdit(QLineEdit):
         MyFrame.updateFrames()
         
 
+    def wheelEvent(self, event):
+        print(self)
+        return super().wheelEvent(event)
+
+
     def keyPressEvent(self, event):
         if event.keyCombination() == Qt.ControlModifier | Qt.Key_C:
             self.storedKeys = []
@@ -143,6 +148,11 @@ class BaseFrame(QFrame):
         newFrame.firstLinedit.setFocus()
         return newFrame
         
+
+    def wheelEvent(self, event):
+        print(self)
+        return super().wheelEvent(event)
+
 
     def removeFrame(self):
         MyFrame.frames.remove(self)
