@@ -1,4 +1,5 @@
 import motion, operators, addconstructor
+from math_editor_scene import Scene
 from PySide6.QtWidgets import QMainWindow
 from matheditor import MyFrame, Fraction, SquareRoot, Subscript, MyLineEdit
 
@@ -8,6 +9,7 @@ class MyMainWindow(QMainWindow):
 
         self.fontSize = 15
         self.initUI()
+        self.scene = Scene()
 
         self.createMyMath()
 

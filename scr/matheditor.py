@@ -46,6 +46,8 @@ class MyLineEdit(QLineEdit):
         self.textChanged.connect(self.updateWidth)
         self.textEdited.connect(self.wasEdited)
         self.updateWidth()
+        self.scene = parent.scene
+        self.scene.addLineEdit(self)
 
         
     def wasEdited(self):
@@ -134,6 +136,8 @@ class BaseFrame(QFrame):
         self.fontSize = self.parent.fontSize
         self.setFont(QFont("monospace", self.fontSize))
         self.setStyleSheet("border:1px dashed red")
+        self.scene = parent.scene
+        self.scene.addFrame(self)
 
         
     def createFrameMiddle(self, currentLinedit, FrameConstructor):
