@@ -27,8 +27,6 @@ class MyLineEdit(QLineEdit):
         self.setStyle(ThickCursorStyle())
         self.setStyleSheet(LINEDIT_STYLESHEET)
         self.setAlignment(Qt.AlignmentFlag.AlignTop)
-        # normal:0, insert:1, visual:2
-        self.mode = 0
         self.storedKeys = []
         self.actions = actions
         self.actionsVisual = actionsVisual
@@ -78,15 +76,15 @@ class MyLineEdit(QLineEdit):
     def keyPressEvent(self, event):
         if event.keyCombination() == Qt.ControlModifier | Qt.Key_C:
             self.storedKeys = []
-            if self.mode != 0:
+            if self.scene.mode != 0:
                 self.enterNormalMode()
             return
 
-        if self.mode == 1:
+        if self.scene.mode == 1:
             super().keyPressEvent(event)
             return
 
-        if self.mode == 0:
+        if self.scene.mode == 0:
             actions = self.actions
         else:
             actions = self.actionsVisual
@@ -110,16 +108,16 @@ class MyLineEdit(QLineEdit):
                     break
 
     def enterInsertMode(self):
-        self.mode = 1
+        self.scene.mode = 1
         self.setStyle(QProxyStyle())
 
     def enterNormalMode(self):
-        self.mode = 0
+        self.scene.mode = 0
         self.cursorBackward(False)
         self.setStyle(ThickCursorStyle())
 
     def enterVisualMode(self):
-        self.mode = 2
+        self.scene.mode = 2
         self.setStyle(ThickCursorStyle())
 
 

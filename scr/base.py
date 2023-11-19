@@ -19,7 +19,7 @@ def RegisterAction(whichMode="normal"):
 
 class BaseMovement:
     def checkmark(self, other):
-        if other.mode == 2:
+        if other.scene.mode == 2:
             mark = True
         else:
             mark = False
@@ -55,7 +55,7 @@ class ToggleVisualMode:
 
 
     def performAction(self, other):
-        if other.mode == 0:
+        if other.scene.mode == 0:
             other.enterVisualMode()
         else:
             other.enterNormalMode()
