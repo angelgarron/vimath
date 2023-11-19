@@ -1,9 +1,7 @@
-import sys
-from PySide6.QtWidgets import (QApplication, QMainWindow, QVBoxLayout)
 import motion, operators, addconstructor
+from PySide6.QtWidgets import QMainWindow
 from matheditor import MyFrame, Fraction, SquareRoot, Subscript, MyLineEdit
 
-    
 class MyMainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -30,10 +28,3 @@ class MyMainWindow(QMainWindow):
         # fractionInsideSquareFrame = squareRootFrame.squareRootArgumentFrame.createFrameMiddle(2, Fraction)
         # fractionInsideSquareFrame.numerator.createFrameMiddle(2, Subscript)
 
-
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    window = MyMainWindow()
-    window.setStyleSheet("background-color:white")
-    window.show()
-    sys.exit(app.exec())
