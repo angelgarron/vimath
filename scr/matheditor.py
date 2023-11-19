@@ -67,7 +67,7 @@ class MyLineEdit(QLineEdit):
         self.u = -tight.top()
         self.d = self.height()-self.u
         self.setGeometry(self.x(), self.y(), self.width(), self.u+self.d)
-        MyFrame.updateFrames()
+        self.parent.updateFrames()
         
 
     def wheelEvent(self, event):
@@ -127,7 +127,6 @@ class BaseFrame(QFrame):
     frames = []
     def __init__(self, parent=None):
         super().__init__(parent)
-        MyFrame.frames.append(self)
         self.parent = parent
         self.children = []
         self.setGeometry(QRect(0, 0, LINEDIT_SIZE[0], LINEDIT_SIZE[1]))
@@ -159,7 +158,7 @@ class BaseFrame(QFrame):
 
 
     def removeFrame(self):
-        MyFrame.frames.remove(self)
+        self.scene.removeFrame(self)
         indexDeleted = self.parent.children.index(self)
         leftLinedit = self.parent.children[indexDeleted-1]
         rightLinedit = self.parent.children[indexDeleted+1]
@@ -172,6 +171,7 @@ class BaseFrame(QFrame):
         rightLinedit.setCursorPosition(len(leftText))
         rightLinedit.previousLinedit = leftLinedit.previousLinedit
         self.parent.children.remove(leftLinedit)
+        self.scene.removeLineEdit(leftLinedit)
         leftLinedit.deleteLater()
         self.parent.children.remove(self)
         self.deleteLater()
@@ -186,9 +186,8 @@ class BaseFrame(QFrame):
         newLinedit.nextLinedit = self.firstLinedit
 
 
-    @classmethod
-    def updateFrames(cls):
-        mainFrame = MyFrame.frames[0]
+    def updateFrames(self):
+        mainFrame = self.scene.frames[0]
         mainFrame.updateFrameSizeAndPosition()
         
 
@@ -215,6 +214,7 @@ class BaseFrame(QFrame):
         newLinedit = MyLineEdit(self)
         newLinedit.show()
         self.children.insert(pos, newLinedit)
+        self.scene.addLineEdit(newLinedit)
         return newLinedit
     
 

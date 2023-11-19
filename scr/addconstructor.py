@@ -12,7 +12,7 @@ class CreateFraction:
     def performAction(self, other):
         newFrame = other.parent.createFrameMiddle(other, Fraction)
         newFrame.show()
-        MyFrame.updateFrames()
+        other.parent.updateFrames()
 
 
 @RegisterAction("normal")
@@ -24,7 +24,7 @@ class CreateSquareRoot:
     def performAction(self, other):
         newFrame = other.parent.createFrameMiddle(other, SquareRoot)
         newFrame.show()
-        MyFrame.updateFrames()
+        other.parent.updateFrames()
 
 
 @RegisterAction("normal")
@@ -74,7 +74,7 @@ class CreateSubscript:
         newFrame.subscript.children[0].setFocus()
         newFrame.subscript.children[0].enterInsertMode()
         newFrame.show()
-        MyFrame.updateFrames()
+        other.parent.updateFrames()
 
 
 @RegisterAction("insert")
@@ -95,7 +95,7 @@ class CreateSuperscript:
         newFrame.superscript.children[0].setFocus()
         newFrame.superscript.children[0].enterInsertMode()
         newFrame.show()
-        MyFrame.updateFrames()
+        other.parent.updateFrames()
 
         
 @RegisterAction("normal")
@@ -107,4 +107,4 @@ class CreateParenthesis:
     def performAction(self, other):
         newFrame = other.parent.createFrameMiddle(other, Parenthesis)
         newFrame.show()
-        MyFrame.updateFrames()
+        other.parent.updateFrames()

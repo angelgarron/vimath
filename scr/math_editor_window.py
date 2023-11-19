@@ -13,8 +13,6 @@ class MyMainWindow(QMainWindow):
 
         self.createMyMath()
 
-        MyFrame.updateFrames()
-    
 
     def initUI(self):
         self.setGeometry(100, 100, 400, 300)
