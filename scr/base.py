@@ -34,7 +34,7 @@ class EnterInsertMode:
 
 
     def performAction(self, other):
-        other.enterInsertMode()
+        other.scene.enterInsertMode()
 
 
 @RegisterAction("normal")
@@ -45,7 +45,7 @@ class EnterInsertModeAppend:
 
     def performAction(self, other):
         other.cursorForward(False)
-        other.enterInsertMode()
+        other.scene.enterInsertMode()
 
 
 @RegisterAction("both")
@@ -56,6 +56,6 @@ class ToggleVisualMode:
 
     def performAction(self, other):
         if other.scene.mode == 0:
-            other.enterVisualMode()
+            other.scene.enterVisualMode()
         else:
-            other.enterNormalMode()
+            other.scene.enterNormalMode()

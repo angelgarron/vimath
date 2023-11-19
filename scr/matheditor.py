@@ -77,7 +77,8 @@ class MyLineEdit(QLineEdit):
         if event.keyCombination() == Qt.ControlModifier | Qt.Key_C:
             self.storedKeys = []
             if self.scene.mode != 0:
-                self.enterNormalMode()
+                self.cursorBackward(False)
+                self.scene.enterNormalMode()
             return
 
         if self.scene.mode == 1:
@@ -106,19 +107,6 @@ class MyLineEdit(QLineEdit):
                     action.performAction(self)
                     self.storedKeys = []
                     break
-
-    def enterInsertMode(self):
-        self.scene.mode = 1
-        self.setStyle(QProxyStyle())
-
-    def enterNormalMode(self):
-        self.scene.mode = 0
-        self.cursorBackward(False)
-        self.setStyle(ThickCursorStyle())
-
-    def enterVisualMode(self):
-        self.scene.mode = 2
-        self.setStyle(ThickCursorStyle())
 
 
 class BaseFrame(QFrame):

@@ -31,7 +31,7 @@ class ChangeInnerWord(BaseInnerWord):
 
     def lastAction(self, other):
         other.del_()
-        other.enterInsertMode()
+        other.scene.enterInsertMode()
 
 
 @RegisterAction("normal")
@@ -59,7 +59,7 @@ class ChangeInVisual:
 
     def performAction(self, other):
         other.del_()
-        other.enterInsertMode()
+        other.scene.enterInsertMode()
 
 
 @RegisterAction("visual")
@@ -70,7 +70,7 @@ class DeleteInVisual:
 
     def performAction(self, other):
         other.del_()
-        other.enterNormalMode()
+        other.scene.enterNormalMode()
 
 
 @RegisterAction("normal")
@@ -85,7 +85,7 @@ class InsertBeginningLine:
             previousLinedit = previousLinedit.previousLinedit
         previousLinedit.home(False)
         previousLinedit.setFocus()
-        previousLinedit.enterInsertMode()
+        previousLinedit.scene.enterInsertMode()
 
 
 @RegisterAction("normal")
@@ -100,7 +100,7 @@ class InsertEndLine:
             nextLinedit = nextLinedit.nextLinedit
         nextLinedit.end(False)
         nextLinedit.setFocus()
-        nextLinedit.enterInsertMode()
+        nextLinedit.scene.enterInsertMode()
 
 
 def findClosingParenthesis(s, cursorPosition):
@@ -204,7 +204,7 @@ class ChangeInsideParenthesis(BaseInnerParenthesis):
 
     def lastAction(self, other):
         other.del_()
-        other.enterInsertMode()
+        other.scene.enterInsertMode()
 
 
 @RegisterAction("normal")

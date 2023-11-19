@@ -1,3 +1,6 @@
+from PySide6.QtWidgets import QProxyStyle
+from matheditor import ThickCursorStyle
+
 NORMAL_MODE = 0
 INSERT_MODE = 1
 VISULAL_MODE = 2
@@ -23,3 +26,21 @@ class Scene:
 
     def removeLineEdit(self, lineEdit):
         self.lineEdits.remove(lineEdit)
+
+        
+    def enterInsertMode(self):
+        self.mode = INSERT_MODE
+        for lineEdit in self.lineEdits:
+            lineEdit.setStyle(QProxyStyle())
+
+
+    def enterNormalMode(self):
+        self.mode = NORMAL_MODE
+        for lineEdit in self.lineEdits:
+            lineEdit.setStyle(ThickCursorStyle())
+
+
+    def enterVisualMode(self):
+        self.mode = VISULAL_MODE
+        for lineEdit in self.lineEdits:
+            lineEdit.setStyle(ThickCursorStyle())
