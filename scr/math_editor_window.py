@@ -1,7 +1,8 @@
 import motion, operators, addconstructor
 from math_editor_scene import Scene
 from PySide6.QtWidgets import QMainWindow
-from matheditor import MyFrame, Fraction, SquareRoot, Subscript, MyLineEdit
+from matheditor import MyFrame, Fraction, SquareRoot, Subscript
+from math_editor_graphics_lineedit import MyGraphicsLineEdit
 
 class MyMainWindow(QMainWindow):
     def __init__(self):
@@ -20,7 +21,7 @@ class MyMainWindow(QMainWindow):
         
     def createMyMath(self):
         mainMathFrame = MyFrame(self)
-        lineEdit = mainMathFrame.findChild(MyLineEdit)
+        lineEdit = mainMathFrame.findChild(MyGraphicsLineEdit)
         lineEdit.setText("example")
         # innerFrame = mainMathFrame.createFrameMiddle(2, Fraction)
         # otherInnerFrame = innerFrame.numerator.createFrameMiddle(2, Fraction)
