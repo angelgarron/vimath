@@ -30,15 +30,15 @@ class BaseFrame(QFrame):
 
         
     def createFrameMiddle(self, currentLinedit, FrameConstructor):
-        cursorPosition = currentLinedit.cursorPosition()
+        cursorPosition = currentLinedit.graphicsLineEdit.cursorPosition()
         newFrame = FrameConstructor(self)
         currentLineditPosition = self.children.index(currentLinedit)
         self.children.insert(currentLineditPosition, newFrame)
         newLinedit = self.createLineEdit(currentLineditPosition)
-        newLinedit.setText(currentLinedit.text()[:cursorPosition])
-        currentLinedit.setText(currentLinedit.text()[cursorPosition:])
+        newLinedit.graphicsLineEdit.setText(currentLinedit.graphicsLineEdit.text()[:cursorPosition])
+        currentLinedit.graphicsLineEdit.setText(currentLinedit.graphicsLineEdit.text()[cursorPosition:])
         newFrame.createLinks(newLinedit, currentLinedit)
-        newFrame.firstLinedit.setFocus()
+        newFrame.firstLinedit.graphicsLineEdit.setFocus()
         return newFrame
         
 

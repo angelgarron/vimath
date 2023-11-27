@@ -21,8 +21,9 @@ class ThickCursorStyle(QProxyStyle):
         
 
 class MyGraphicsLineEdit(QLineEdit):
-    def __init__(self, fontSize, scene, parent=None):
+    def __init__(self, fontSize, scene, lineEdit, parent=None):
         super().__init__(parent)
+        self.lineEdit = lineEdit
         self.storedKeys = []
         self.scene = scene
         self.parent = parent
@@ -104,3 +105,23 @@ class MyGraphicsLineEdit(QLineEdit):
                     action.performAction(self)
                     self.storedKeys = []
                     break
+
+
+    @property
+    def nextLinedit(self):
+        return self.lineEdit.nextLinedit
+
+
+    @property
+    def previousLinedit(self):
+        return self.lineEdit.previousLinedit
+
+
+    @property
+    def lowerLinedit(self):
+        return self.lineEdit.lowerLinedit
+    
+
+    @property
+    def upperLinedit(self):
+        return self.lineEdit.upperLinedit

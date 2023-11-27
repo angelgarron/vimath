@@ -10,7 +10,7 @@ class CreateFraction:
 
         
     def performAction(self, other):
-        newFrame = other.parent.createFrameMiddle(other, Fraction)
+        newFrame = other.parent.createFrameMiddle(other.lineEdit, Fraction)
         newFrame.show()
         other.parent.updateFrames()
 

@@ -10,7 +10,7 @@ class MoveLeft(BaseMovement):
         
     def performAction(self, other):
         if other.cursorPosition() == 0 and other.previousLinedit:
-            other.previousLinedit.setFocus()
+            other.previousLinedit.graphicsLineEdit.setFocus()
             return
         other.cursorBackward(self.checkmark(other))
 
@@ -23,7 +23,7 @@ class MoveDown(BaseMovement):
         
     def performAction(self, other):
         if other.lowerLinedit:
-            other.lowerLinedit.setFocus()
+            other.lowerLinedit.graphicsLineEdit.setFocus()
 
 
 @RegisterAction("both")
@@ -34,7 +34,7 @@ class MoveUp(BaseMovement):
         
     def performAction(self, other):
         if other.upperLinedit:
-            other.upperLinedit.setFocus()
+            other.upperLinedit.graphicsLineEdit.setFocus()
         
 
 @RegisterAction("both")
@@ -45,7 +45,7 @@ class MoveRight(BaseMovement):
     
     def performAction(self, other):
         if other.cursorPosition() == len(other.text()) and other.nextLinedit:
-            other.nextLinedit.setFocus()
+            other.nextLinedit.graphicsLineEdit.setFocus()
             return
         other.cursorForward(self.checkmark(other))
         
