@@ -6,7 +6,7 @@ class MyLineEdit:
     def __init__(self, parent=None):
         self.scene = parent.scene
         self.scene.addLineEdit(self)
-        self.graphicsLineEdit = MyGraphicsLineEdit(parent.fontSize, self.scene, self, parent)
+        self.graphicsLineEdit = MyGraphicsLineEdit(parent.graphicsFrame.fontSize, self.scene, self, parent.graphicsFrame)
         self.parent = parent
         self.actions = actions
         self.actionsVisual = actionsVisual

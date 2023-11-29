@@ -3,6 +3,7 @@ from PySide6.QtWidgets import (QLineEdit, QFrame, QProxyStyle)
 from PySide6.QtGui import QPainter, QPen, QPainterPath, QColor, QBrush, QFont
 from PySide6.QtCore import QRect, Qt, QSize
 from math_editor_lineedit import MyLineEdit
+from math_editor_graphics_frame import MyGraphicsFrame
 
 LINEDIT_SIZE = (8, 20)
 CURSOR_WIDTH = 12
@@ -13,25 +14,26 @@ border-radius: 4px;
 background: transparent;
 """
 
-class BaseFrame(QFrame):
+class MyFrame:
     frames = []
     def __init__(self, parent=None):
-        super().__init__(parent)
+        self.graphicsFrame = MyGraphicsFrame(self, parent, parent.scene)
         self.parent = parent
         self.children = []
-        self.setGeometry(QRect(0, 0, LINEDIT_SIZE[0], LINEDIT_SIZE[1]))
+        self.graphicsFrame.setGeometry(QRect(0, 0, LINEDIT_SIZE[0], LINEDIT_SIZE[1]))
         self.u = 0
         self.d = 0
-        self.fontSize = self.parent.fontSize
-        self.setFont(QFont("monospace", self.fontSize))
-        self.setStyleSheet("border:1px dashed red")
+        self.graphicsFrame.fontSize = self.parent.fontSize
+        self.graphicsFrame.setFont(QFont("monospace", self.graphicsFrame.fontSize))
+        self.graphicsFrame.setStyleSheet("border:1px dashed red")
         self.scene = parent.scene
         self.scene.addFrame(self)
+        self.firstLinedit = self.createLineEdit()
 
         
     def createFrameMiddle(self, currentLinedit, FrameConstructor):
         cursorPosition = currentLinedit.graphicsLineEdit.cursorPosition()
-        newFrame = FrameConstructor(self)
+        newFrame = FrameConstructor(self.graphicsFrame)
         currentLineditPosition = self.children.index(currentLinedit)
         self.children.insert(currentLineditPosition, newFrame)
         newLinedit = self.createLineEdit(currentLineditPosition)
@@ -93,11 +95,20 @@ class BaseFrame(QFrame):
         width = 0
         x = 0
         for child in self.children:
-            child.setGeometry(QRect(x, self.u-child.u, child.width(), child.height()))
-            width += child.width()
-            x += child.width()
+            if isinstance(child, MyLineEdit):
+                child.setGeometry(QRect(x, self.u-child.u, child.width(), child.height()))
+            else:
+                child.graphicsFrame.setGeometry(QRect(x, self.u-child.u, child.graphicsFrame.width(), child.graphicsFrame.height()))
+            if isinstance(child, MyLineEdit):
+                width += child.width()
+            else:
+                width += child.graphicsFrame.width()
+            if isinstance(child, MyLineEdit):
+                x += child.width()
+            else:
+                x += child.graphicsFrame.width()
         
-        self.setGeometry(QRect(self.x(), self.y(), width, self.u+self.d))
+        self.graphicsFrame.setGeometry(QRect(self.graphicsFrame.x(), self.graphicsFrame.y(), width, self.u+self.d))
     
 
     def createLineEdit(self, pos=0):
@@ -115,20 +126,14 @@ class BaseFrame(QFrame):
         painter.setPen(pen)
         return painter
 
-        
-class MyFrame(BaseFrame):
-    def __init__(self, parent):
-        super().__init__(parent)
-        self.firstLinedit = self.createLineEdit()
-    
 
-class Fraction(BaseFrame):
+class Fraction(MyFrame):
     VSPACE = 3
     HSPACE = 5
     def __init__(self, parent):
         super().__init__(parent)
-        self.numerator = MyFrame(self)
-        self.denominator = MyFrame(self)
+        self.numerator = MyFrame(self.graphicsFrame)
+        self.denominator = MyFrame(self.graphicsFrame)
         self.children.append(self.numerator)
         self.children.append(self.denominator)
         self.firstLinedit = self.numerator.children[0]
@@ -149,16 +154,16 @@ class Fraction(BaseFrame):
     def updateFrameSizeAndPosition(self):
         self.numerator.updateFrameSizeAndPosition()
         self.denominator.updateFrameSizeAndPosition()
-        lenFractionLine = max(self.numerator.width(), self.denominator.width())+2*Fraction.HSPACE
-        self.u = self.numerator.height()+Fraction.VSPACE
-        self.d = self.denominator.height()+Fraction.VSPACE
-        self.setGeometry(QRect(self.x(), self.y(), lenFractionLine, self.u+self.d))
-        xn = (self.width()-self.numerator.width())/2
+        lenFractionLine = max(self.numerator.graphicsFrame.width(), self.denominator.graphicsFrame.width())+2*Fraction.HSPACE
+        self.u = self.numerator.graphicsFrame.height()+Fraction.VSPACE
+        self.d = self.denominator.graphicsFrame.height()+Fraction.VSPACE
+        self.graphicsFrame.setGeometry(QRect(self.graphicsFrame.x(), self.graphicsFrame.y(), lenFractionLine, self.u+self.d))
+        xn = (self.graphicsFrame.width()-self.numerator.graphicsFrame.width())/2
         yn = 0
-        xd = (self.width()-self.denominator.width())/2
+        xd = (self.graphicsFrame.width()-self.denominator.graphicsFrame.width())/2
         yd = self.u+Fraction.VSPACE
-        self.numerator.setGeometry(QRect(xn, yn, self.numerator.width(), self.numerator.height()))
-        self.denominator.setGeometry(QRect(xd, yd, self.denominator.width(), self.denominator.height()))
+        self.numerator.graphicsFrame.setGeometry(QRect(xn, yn, self.numerator.graphicsFrame.width(), self.numerator.graphicsFrame.height()))
+        self.denominator.graphicsFrame.setGeometry(QRect(xd, yd, self.denominator.graphicsFrame.width(), self.denominator.graphicsFrame.height()))
 
 
     def paintEvent(self, event):
@@ -167,7 +172,7 @@ class Fraction(BaseFrame):
         painter.drawLine(0, self.u, self.width(), self.u)
 
 
-class SquareRoot(BaseFrame):
+class SquareRoot(MyFrame):
     VSPACE = 3
     LHSPACE = 8
     RHSPACE = 3
@@ -203,7 +208,7 @@ class SquareRoot(BaseFrame):
         painter.drawLine(SquareRoot.LHSPACE, SquareRoot.VSPACE, self.width(), SquareRoot.VSPACE)
 
 
-class Subscript(BaseFrame):
+class Subscript(MyFrame):
     VSPACE = 0.6
     def __init__(self, parent):
         super().__init__(parent)
@@ -241,7 +246,7 @@ class Subscript(BaseFrame):
         self.subscript.setGeometry(QRect(xi, yi, self.subscript.width(), self.subscript.height()))
 
 
-class Superscript(BaseFrame):
+class Superscript(MyFrame):
     VSPACE = 0.6
     def __init__(self, parent):
         super().__init__(parent)
@@ -279,7 +284,7 @@ class Superscript(BaseFrame):
         self.superscript.setGeometry(QRect(xi, 0, self.superscript.width(), self.superscript.height()))
 
 
-class SuperSubscript(BaseFrame):
+class SuperSubscript(MyFrame):
     VSPACE = 0.6
     def __init__(self, parent):
         super().__init__(parent)
@@ -328,7 +333,7 @@ class SuperSubscript(BaseFrame):
         self.subscript.setGeometry(QRect(xSubscript, ySubscript, self.subscript.width(), self.subscript.height()))
 
 
-class Parenthesis(BaseFrame):
+class Parenthesis(MyFrame):
     VSPACE = 3
     LHSPACE = 10
     RHSPACE = 10
