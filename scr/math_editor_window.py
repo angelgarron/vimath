@@ -8,7 +8,7 @@ class MyMainWindow(QMainWindow):
         super().__init__()
 
         self.initUI()
-        self.scene = Scene()
+        self.scene = Scene(self)
 
         self.createMyMath()
 

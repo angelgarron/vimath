@@ -6,7 +6,8 @@ INSERT_MODE = 1
 VISULAL_MODE = 2
 
 class Scene:
-    def __init__(self):
+    def __init__(self, window):
+        self.window = window
         self.fontSize = 15
         self.mode = NORMAL_MODE
         self.frames = []

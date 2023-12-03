@@ -5,6 +5,7 @@ from math_editor_graphics_lineedit import MyGraphicsLineEdit
 class MyLineEdit:
     def __init__(self, parent):
         self.parent = parent
+        self.parent.children.append(self)
         self.scene = self.parent.scene
         self.scene.addLineEdit(self)
         self.graphicsLineEdit = MyGraphicsLineEdit(self.parent.scene.fontSize, self, self.parent.graphicsFrame)
@@ -15,8 +16,9 @@ class MyLineEdit:
         self.previousLinedit = None
         self.upperLinedit = None
         self.lowerLinedit = None
+        self.graphicsLineEdit.updateWidth()
+    
 
-        
     def setGeometry(self, *args, **kwargs):
         self.graphicsLineEdit.setGeometry(*args, **kwargs)
 

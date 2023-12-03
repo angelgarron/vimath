@@ -84,10 +84,7 @@ class MyFrame:
         self.graphicsFrame.setGeometry(QRect(self.graphicsFrame.x(), self.graphicsFrame.y(), width, self.u+self.d))
     
 
-    def createLineEdit(self, pos=0):
+    def createLineEdit(self):
         newLinedit = MyLineEdit(self)
-        newLinedit.graphicsLineEdit.show()
-        self.children.insert(pos, newLinedit)
-        self.scene.addLineEdit(newLinedit)
         return newLinedit
     

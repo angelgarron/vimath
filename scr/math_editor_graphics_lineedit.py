@@ -41,7 +41,7 @@ class MyGraphicsLineEdit(QLineEdit):
 
         self.textChanged.connect(self.updateWidth)
         self.textEdited.connect(self.wasEdited)
-        self.updateWidth()
+        self.show()
 
         
     def wasEdited(self):
@@ -72,16 +72,16 @@ class MyGraphicsLineEdit(QLineEdit):
     def keyPressEvent(self, event):
         if event.keyCombination() == Qt.ControlModifier | Qt.Key_C:
             self.storedKeys = []
-            if self.scene.mode != 0:
+            if self.lineEdit.scene.mode != 0:
                 self.cursorBackward(False)
                 self.scene.enterNormalMode()
             return
 
-        if self.scene.mode == 1:
+        if self.lineEdit.scene.mode == 1:
             super().keyPressEvent(event)
             return
 
-        if self.scene.mode == 0:
+        if self.lineEdit.scene.mode == 0:
             actions = self.actions
         else:
             actions = self.actionsVisual
