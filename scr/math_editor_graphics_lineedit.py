@@ -1,7 +1,6 @@
 from PySide6.QtWidgets import (QLineEdit, QFrame, QProxyStyle)
 from PySide6.QtGui import QPainter, QPen, QPainterPath, QColor, QBrush, QFont
 from PySide6.QtCore import QRect, Qt, QSize
-from base import actions, actionsVisual, actionsInsert
 
 LINEDIT_SIZE = (8, 20)
 CURSOR_WIDTH = 12
@@ -24,21 +23,16 @@ class MyGraphicsLineEdit(QLineEdit):
     def __init__(self, fontSize, lineEdit, parent=None):
         super().__init__(parent)
         self.lineEdit = lineEdit
+        self.scene = self.lineEdit.scene
         self.storedKeys = []
         self.fontSize = fontSize
         self.setStyle(ThickCursorStyle())
         self.setStyleSheet(LINEDIT_STYLESHEET)
         self.setAlignment(Qt.AlignmentFlag.AlignTop)
-
-        self.actions = actions
-        self.actionsVisual = actionsVisual
-
         self.setFont(QFont("monospace", self.fontSize))
         self.u = self.fontSize/2+2
         self.d = self.fontSize/2+2
         self.setGeometry(QRect(0, 0, LINEDIT_SIZE[0], self.u+self.d))
-
-
         self.textChanged.connect(self.updateWidth)
         self.textEdited.connect(self.wasEdited)
         self.show()
@@ -46,7 +40,7 @@ class MyGraphicsLineEdit(QLineEdit):
         
     def wasEdited(self):
         text = self.text()
-        for action in actionsInsert.values():
+        for action in self.scene.actionsInsert.values():
             cursorPosition = text.find(action.key[0])
             if cursorPosition != -1:
                 action.performAction(self, cursorPosition, text)
@@ -72,7 +66,7 @@ class MyGraphicsLineEdit(QLineEdit):
     def keyPressEvent(self, event):
         if event.keyCombination() == Qt.ControlModifier | Qt.Key_C:
             self.storedKeys = []
-            if self.lineEdit.scene.mode != 0:
+            if self.scene.mode != 0:
                 self.cursorBackward(False)
                 self.scene.enterNormalMode()
             return
@@ -81,10 +75,10 @@ class MyGraphicsLineEdit(QLineEdit):
             super().keyPressEvent(event)
             return
 
-        if self.lineEdit.scene.mode == 0:
-            actions = self.actions
+        if self.scene.mode == 0:
+            actions = self.scene.actions
         else:
-            actions = self.actionsVisual
+            actions = self.scene.actionsVisual
 
         if event.key() in [Qt.Key_Control, Qt.Key_Shift, Qt.Key_Alt]:
             return

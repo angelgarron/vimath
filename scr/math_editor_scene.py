@@ -6,8 +6,7 @@ INSERT_MODE = 1
 VISULAL_MODE = 2
 
 class Scene:
-    def __init__(self, window):
-        self.window = window
+    def __init__(self):
         self.fontSize = 15
         self.mode = NORMAL_MODE
         self.frames = []
@@ -51,3 +50,10 @@ class Scene:
         self.mode = VISULAL_MODE
         for lineEdit in self.lineEdits:
             lineEdit.setStyle(ThickCursorStyle())
+
+
+scene = Scene()
+from base import actions, actionsVisual, actionsInsert
+scene.actions = actions
+scene.actionsVisual = actionsVisual
+scene.actionsInsert = actionsInsert

@@ -1,4 +1,5 @@
 from PySide6.QtCore import Qt
+from math_editor_scene import scene
 
 actions = {}
 actionsVisual = {}
@@ -34,7 +35,7 @@ class EnterInsertMode:
 
 
     def performAction(self, other):
-        other.scene.enterInsertMode()
+        scene.enterInsertMode()
 
 
 @RegisterAction("normal")

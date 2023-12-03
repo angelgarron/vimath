@@ -1,4 +1,4 @@
-from math_editor_scene import Scene
+from math_editor_scene import scene
 from PySide6.QtWidgets import QMainWindow
 from math_editor_frame import MyFrame
 from math_editor_graphics_lineedit import MyGraphicsLineEdit
@@ -8,7 +8,8 @@ class MyMainWindow(QMainWindow):
         super().__init__()
 
         self.initUI()
-        self.scene = Scene(self)
+        self.scene = scene
+        self.scene.window = self
 
         self.createMyMath()
 
