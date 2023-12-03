@@ -7,11 +7,17 @@ VISULAL_MODE = 2
 
 class Scene:
     def __init__(self):
+        self.fontSize = 15
         self.mode = NORMAL_MODE
         self.frames = []
         self.lineEdits = []
 
         
+    def updateFrames(self):
+        mainFrame = self.frames[0]
+        mainFrame.updateFrameSizeAndPosition()
+
+
     def addFrame(self, frame):
         self.frames.append(frame)
     

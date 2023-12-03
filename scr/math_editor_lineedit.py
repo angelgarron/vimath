@@ -3,11 +3,11 @@ from base import actions, actionsVisual, actionsInsert
 from math_editor_graphics_lineedit import MyGraphicsLineEdit
 
 class MyLineEdit:
-    def __init__(self, parent=None):
-        self.scene = parent.scene
-        self.scene.addLineEdit(self)
-        self.graphicsLineEdit = MyGraphicsLineEdit(parent.graphicsFrame.fontSize, self.scene, self, parent.graphicsFrame)
+    def __init__(self, parent):
         self.parent = parent
+        self.scene = self.parent.scene
+        self.scene.addLineEdit(self)
+        self.graphicsLineEdit = MyGraphicsLineEdit(self.parent.scene.fontSize, self, self.parent.graphicsFrame)
         self.actions = actions
         self.actionsVisual = actionsVisual
 
@@ -15,7 +15,6 @@ class MyLineEdit:
         self.previousLinedit = None
         self.upperLinedit = None
         self.lowerLinedit = None
-
 
         
     def setGeometry(self, *args, **kwargs):

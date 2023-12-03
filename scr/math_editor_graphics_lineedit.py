@@ -21,12 +21,10 @@ class ThickCursorStyle(QProxyStyle):
         
 
 class MyGraphicsLineEdit(QLineEdit):
-    def __init__(self, fontSize, scene, lineEdit, parent=None):
+    def __init__(self, fontSize, lineEdit, parent=None):
         super().__init__(parent)
         self.lineEdit = lineEdit
         self.storedKeys = []
-        self.scene = scene
-        self.parent = parent
         self.fontSize = fontSize
         self.setStyle(ThickCursorStyle())
         self.setStyleSheet(LINEDIT_STYLESHEET)
@@ -63,7 +61,7 @@ class MyGraphicsLineEdit(QLineEdit):
         self.u = -tight.top()
         self.d = self.height()-self.u
         self.setGeometry(self.x(), self.y(), self.width(), self.u+self.d)
-        self.parent.updateFrames()
+        self.lineEdit.scene.updateFrames()
         
 
     def wheelEvent(self, event):
