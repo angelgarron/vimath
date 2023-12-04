@@ -1,4 +1,5 @@
 from base import RegisterAction, actions
+from math_editor_scene import scene
 from PySide6.QtGui import Qt
 
 class BaseInnerWord:
@@ -31,7 +32,7 @@ class ChangeInnerWord(BaseInnerWord):
 
     def lastAction(self, other):
         other.del_()
-        other.scene.enterInsertMode()
+        scene.enterInsertMode()
 
 
 @RegisterAction("normal")
@@ -59,7 +60,7 @@ class ChangeInVisual:
 
     def performAction(self, other):
         other.del_()
-        other.scene.enterInsertMode()
+        scene.enterInsertMode()
 
 
 @RegisterAction("visual")
@@ -70,7 +71,7 @@ class DeleteInVisual:
 
     def performAction(self, other):
         other.del_()
-        other.scene.enterNormalMode()
+        scene.enterNormalMode()
 
 
 @RegisterAction("normal")
@@ -85,7 +86,7 @@ class InsertBeginningLine:
             previousLinedit = previousLinedit.previousLinedit
         previousLinedit.home(False)
         previousLinedit.setFocus()
-        previousLinedit.scene.enterInsertMode()
+        scene.enterInsertMode()
 
 
 @RegisterAction("normal")
@@ -100,7 +101,7 @@ class InsertEndLine:
             nextLinedit = nextLinedit.nextLinedit
         nextLinedit.end(False)
         nextLinedit.setFocus()
-        nextLinedit.scene.enterInsertMode()
+        scene.enterInsertMode()
 
 
 def findClosingParenthesis(s, cursorPosition):
