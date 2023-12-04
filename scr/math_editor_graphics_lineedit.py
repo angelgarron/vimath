@@ -66,16 +66,16 @@ class MyGraphicsLineEdit(QLineEdit):
     def keyPressEvent(self, event):
         if event.keyCombination() == Qt.ControlModifier | Qt.Key_C:
             self.storedKeys = []
-            if self.scene.mode != 0:
+            if not self.scene.isNormalMode():
                 self.cursorBackward(False)
                 self.scene.enterNormalMode()
             return
 
-        if self.scene.mode == 1:
+        if self.scene.isInsertMode():
             super().keyPressEvent(event)
             return
 
-        if self.scene.mode == 0:
+        if self.scene.isNormalMode():
             actions = self.scene.actions
         else:
             actions = self.scene.actionsVisual

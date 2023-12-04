@@ -51,6 +51,18 @@ class Scene:
         for lineEdit in self.lineEdits:
             lineEdit.setStyle(ThickCursorStyle())
 
+            
+    def isNormalMode(self):
+        return self.mode == NORMAL_MODE
+    
+
+    def isInsertMode(self):
+        return self.mode == INSERT_MODE
+    
+
+    def isVisualMode(self):
+        return self.mode == VISULAL_MODE
+
 
 scene = Scene()
 # initialize all actions
