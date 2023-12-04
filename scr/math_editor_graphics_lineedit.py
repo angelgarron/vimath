@@ -71,7 +71,7 @@ class MyGraphicsLineEdit(QLineEdit):
                 self.scene.enterNormalMode()
             return
 
-        if self.lineEdit.scene.mode == 1:
+        if self.scene.mode == 1:
             super().keyPressEvent(event)
             return
 

@@ -53,6 +53,8 @@ class Scene:
 
 
 scene = Scene()
+# initialize all actions
+import motion, operators
 from base import actions, actionsVisual, actionsInsert
 scene.actions = actions
 scene.actionsVisual = actionsVisual
