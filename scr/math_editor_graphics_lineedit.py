@@ -55,7 +55,7 @@ class MyGraphicsLineEdit(QLineEdit):
         self.u = -tight.top()
         self.d = self.height()-self.u
         self.setGeometry(self.x(), self.y(), self.width(), self.u+self.d)
-        self.lineEdit.scene.updateFrames()
+        self.scene.updateFrames()
         
 
     def wheelEvent(self, event):

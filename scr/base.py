@@ -56,7 +56,7 @@ class ToggleVisualMode:
 
 
     def performAction(self, other):
-        if scene.mode.isNormalMode():
+        if scene.isNormalMode():
             scene.enterVisualMode()
         else:
             scene.enterNormalMode()

@@ -1,4 +1,4 @@
-from base import RegisterAction, actions
+from base import RegisterAction
 from math_editor_scene import scene
 from PySide6.QtGui import Qt
 
