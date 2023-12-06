@@ -1,9 +1,10 @@
-from base import RegisterAction, BaseMovement
+from base import RegisterAction
+from math_editor_scene import scene
 from PySide6.QtGui import Qt
 
 
 @RegisterAction("both")
-class MoveLeft(BaseMovement):
+class MoveLeft:
     def __init__(self):
         self.key = [[Qt.Key_H], [Qt.Key_Left]]
 
@@ -12,11 +13,11 @@ class MoveLeft(BaseMovement):
         if other.cursorPosition() == 0 and other.previousLinedit:
             other.previousLinedit.graphicsLineEdit.setFocus()
             return
-        other.cursorBackward(self.checkmark(other))
+        other.cursorBackward(scene.isVisualMode())
 
 
 @RegisterAction("both")
-class MoveDown(BaseMovement):
+class MoveDown:
     def __init__(self):
         self.key = [[Qt.Key_J], [Qt.Key_Down]]
         
@@ -27,7 +28,7 @@ class MoveDown(BaseMovement):
 
 
 @RegisterAction("both")
-class MoveUp(BaseMovement):
+class MoveUp:
     def __init__(self):
         self.key = [[Qt.Key_K], [Qt.Key_Up]]
 
@@ -38,7 +39,7 @@ class MoveUp(BaseMovement):
         
 
 @RegisterAction("both")
-class MoveRight(BaseMovement):
+class MoveRight:
     def __init__(self):
         self.key = [[Qt.Key_L], [Qt.Key_Right]]
 
@@ -47,31 +48,31 @@ class MoveRight(BaseMovement):
         if other.cursorPosition() == len(other.text()) and other.nextLinedit:
             other.nextLinedit.graphicsLineEdit.setFocus()
             return
-        other.cursorForward(self.checkmark(other))
+        other.cursorForward(scene.isVisualMode())
         
 
 @RegisterAction("both")
-class MoveWordBegin(BaseMovement):
+class MoveWordBegin:
     def __init__(self):
         self.key = [Qt.Key_W]
         
     
     def performAction(self, other):
-        other.cursorWordForward(self.checkmark(other))
+        other.cursorWordForward(scene.isVisualMode())
         
         
 @RegisterAction("both")
-class MoveBeginningWord(BaseMovement):
+class MoveBeginningWord:
     def __init__(self):
         self.key = [Qt.Key_B]
 
 
     def performAction(self, other):
-        other.cursorWordBackward(self.checkmark(other))
+        other.cursorWordBackward(scene.isVisualMode())
 
 
 @RegisterAction("both")
-class MoveWordEnd(BaseMovement):
+class MoveWordEnd:
     # FIXME
     def __init__(self):
         self.key = [Qt.Key_E]
@@ -86,32 +87,32 @@ class MoveWordEnd(BaseMovement):
                     ]
 
         for movement in movements:
-            movement(self.checkmark(other))
+            movement(scene.isVisualMode())
         
 
 
 @RegisterAction("both")
-class MoveStartDocument(BaseMovement):
+class MoveStartDocument:
     def __init__(self):
         self.key = [Qt.Key_G, Qt.Key_G]
 
         
     def performAction(self, other):
-        other.home(self.checkmark(other))
+        other.home(scene.isVisualMode())
 
 
 @RegisterAction("both")
-class MoveEndDocument(BaseMovement):
+class MoveEndDocument:
     def __init__(self):
         self.key = [Qt.ShiftModifier | Qt.Key_G]
 
 
     def performAction(self, other):
-        other.end(self.checkmark(other))
+        other.end(scene.isVisualMode())
 
 
 @RegisterAction("both")
-class MoveStartOfLine(BaseMovement):
+class MoveStartOfLine:
     def __init__(self):
         self.key = [Qt.ShiftModifier | Qt.Key_Underscore]
     
@@ -125,7 +126,7 @@ class MoveStartOfLine(BaseMovement):
 
 
 @RegisterAction("both")
-class MoveEndOfLine(BaseMovement):
+class MoveEndOfLine:
     def __init__(self):
         self.key = [Qt.ShiftModifier | Qt.Key_Dollar]
 

@@ -18,16 +18,6 @@ def RegisterAction(whichMode="normal"):
     return wrapper
 
 
-class BaseMovement:
-    def checkmark(self, other):
-        if other.scene.mode == 2:
-            mark = True
-        else:
-            mark = False
-
-        return mark
-
-                
 @RegisterAction("normal")
 class EnterInsertMode:
     def __init__(self):
