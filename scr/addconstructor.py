@@ -1,6 +1,7 @@
 from base import RegisterAction
-from constructors import Fraction
+from constructors.fraction import Fraction
 from PySide6.QtGui import Qt
+from scene import scene
 
 
 @RegisterAction("normal")
@@ -12,7 +13,7 @@ class CreateFraction:
     def performAction(self, other):
         newFrame = other.parent.createFrameMiddle(other, Fraction)
         newFrame.show()
-        other.parent.updateFrames()
+        scene.updateFrames()
 
 
 @RegisterAction("normal")

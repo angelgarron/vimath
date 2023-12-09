@@ -18,10 +18,8 @@ class MyFrame(QFrame):
         self.fontSize = self.scene.fontSize
         self.setFont(QFont("monospace", self.fontSize))
         self.setStyleSheet("border:1px dashed red")
-        # self.painter = QPainter(self)
-        # pen = QPen()
-        # pen.setColor("black")
-        # self.painter.setPen(pen)
+        self.pen = QPen()
+        self.pen.setColor("black")
         self.children = []
         self.scene.addFrame(self)
         self.firstLinedit = self.createLineEdit()
@@ -96,4 +94,9 @@ class MyFrame(QFrame):
     def createLineEdit(self):
         newLinedit = MyLineEdit(self)
         return newLinedit
-    
+        
+
+    def createPainter(self):
+        painter = QPainter(self)
+        painter.setPen(self.pen)
+        return painter
