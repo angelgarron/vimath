@@ -1,10 +1,5 @@
 from base import RegisterAction
-from constructors.fraction import Fraction
-from constructors.squareroot import SquareRoot
-from constructors.subscript import Subscript
-from constructors.superscript import Superscript
-from constructors.supersubscript import SuperSubscript
-from constructors.parenthesis import Parenthesis
+from constructors import Fraction, Parenthesis, SquareRoot, Subscript, Superscript, SuperSubscript
 from PySide6.QtGui import Qt
 from scene import scene
 
