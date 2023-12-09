@@ -2,32 +2,41 @@ from PySide6.QtWidgets import (QLineEdit, QFrame, QProxyStyle)
 from PySide6.QtGui import QPainter, QPen, QPainterPath, QColor, QBrush, QFont
 from PySide6.QtCore import QRect, Qt, QSize
 from math_editor_lineedit import MyLineEdit
-from math_editor_graphics_frame import MyGraphicsFrame
+
+LINEDIT_SIZE = (8, 20)
+CURSOR_WIDTH = 12
 
 
-class MyFrame:
+class MyFrame(QFrame):
     def __init__(self, parent):
+        super().__init__(parent)
         self.parent = parent
         self.scene = parent.scene
-        try:
-            self.graphicsFrame = MyGraphicsFrame(self, self.parent.graphicsFrame)
-        except AttributeError:
-            self.graphicsFrame = MyGraphicsFrame(self, self.parent)
+        self.u = 0
+        self.d = 0
+        self.setGeometry(QRect(0, 0, LINEDIT_SIZE[0], LINEDIT_SIZE[1]))
+        self.fontSize = self.scene.fontSize
+        self.setFont(QFont("monospace", self.fontSize))
+        self.setStyleSheet("border:1px dashed red")
+        # self.painter = QPainter(self)
+        # pen = QPen()
+        # pen.setColor("black")
+        # self.painter.setPen(pen)
         self.children = []
         self.scene.addFrame(self)
         self.firstLinedit = self.createLineEdit()
 
         
     def createFrameMiddle(self, currentLinedit, FrameConstructor):
-        cursorPosition = currentLinedit.graphicsLineEdit.cursorPosition()
+        cursorPosition = currentLinedit.cursorPosition()
         newFrame = FrameConstructor(self)
         currentLineditPosition = self.children.index(currentLinedit)
         self.children.insert(currentLineditPosition, newFrame)
         newLinedit = self.createLineEdit()
-        newLinedit.graphicsLineEdit.setText(currentLinedit.graphicsLineEdit.text()[:cursorPosition])
-        currentLinedit.graphicsLineEdit.setText(currentLinedit.graphicsLineEdit.text()[cursorPosition:])
+        newLinedit.setText(currentLinedit.text()[:cursorPosition])
+        currentLinedit.setText(currentLinedit.text()[cursorPosition:])
         newFrame.createLinks(newLinedit, currentLinedit)
-        newFrame.firstLinedit.graphicsLineEdit.setFocus()
+        newFrame.firstLinedit.setFocus()
         return newFrame
         
 
@@ -81,7 +90,7 @@ class MyFrame:
             width += child.width()
             x += child.width()
         
-        self.graphicsFrame.setGeometry(QRect(self.graphicsFrame.x(), self.graphicsFrame.y(), width, self.u+self.d))
+        self.setGeometry(QRect(self.x(), self.y(), width, self.u+self.d))
     
 
     def createLineEdit(self):

@@ -11,7 +11,7 @@ class MoveLeft:
         
     def performAction(self, other):
         if other.cursorPosition() == 0 and other.previousLinedit:
-            other.previousLinedit.graphicsLineEdit.setFocus()
+            other.previousLinedit.setFocus()
             return
         other.cursorBackward(scene.isVisualMode())
 
@@ -24,7 +24,7 @@ class MoveDown:
         
     def performAction(self, other):
         if other.lowerLinedit:
-            other.lowerLinedit.graphicsLineEdit.setFocus()
+            other.lowerLinedit.setFocus()
 
 
 @RegisterAction("both")
@@ -35,7 +35,7 @@ class MoveUp:
         
     def performAction(self, other):
         if other.upperLinedit:
-            other.upperLinedit.graphicsLineEdit.setFocus()
+            other.upperLinedit.setFocus()
         
 
 @RegisterAction("both")
@@ -46,7 +46,7 @@ class MoveRight:
     
     def performAction(self, other):
         if other.cursorPosition() == len(other.text()) and other.nextLinedit:
-            other.nextLinedit.graphicsLineEdit.setFocus()
+            other.nextLinedit.setFocus()
             return
         other.cursorForward(scene.isVisualMode())
         

@@ -1,5 +1,5 @@
 from PySide6.QtWidgets import QProxyStyle
-from math_editor_graphics_lineedit import ThickCursorStyle
+from math_editor_lineedit import ThickCursorStyle
 
 NORMAL_MODE = 0
 INSERT_MODE = 1

@@ -28,16 +28,16 @@ class Fraction(MyFrame):
     def updateFrameSizeAndPosition(self):
         self.numerator.updateFrameSizeAndPosition()
         self.denominator.updateFrameSizeAndPosition()
-        lenFractionLine = max(self.numerator.graphicsFrame.width(), self.denominator.graphicsFrame.width())+2*Fraction.HSPACE
-        self.u = self.numerator.graphicsFrame.height()+Fraction.VSPACE
-        self.d = self.denominator.graphicsFrame.height()+Fraction.VSPACE
-        self.graphicsFrame.setGeometry(QRect(self.graphicsFrame.x(), self.graphicsFrame.y(), lenFractionLine, self.u+self.d))
-        xn = (self.graphicsFrame.width()-self.numerator.graphicsFrame.width())/2
+        lenFractionLine = max(self.numerator.width(), self.denominator.width())+2*Fraction.HSPACE
+        self.u = self.numerator.height()+Fraction.VSPACE
+        self.d = self.denominator.height()+Fraction.VSPACE
+        self.setGeometry(QRect(self.x(), self.y(), lenFractionLine, self.u+self.d))
+        xn = (self.width()-self.numerator.width())/2
         yn = 0
-        xd = (self.graphicsFrame.width()-self.denominator.graphicsFrame.width())/2
+        xd = (self.width()-self.denominator.width())/2
         yd = self.u+Fraction.VSPACE
-        self.numerator.graphicsFrame.setGeometry(QRect(xn, yn, self.numerator.graphicsFrame.width(), self.numerator.graphicsFrame.height()))
-        self.denominator.graphicsFrame.setGeometry(QRect(xd, yd, self.denominator.graphicsFrame.width(), self.denominator.graphicsFrame.height()))
+        self.numerator.setGeometry(QRect(xn, yn, self.numerator.width(), self.numerator.height()))
+        self.denominator.setGeometry(QRect(xd, yd, self.denominator.width(), self.denominator.height()))
 
 
     def paintEvent(self, event):
