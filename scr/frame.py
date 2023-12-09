@@ -7,7 +7,7 @@ LINEDIT_SIZE = (8, 20)
 CURSOR_WIDTH = 12
 
 
-class MyFrame(QFrame):
+class BaseFrame(QFrame):
     def __init__(self, parent):
         super().__init__(parent)
         self.parent = parent
@@ -22,7 +22,6 @@ class MyFrame(QFrame):
         self.pen.setColor("black")
         self.children = []
         self.scene.addFrame(self)
-        self.firstLinedit = self.createLineEdit()
 
         
     def createFrameMiddle(self, currentLinedit, FrameConstructor):
@@ -100,3 +99,9 @@ class MyFrame(QFrame):
         painter = QPainter(self)
         painter.setPen(self.pen)
         return painter
+
+
+class MyFrame(BaseFrame):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.firstLinedit = self.createLineEdit()

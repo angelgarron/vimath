@@ -1,8 +1,8 @@
-from frame import MyFrame
+from frame import MyFrame, BaseFrame
 from PySide6.QtCore import QRect
 
 
-class SquareRoot(MyFrame):
+class SquareRoot(BaseFrame):
     VSPACE = 3
     LHSPACE = 8
     RHSPACE = 3

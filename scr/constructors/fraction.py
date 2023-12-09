@@ -1,8 +1,8 @@
-from frame import MyFrame
+from frame import MyFrame, BaseFrame
 from PySide6.QtCore import QRect
 
 
-class Fraction(MyFrame):
+class Fraction(BaseFrame):
     VSPACE = 3
     HSPACE = 5
     def __init__(self, parent):

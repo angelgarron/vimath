@@ -1,8 +1,8 @@
-from frame import MyFrame
+from frame import MyFrame, BaseFrame
 from PySide6.QtCore import QRect
 
 
-class Superscript(MyFrame):
+class Superscript(BaseFrame):
     VSPACE = 0.6
     def __init__(self, parent):
         super().__init__(parent)

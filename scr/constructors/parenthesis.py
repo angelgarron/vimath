@@ -1,8 +1,8 @@
-from frame import MyFrame
+from frame import MyFrame, BaseFrame
 from PySide6.QtCore import QRect
 
 
-class Parenthesis(MyFrame):
+class Parenthesis(BaseFrame):
     VSPACE = 3
     LHSPACE = 10
     RHSPACE = 10
