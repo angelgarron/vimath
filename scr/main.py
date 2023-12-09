@@ -1,6 +1,6 @@
 import sys
 from PySide6.QtWidgets import QApplication
-from math_editor_window import MyMainWindow
+from window import MyMainWindow
 
 
 if __name__ == '__main__':

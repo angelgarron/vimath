@@ -1,5 +1,5 @@
 from base import RegisterAction
-from math_editor_constructors import Fraction
+from constructors import Fraction
 from PySide6.QtGui import Qt
 
 

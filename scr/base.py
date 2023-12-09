@@ -1,5 +1,5 @@
 from PySide6.QtCore import Qt
-from math_editor_scene import scene
+from scene import scene
 
 actions = {}
 actionsVisual = {}

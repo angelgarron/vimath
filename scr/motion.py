@@ -1,5 +1,5 @@
 from base import RegisterAction
-from math_editor_scene import scene
+from scene import scene
 from PySide6.QtGui import Qt
 
 
