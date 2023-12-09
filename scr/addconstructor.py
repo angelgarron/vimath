@@ -11,9 +11,7 @@ class CreateFraction:
 
         
     def performAction(self, other):
-        newFrame = other.parent.createFrameMiddle(other, Fraction)
-        newFrame.show()
-        scene.updateFrames()
+        other.createFrameMiddle(Fraction)
 
 
 @RegisterAction("normal")
@@ -23,9 +21,7 @@ class CreateSquareRoot:
 
         
     def performAction(self, other):
-        newFrame = other.parent.createFrameMiddle(other, SquareRoot)
-        newFrame.show()
-        scene.updateFrames()
+        other.createFrameMiddle(SquareRoot)
 
 
 @RegisterAction("normal")
@@ -68,13 +64,12 @@ class CreateSubscript:
         other.setText("".join(text))
         other.setCursorPosition(cursorPosition-1)
         if wasSuperscript:
-            newFrame = other.parent.createFrameMiddle(other, SuperSubscript)
+            newFrame = other.createFrameMiddle(SuperSubscript)
         else:
-            newFrame = other.parent.createFrameMiddle(other, Subscript)
+            newFrame = other.createFrameMiddle(Subscript)
         newFrame.baseCharacter.children[0].setText(character)
         newFrame.subscript.children[0].setFocus()
-        newFrame.scene.enterInsertMode()
-        newFrame.show()
+        scene.enterInsertMode()
         other.parent.updateFrames()
 
 
@@ -91,12 +86,10 @@ class CreateSuperscript:
         character = text.pop(cursorPosition-1)
         other.setText("".join(text))
         other.setCursorPosition(cursorPosition-1)
-        newFrame = other.parent.createFrameMiddle(other, Superscript)
+        newFrame = other.createFrameMiddle(Superscript)
         newFrame.baseCharacter.children[0].setText(character)
         newFrame.superscript.children[0].setFocus()
         newFrame.scene.enterInsertMode()
-        newFrame.show()
-        scene.updateFrames()
 
         
 @RegisterAction("normal")
@@ -106,6 +99,4 @@ class CreateParenthesis:
 
         
     def performAction(self, other):
-        newFrame = other.parent.createFrameMiddle(other, Parenthesis)
-        newFrame.show()
-        scene.updateFrames()
+        other.createFrameMiddle(Parenthesis)

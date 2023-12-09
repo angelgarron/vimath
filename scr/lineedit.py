@@ -35,13 +35,12 @@ class MyLineEdit(QLineEdit):
         self.setGeometry(QRect(0, 0, LINEDIT_SIZE[0], self.u+self.d))
         self.textChanged.connect(self.updateWidth)
         self.textEdited.connect(self.wasEdited)
-        self.show()
-        self.parent.children.append(self)
         self.nextLinedit = None
         self.previousLinedit = None
         self.upperLinedit = None
         self.lowerLinedit = None
         self.updateWidth()
+        self.show()
     
 
     def wasEdited(self):
@@ -62,6 +61,22 @@ class MyLineEdit(QLineEdit):
         self.d = self.height()-self.u
         self.setGeometry(self.x(), self.y(), self.width(), self.u+self.d)
         self.scene.updateFrames()
+    
+
+    def createFrameMiddle(self, FrameConstructor):
+        cursorPosition = self.cursorPosition()
+        newFrame = FrameConstructor(self.parent)
+        currentLineditPosition = self.parent.children.index(self)
+        self.parent.children.insert(currentLineditPosition, newFrame)
+        newLinedit = MyLineEdit(self.parent)
+        self.parent.children.insert(currentLineditPosition, newLinedit)
+        newLinedit.setText(self.text()[:cursorPosition])
+        self.setText(self.text()[cursorPosition:])
+        newFrame.createLinks(newLinedit, self)
+        newFrame.firstLinedit.setFocus()
+        newFrame.show()
+        self.scene.updateFrames()
+        return newFrame
         
 
     def wheelEvent(self, event):

@@ -24,19 +24,6 @@ class BaseFrame(QFrame):
         self.scene.addFrame(self)
 
         
-    def createFrameMiddle(self, currentLinedit, FrameConstructor):
-        cursorPosition = currentLinedit.cursorPosition()
-        newFrame = FrameConstructor(self)
-        currentLineditPosition = self.children.index(currentLinedit)
-        self.children.insert(currentLineditPosition, newFrame)
-        newLinedit = self.createLineEdit()
-        newLinedit.setText(currentLinedit.text()[:cursorPosition])
-        currentLinedit.setText(currentLinedit.text()[cursorPosition:])
-        newFrame.createLinks(newLinedit, currentLinedit)
-        newFrame.firstLinedit.setFocus()
-        return newFrame
-        
-
     def wheelEvent(self, event):
         print(self)
         return super().wheelEvent(event)
@@ -90,11 +77,6 @@ class BaseFrame(QFrame):
         self.setGeometry(QRect(self.x(), self.y(), width, self.u+self.d))
     
 
-    def createLineEdit(self):
-        newLinedit = MyLineEdit(self)
-        return newLinedit
-        
-
     def createPainter(self):
         painter = QPainter(self)
         painter.setPen(self.pen)
@@ -104,4 +86,5 @@ class BaseFrame(QFrame):
 class MyFrame(BaseFrame):
     def __init__(self, parent):
         super().__init__(parent)
-        self.firstLinedit = self.createLineEdit()
+        self.firstLinedit = MyLineEdit(self)
+        self.children.append(self.firstLinedit)
