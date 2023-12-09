@@ -1,5 +1,10 @@
 from base import RegisterAction
 from constructors.fraction import Fraction
+from constructors.squareroot import SquareRoot
+from constructors.subscript import Subscript
+from constructors.superscript import Superscript
+from constructors.supersubscript import SuperSubscript
+from constructors.parenthesis import Parenthesis
 from PySide6.QtGui import Qt
 from scene import scene
 
@@ -25,7 +30,7 @@ class CreateSquareRoot:
     def performAction(self, other):
         newFrame = other.parent.createFrameMiddle(other, SquareRoot)
         newFrame.show()
-        other.parent.updateFrames()
+        scene.updateFrames()
 
 
 @RegisterAction("normal")
@@ -96,7 +101,7 @@ class CreateSuperscript:
         newFrame.superscript.children[0].setFocus()
         newFrame.scene.enterInsertMode()
         newFrame.show()
-        other.parent.updateFrames()
+        scene.updateFrames()
 
         
 @RegisterAction("normal")
@@ -108,4 +113,4 @@ class CreateParenthesis:
     def performAction(self, other):
         newFrame = other.parent.createFrameMiddle(other, Parenthesis)
         newFrame.show()
-        other.parent.updateFrames()
+        scene.updateFrames()

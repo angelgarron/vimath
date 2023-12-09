@@ -1,6 +1,5 @@
 from frame import MyFrame
 from PySide6.QtCore import QRect
-from PySide6.QtGui import Qt
 
 
 class Fraction(MyFrame):
