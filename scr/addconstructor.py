@@ -1,5 +1,5 @@
 from base import RegisterAction
-from math_editor_frame import MyFrame, Fraction, SquareRoot, Subscript, Superscript, SuperSubscript, Parenthesis
+from math_editor_constructors import Fraction
 from PySide6.QtGui import Qt
 
 
@@ -10,7 +10,7 @@ class CreateFraction:
 
         
     def performAction(self, other):
-        newFrame = other.parent.frame.createFrameMiddle(other.lineEdit, Fraction)
+        newFrame = other.lineEdit.parent.createFrameMiddle(other.lineEdit, Fraction)
         newFrame.graphicsFrame.show()
         other.parent.updateFrames()
 

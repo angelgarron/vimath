@@ -1,10 +1,13 @@
+from math_editor_frame import MyFrame
+from PySide6.QtCore import QRect
+
 class Fraction(MyFrame):
     VSPACE = 3
     HSPACE = 5
     def __init__(self, parent):
         super().__init__(parent)
-        self.numerator = MyFrame(self.graphicsFrame)
-        self.denominator = MyFrame(self.graphicsFrame)
+        self.numerator = MyFrame(self)
+        self.denominator = MyFrame(self)
         self.children.append(self.numerator)
         self.children.append(self.denominator)
         self.firstLinedit = self.numerator.children[0]

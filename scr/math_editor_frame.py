@@ -20,10 +20,10 @@ class MyFrame:
         
     def createFrameMiddle(self, currentLinedit, FrameConstructor):
         cursorPosition = currentLinedit.graphicsLineEdit.cursorPosition()
-        newFrame = FrameConstructor(self.graphicsFrame)
+        newFrame = FrameConstructor(self)
         currentLineditPosition = self.children.index(currentLinedit)
         self.children.insert(currentLineditPosition, newFrame)
-        newLinedit = self.createLineEdit(currentLineditPosition)
+        newLinedit = self.createLineEdit()
         newLinedit.graphicsLineEdit.setText(currentLinedit.graphicsLineEdit.text()[:cursorPosition])
         currentLinedit.graphicsLineEdit.setText(currentLinedit.graphicsLineEdit.text()[cursorPosition:])
         newFrame.createLinks(newLinedit, currentLinedit)
