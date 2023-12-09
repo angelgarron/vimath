@@ -3,7 +3,7 @@ from lineedit import ThickCursorStyle
 
 NORMAL_MODE = 0
 INSERT_MODE = 1
-VISULAL_MODE = 2
+VISUAL_MODE = 2
 
 class Scene:
     def __init__(self):
@@ -47,7 +47,7 @@ class Scene:
 
 
     def enterVisualMode(self):
-        self.mode = VISULAL_MODE
+        self.mode = VISUAL_MODE
         for lineEdit in self.lineEdits:
             lineEdit.setStyle(ThickCursorStyle())
 
@@ -61,7 +61,7 @@ class Scene:
     
 
     def isVisualMode(self):
-        return self.mode == VISULAL_MODE
+        return self.mode == VISUAL_MODE
 
 
 scene = Scene()
