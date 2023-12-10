@@ -11,21 +11,21 @@ class SuperSubscript(BaseFrame):
         self.subscript = MyFrame(self)
         self.children.append(self.baseCharacter)
         self.children.append(self.superscript)
-        self.firstLinedit = self.baseCharacter.children[0]
+        self.firstLinedit = self.baseCharacter.firstLinedit
         
         
     def createLinks(self, newLinedit, currentLinedit):
         super().createLinks(newLinedit, currentLinedit)
-        self.superscript.children[0].nextLinedit = currentLinedit
-        self.superscript.children[0].previousLinedit = newLinedit
-        self.subscript.children[0].nextLinedit = currentLinedit
-        self.subscript.children[0].previousLinedit = newLinedit
-        self.baseCharacter.children[0].upperLinedit = self.superscript.children[0]
-        self.baseCharacter.children[0].lowerLinedit = self.subscript.children[0]
-        self.superscript.children[0].lowerLinedit = self.baseCharacter.children[0]
-        self.superscript.children[0].upperLinedit = currentLinedit.upperLinedit
-        self.subscript.children[0].lowerLinedit = currentLinedit.lowerLinedit
-        self.subscript.children[0].upperLinedit = self.baseCharacter.children[0]
+        self.superscript.firstLinedit.nextLinedit = currentLinedit
+        self.superscript.firstLinedit.previousLinedit = newLinedit
+        self.subscript.firstLinedit.nextLinedit = currentLinedit
+        self.subscript.firstLinedit.previousLinedit = newLinedit
+        self.baseCharacter.firstLinedit.upperLinedit = self.superscript.firstLinedit
+        self.baseCharacter.firstLinedit.lowerLinedit = self.subscript.firstLinedit
+        self.superscript.firstLinedit.lowerLinedit = self.baseCharacter.firstLinedit
+        self.superscript.firstLinedit.upperLinedit = currentLinedit.upperLinedit
+        self.subscript.firstLinedit.lowerLinedit = currentLinedit.lowerLinedit
+        self.subscript.firstLinedit.upperLinedit = self.baseCharacter.firstLinedit
         newLinedit.lowerLinedit = currentLinedit.lowerLinedit
         newLinedit.upperLinedit = currentLinedit.upperLinedit
 

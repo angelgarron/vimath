@@ -10,18 +10,18 @@ class Superscript(BaseFrame):
         self.superscript = MyFrame(self)
         self.children.append(self.baseCharacter)
         self.children.append(self.superscript)
-        self.firstLinedit = self.baseCharacter.children[0]
+        self.firstLinedit = self.baseCharacter.firstLinedit
         
         
     def createLinks(self, newLinedit, currentLinedit):
         super().createLinks(newLinedit, currentLinedit)
-        self.superscript.children[0].nextLinedit = currentLinedit
-        self.superscript.children[0].previousLinedit = newLinedit
-        self.baseCharacter.children[0].upperLinedit = self.superscript.children[0]
-        self.superscript.children[0].lowerLinedit = self.baseCharacter.children[0]
-        self.superscript.children[0].upperLinedit = currentLinedit.upperLinedit
+        self.superscript.firstLinedit.nextLinedit = currentLinedit
+        self.superscript.firstLinedit.previousLinedit = newLinedit
+        self.baseCharacter.firstLinedit.upperLinedit = self.superscript.firstLinedit
+        self.superscript.firstLinedit.lowerLinedit = self.baseCharacter.firstLinedit
+        self.superscript.firstLinedit.upperLinedit = currentLinedit.upperLinedit
         newLinedit.lowerLinedit = currentLinedit.lowerLinedit
-        self.baseCharacter.children[0].lowerLinedit = currentLinedit.lowerLinedit
+        self.baseCharacter.firstLinedit.lowerLinedit = currentLinedit.lowerLinedit
         newLinedit.upperLinedit = currentLinedit.upperLinedit
 
 

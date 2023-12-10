@@ -9,14 +9,14 @@ class Parenthesis(BaseFrame):
         super().__init__(parent)
         self.base = MyFrame(self)
         self.children.append(self.base)
-        self.firstLinedit = self.base.children[0]
+        self.firstLinedit = self.base.firstLinedit
 
 
     def createLinks(self, newLinedit, currentLinedit):
         super().createLinks(newLinedit, currentLinedit)
-        self.base.children[0].upperLinedit = currentLinedit.upperLinedit
+        self.base.firstLinedit.upperLinedit = currentLinedit.upperLinedit
         newLinedit.upperLinedit = currentLinedit.upperLinedit
-        self.base.children[0].lowerLinedit = currentLinedit.lowerLinedit
+        self.base.firstLinedit.lowerLinedit = currentLinedit.lowerLinedit
         newLinedit.lowerLinedit = currentLinedit.lowerLinedit
 
 

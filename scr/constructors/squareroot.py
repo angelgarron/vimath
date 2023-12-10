@@ -9,14 +9,14 @@ class SquareRoot(BaseFrame):
         super().__init__(parent)
         self.squareRootArgumentFrame = MyFrame(self)
         self.children.append(self.squareRootArgumentFrame)
-        self.firstLinedit = self.squareRootArgumentFrame.children[0]
+        self.firstLinedit = self.squareRootArgumentFrame.firstLinedit
 
 
     def createLinks(self, newLinedit, currentLinedit):
         super().createLinks(newLinedit, currentLinedit)
-        self.squareRootArgumentFrame.children[0].upperLinedit = currentLinedit.upperLinedit
+        self.squareRootArgumentFrame.firstLinedit.upperLinedit = currentLinedit.upperLinedit
         newLinedit.upperLinedit = currentLinedit.upperLinedit
-        self.squareRootArgumentFrame.children[0].lowerLinedit = currentLinedit.lowerLinedit
+        self.squareRootArgumentFrame.firstLinedit.lowerLinedit = currentLinedit.lowerLinedit
         newLinedit.lowerLinedit = currentLinedit.lowerLinedit
 
 
