@@ -16,19 +16,31 @@ class MoveLeft:
         other.cursorBackward(scene.isVisualMode())
 
 
+class MoveVertical:
+    def giveFocusProportion(self, lineEdit, elements):
+        cursorPosition = lineEdit.cursorPosition()
+        if len(lineEdit.text()) > 0:
+            prop = cursorPosition/len(lineEdit.text())
+        else:
+            prop = 0.5
+        pos = round((len(elements)-1)*prop)
+        elements[pos].setFocus()
+
+
 @RegisterAction("both")
-class MoveDown:
+class MoveDown(MoveVertical):
     def __init__(self):
         self.key = [[Qt.Key_J], [Qt.Key_Down]]
         
         
     def performAction(self, other):
         if other.lowerLinedit:
-            other.lowerLinedit.setFocus()
+            denominatorElements = other.lowerLinedit.parent.children
+            self.giveFocusProportion(other, denominatorElements)
 
 
 @RegisterAction("both")
-class MoveUp:
+class MoveUp(MoveVertical):
     def __init__(self):
         self.key = [[Qt.Key_K], [Qt.Key_Up]]
 
@@ -36,13 +48,7 @@ class MoveUp:
     def performAction(self, other):
         if other.upperLinedit:
             numeratorElements = other.upperLinedit.parent.children
-            cursorPosition = other.cursorPosition()
-            if len(other.text()) > 0:
-                prop = cursorPosition/len(other.text())
-            else:
-                prop = 0.5
-            pos = round((len(numeratorElements)-1)*prop)
-            numeratorElements[pos].setFocus()
+            self.giveFocusProportion(other, numeratorElements)
         
 
 @RegisterAction("both")
