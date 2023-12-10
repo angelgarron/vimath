@@ -56,6 +56,18 @@ class BaseFrame(QFrame):
         self.firstLinedit.nextLinedit = currentLinedit
         self.firstLinedit.previousLinedit = newLinedit
         newLinedit.nextLinedit = self.firstLinedit
+        # the links that before were pointing to currentLinedit
+        # should now point to newLinedit
+        # find the element to the left
+        element = self.parent.children[self.parent.children.index(newLinedit)-1]
+        self.rearrangeLinks(element, newLinedit)
+
+        
+    def rearrangeLinks(self, element, newLinedit):
+        if not isinstance(element, MyLineEdit):
+            for child in element.children:
+                child.nextLinedit = newLinedit
+                self.rearrangeLinks(child, newLinedit)
 
 
     def updateFrameSizeAndPosition(self):
