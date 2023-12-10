@@ -60,25 +60,30 @@ class BaseFrame(QFrame):
 
         # the links that before were pointing to currentLinedit
         # should now point to newLinedit
-        # find the element to the left
+        # find the element to the left to rearrange those links
         element = self.findElementLeft(newLinedit)
-        print("the element is", element)
         if element is not None:
             self.rearrangeLinks(element, newLinedit)
 
         
-    def findElementLeft(self, c):
-        print("children are", c.parent.children)
-        if scene.window == c.parent:
+    def findElementLeft(self, currentElement):
+        # check if currentElement is a denominator frame so it doesn't go from numerator to denominator
+        if hasattr(currentElement.parent, "denominator"):
+            if currentElement.parent.denominator == currentElement:
+                return
+        # don't keep looking if we reached parent window
+        if scene.window == currentElement.parent:
             return
-        indx = c.parent.children.index(c)-1
+        indx = currentElement.parent.children.index(currentElement)-1
         if indx == -1: # meaning that we do not have anything to the left
-            return self.findElementLeft(c.parent)
-        element = c.parent.children[indx]
+            return self.findElementLeft(currentElement.parent)
+        element = currentElement.parent.children[indx]
         return element
 
         
     def rearrangeLinks(self, element, newLinedit):
+        """Make all the nextLinedit inside `element` (recursively) point to newLinedit
+        """
         if not isinstance(element, MyLineEdit):
             for child in element.children:
                 self.rearrangeLinks(child, newLinedit)
