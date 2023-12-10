@@ -1,5 +1,4 @@
 from frame import MyFrame, BaseFrame
-from PySide6.QtCore import QRect
 
 
 class Subscript(BaseFrame):
@@ -33,7 +32,7 @@ class Subscript(BaseFrame):
         subscriptGap = max(Subscript.VSPACE, self.subscript.u-self.baseCharacter.d)
         self.d = self.baseCharacter.d+subscriptGap+self.subscript.d
         width = self.baseCharacter.width()+self.subscript.width()
-        self.setGeometry(QRect(self.x(), self.y(), width, self.u+self.d))
+        self.setGeometry(self.x(), self.y(), width, self.u+self.d)
         xi = self.baseCharacter.width()
         yi = self.baseCharacter.height()+subscriptGap-self.subscript.u
         self.baseCharacter.setGeometry(QRect(0, 0, self.baseCharacter.width(), self.baseCharacter.height()))

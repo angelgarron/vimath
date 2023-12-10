@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import (QLineEdit, QFrame, QProxyStyle)
 from PySide6.QtGui import QPainter, QPen, QPainterPath, QColor, QBrush, QFont
-from PySide6.QtCore import QRect, Qt, QSize
+from PySide6.QtCore import Qt, QSize
 
 LINEDIT_SIZE = (8, 20)
 CURSOR_WIDTH = 12
@@ -32,7 +32,7 @@ class MyLineEdit(QLineEdit):
         self.scene.addLineEdit(self)
         self.u = self.parent.fontSize/2+2
         self.d = self.parent.fontSize/2+2
-        self.setGeometry(QRect(0, 0, LINEDIT_SIZE[0], self.u+self.d))
+        self.setGeometry(0, 0, LINEDIT_SIZE[0], self.u+self.d)
         self.textChanged.connect(self.updateWidth)
         self.textEdited.connect(self.wasEdited)
         self.nextLinedit = None

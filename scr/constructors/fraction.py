@@ -1,5 +1,4 @@
 from frame import MyFrame, BaseFrame
-from PySide6.QtCore import QRect
 
 
 class Fraction(BaseFrame):
@@ -32,13 +31,13 @@ class Fraction(BaseFrame):
         lenFractionLine = max(self.numerator.width(), self.denominator.width())+2*Fraction.HSPACE
         self.u = self.numerator.height()+Fraction.VSPACE
         self.d = self.denominator.height()+Fraction.VSPACE
-        self.setGeometry(QRect(self.x(), self.y(), lenFractionLine, self.u+self.d))
+        self.setGeometry(self.x(), self.y(), lenFractionLine, self.u+self.d)
         xn = (self.width()-self.numerator.width())/2
         yn = 0
         xd = (self.width()-self.denominator.width())/2
         yd = self.u+Fraction.VSPACE
-        self.numerator.setGeometry(QRect(xn, yn, self.numerator.width(), self.numerator.height()))
-        self.denominator.setGeometry(QRect(xd, yd, self.denominator.width(), self.denominator.height()))
+        self.numerator.setGeometry(xn, yn, self.numerator.width(), self.numerator.height())
+        self.denominator.setGeometry(xd, yd, self.denominator.width(), self.denominator.height())
 
 
     def paintEvent(self, event):

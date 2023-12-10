@@ -1,5 +1,4 @@
 from frame import MyFrame, BaseFrame
-from PySide6.QtCore import QRect
 
 
 class SquareRoot(BaseFrame):
@@ -26,8 +25,8 @@ class SquareRoot(BaseFrame):
         self.u = self.squareRootArgumentFrame.u+2*SquareRoot.VSPACE
         self.d = self.squareRootArgumentFrame.d+SquareRoot.VSPACE
         width = self.squareRootArgumentFrame.width()+SquareRoot.LHSPACE+SquareRoot.RHSPACE
-        self.setGeometry(QRect(self.x(), self.y(), width, self.u+self.d))
-        self.squareRootArgumentFrame.setGeometry(QRect(SquareRoot.LHSPACE, 2*SquareRoot.VSPACE, self.squareRootArgumentFrame.width(), self.squareRootArgumentFrame.height()))
+        self.setGeometry(self.x(), self.y(), width, self.u+self.d)
+        self.squareRootArgumentFrame.setGeometry(SquareRoot.LHSPACE, 2*SquareRoot.VSPACE, self.squareRootArgumentFrame.width(), self.squareRootArgumentFrame.height())
 
 
     def paintEvent(self, event):

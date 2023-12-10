@@ -1,5 +1,4 @@
 from frame import MyFrame, BaseFrame
-from PySide6.QtCore import QRect
 
 
 class Superscript(BaseFrame):
@@ -33,8 +32,8 @@ class Superscript(BaseFrame):
         superscriptGap = max(Superscript.VSPACE, self.superscript.d-self.baseCharacter.u)
         self.u = self.superscript.u+superscriptGap+self.baseCharacter.u
         width = self.baseCharacter.width()+self.superscript.width()
-        self.setGeometry(QRect(self.x(), self.y(), width, self.u+self.d))
+        self.setGeometry(self.x(), self.y(), width, self.u+self.d)
         xi = self.baseCharacter.width()
         yb = self.superscript.u+superscriptGap
-        self.baseCharacter.setGeometry(QRect(0, yb, self.baseCharacter.width(), self.baseCharacter.height()))
-        self.superscript.setGeometry(QRect(xi, 0, self.superscript.width(), self.superscript.height()))
+        self.baseCharacter.setGeometry(0, yb, self.baseCharacter.width(), self.baseCharacter.height())
+        self.superscript.setGeometry(xi, 0, self.superscript.width(), self.superscript.height())

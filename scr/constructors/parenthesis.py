@@ -1,5 +1,4 @@
 from frame import MyFrame, BaseFrame
-from PySide6.QtCore import QRect
 
 
 class Parenthesis(BaseFrame):
@@ -26,8 +25,8 @@ class Parenthesis(BaseFrame):
         self.u = self.base.u+Parenthesis.VSPACE
         self.d = self.base.d+Parenthesis.VSPACE
         width = self.base.width()+Parenthesis.LHSPACE+Parenthesis.RHSPACE
-        self.setGeometry(QRect(self.x(), self.y(), width, self.u+self.d))
-        self.base.setGeometry(QRect(Parenthesis.LHSPACE, Parenthesis.VSPACE, self.base.width(), self.base.height()))
+        self.setGeometry(self.x(), self.y(), width, self.u+self.d)
+        self.base.setGeometry(Parenthesis.LHSPACE, Parenthesis.VSPACE, self.base.width(), self.base.height())
 
 
     def paintEvent(self, event):

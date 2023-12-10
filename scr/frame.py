@@ -1,6 +1,5 @@
 from PySide6.QtWidgets import (QLineEdit, QFrame, QProxyStyle)
 from PySide6.QtGui import QPainter, QPen, QPainterPath, QColor, QBrush, QFont
-from PySide6.QtCore import QRect, Qt, QSize
 from lineedit import MyLineEdit
 
 LINEDIT_SIZE = (8, 20)
@@ -14,7 +13,7 @@ class BaseFrame(QFrame):
         self.scene = parent.scene
         self.u = 0
         self.d = 0
-        self.setGeometry(QRect(0, 0, LINEDIT_SIZE[0], LINEDIT_SIZE[1]))
+        self.setGeometry(0, 0, LINEDIT_SIZE[0], LINEDIT_SIZE[1])
         self.fontSize = self.scene.fontSize
         self.setFont(QFont("monospace", self.fontSize))
         self.setStyleSheet("border:1px dashed red")
@@ -82,11 +81,11 @@ class BaseFrame(QFrame):
         width = 0
         x = 0
         for child in self.children:
-            child.setGeometry(QRect(x, self.u-child.u, child.width(), child.height()))
+            child.setGeometry(x, self.u-child.u, child.width(), child.height())
             width += child.width()
             x += child.width()
         
-        self.setGeometry(QRect(self.x(), self.y(), width, self.u+self.d))
+        self.setGeometry(self.x(), self.y(), width, self.u+self.d)
     
 
     def createPainter(self):
