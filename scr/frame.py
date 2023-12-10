@@ -1,6 +1,8 @@
 from PySide6.QtWidgets import (QLineEdit, QFrame, QProxyStyle)
 from PySide6.QtGui import QPainter, QPen, QPainterPath, QColor, QBrush, QFont
 from lineedit import MyLineEdit
+from scene import scene
+
 
 LINEDIT_SIZE = (8, 20)
 CURSOR_WIDTH = 12
@@ -65,19 +67,23 @@ class BaseFrame(QFrame):
             self.rearrangeLinks(element, newLinedit)
 
         
-    def findElementLeft(self, newLinedit):
-        print("children are", self.parent.children)
-        indx = self.parent.children.index(newLinedit)-1
-        if indx != -1: # meaning that we do not have anything to the left
-            element = self.parent.children[indx]
-            return element
+    def findElementLeft(self, c):
+        print("children are", c.parent.children)
+        if scene.window == c.parent:
+            return
+        indx = c.parent.children.index(c)-1
+        if indx == -1: # meaning that we do not have anything to the left
+            return self.findElementLeft(c.parent)
+        element = c.parent.children[indx]
+        return element
 
         
     def rearrangeLinks(self, element, newLinedit):
         if not isinstance(element, MyLineEdit):
             for child in element.children:
-                child.nextLinedit = newLinedit
                 self.rearrangeLinks(child, newLinedit)
+        else:
+            element.nextLinedit = newLinedit
 
 
     def updateFrameSizeAndPosition(self):
