@@ -35,5 +35,5 @@ class Subscript(BaseFrame):
         self.setGeometry(self.x(), self.y(), width, self.u+self.d)
         xi = self.baseCharacter.width()
         yi = self.baseCharacter.height()+subscriptGap-self.subscript.u
-        self.baseCharacter.setGeometry(QRect(0, 0, self.baseCharacter.width(), self.baseCharacter.height()))
-        self.subscript.setGeometry(QRect(xi, yi, self.subscript.width(), self.subscript.height()))
+        self.baseCharacter.setGeometry(0, 0, self.baseCharacter.width(), self.baseCharacter.height())
+        self.subscript.setGeometry(xi, yi, self.subscript.width(), self.subscript.height())
