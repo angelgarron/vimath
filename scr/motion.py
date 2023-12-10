@@ -12,6 +12,7 @@ class MoveLeft:
     def performAction(self, other):
         if other.cursorPosition() == 0 and other.previousLinedit:
             other.previousLinedit.setFocus()
+            other.previousLinedit.setCursorPosition(len(other.previousLinedit.text()))
             return
         other.cursorBackward(scene.isVisualMode())
 
@@ -60,6 +61,7 @@ class MoveRight:
     def performAction(self, other):
         if other.cursorPosition() == len(other.text()) and other.nextLinedit:
             other.nextLinedit.setFocus()
+            other.nextLinedit.setCursorPosition(0)
             return
         other.cursorForward(scene.isVisualMode())
         
