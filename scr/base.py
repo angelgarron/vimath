@@ -47,6 +47,10 @@ class ToggleVisualMode:
 
     def performAction(self, other):
         if scene.isNormalMode():
+            scene.selectionFirst = [other, other.cursorPosition()]
             scene.enterVisualMode()
         else:
+            scene.selectionFirst = None
+            scene.selectionSecond = None
             scene.enterNormalMode()
+        scene.printSelection()

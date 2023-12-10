@@ -11,8 +11,15 @@ class Scene:
         self.mode = NORMAL_MODE
         self.frames = []
         self.lineEdits = []
+        self.selectionFirst = None
+        self.selectionSecond = None
 
         
+    def printSelection(self):
+        print("selectionFirst", self.selectionFirst)
+        print("selectionSecond", self.selectionSecond)
+
+
     def updateFrames(self):
         mainFrame = self.frames[0]
         mainFrame.updateFrameSizeAndPosition()

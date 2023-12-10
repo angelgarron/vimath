@@ -14,7 +14,10 @@ class MoveLeft:
             other.previousLinedit.setFocus()
             other.previousLinedit.setCursorPosition(len(other.previousLinedit.text()))
             return
-        other.cursorBackward(scene.isVisualMode())
+        other.cursorBackward(False)
+        if scene.isVisualMode():
+            scene.selectionSecond = [other, other.cursorPosition()]
+            scene.printSelection()
 
 
 class MoveVertical:
@@ -63,7 +66,7 @@ class MoveRight:
             other.nextLinedit.setFocus()
             other.nextLinedit.setCursorPosition(0)
             return
-        other.cursorForward(scene.isVisualMode())
+        other.cursorForward(False)
         
 
 @RegisterAction("both")
@@ -73,7 +76,7 @@ class MoveWordBegin:
         
     
     def performAction(self, other):
-        other.cursorWordForward(scene.isVisualMode())
+        other.cursorWordForward(False)
         
         
 @RegisterAction("both")
@@ -83,7 +86,7 @@ class MoveBeginningWord:
 
 
     def performAction(self, other):
-        other.cursorWordBackward(scene.isVisualMode())
+        other.cursorWordBackward(False)
 
 
 @RegisterAction("both")
@@ -102,7 +105,7 @@ class MoveWordEnd:
                     ]
 
         for movement in movements:
-            movement(scene.isVisualMode())
+            movement(False)
         
 
 
@@ -113,7 +116,7 @@ class MoveStartDocument:
 
         
     def performAction(self, other):
-        other.home(scene.isVisualMode())
+        other.home(False)
 
 
 @RegisterAction("both")
@@ -123,7 +126,7 @@ class MoveEndDocument:
 
 
     def performAction(self, other):
-        other.end(scene.isVisualMode())
+        other.end(False)
 
 
 @RegisterAction("both")
