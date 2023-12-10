@@ -35,7 +35,14 @@ class MoveUp:
         
     def performAction(self, other):
         if other.upperLinedit:
-            other.upperLinedit.setFocus()
+            numeratorElements = other.upperLinedit.parent.children
+            cursorPosition = other.cursorPosition()
+            if len(other.text()) > 0:
+                prop = cursorPosition/len(other.text())
+            else:
+                prop = 0.5
+            pos = round((len(numeratorElements)-1)*prop)
+            numeratorElements[pos].setFocus()
         
 
 @RegisterAction("both")

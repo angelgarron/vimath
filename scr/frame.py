@@ -114,6 +114,10 @@ class BaseFrame(QFrame):
         painter = QPainter(self)
         painter.setPen(self.pen)
         return painter
+    
+
+    def setFocus(self):
+        self.firstLinedit.setFocus()
 
 
 class MyFrame(BaseFrame):
