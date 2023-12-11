@@ -11,6 +11,7 @@ class Scene:
         self.mode = NORMAL_MODE
         self.frames = []
         self.lineEdits = []
+        self.storedKeys = []
         self.selectionFirst = None
         self.selectionSecond = None
 

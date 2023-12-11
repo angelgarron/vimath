@@ -27,7 +27,6 @@ class MyLineEdit(QLineEdit):
         self.setStyleSheet(LINEDIT_STYLESHEET)
         self.setAlignment(Qt.AlignmentFlag.AlignTop)
         self.setFont(QFont("monospace", self.parent.fontSize))
-        self.storedKeys = []
         self.scene = self.parent.scene
         self.scene.addLineEdit(self)
         self.u = self.parent.fontSize/2+2
@@ -86,7 +85,7 @@ class MyLineEdit(QLineEdit):
 
     def keyPressEvent(self, event):
         if event.keyCombination() == Qt.ControlModifier | Qt.Key_C:
-            self.storedKeys = []
+            self.scene.storedKeys = []
             if not self.scene.isNormalMode():
                 self.cursorBackward(False)
                 self.scene.enterNormalMode()
@@ -104,17 +103,17 @@ class MyLineEdit(QLineEdit):
         if event.key() in [Qt.Key_Control, Qt.Key_Shift, Qt.Key_Alt]:
             return
 
-        self.storedKeys.append(event.keyCombination())
+        self.scene.storedKeys.append(event.keyCombination())
 
         for action in actions.values():
             if isinstance(action.key[0], list):
                 for key in action.key:
-                    if key == self.storedKeys:
+                    if key == self.scene.storedKeys:
                         action.performAction(self)
-                        self.storedKeys = []
+                        self.scene.storedKeys = []
                         break
             else:
-                if action.key == self.storedKeys:
+                if action.key == self.scene.storedKeys:
                     action.performAction(self)
-                    self.storedKeys = []
+                    self.scene.storedKeys = []
                     break
