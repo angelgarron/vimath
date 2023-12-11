@@ -112,12 +112,12 @@ class MyLineEdit(QLineEdit):
                         action.performAction(self)
                         self.scene.storedKeys = []
                         if self.scene.isVisualMode():
-                            self.scene.updateVisualSelection()
+                            self.scene.updateVisualSelection(self)
                         break
             else:
                 if action.key == self.scene.storedKeys:
                     action.performAction(self)
                     self.scene.storedKeys = []
                     if self.scene.isVisualMode():
-                        self.scene.updateVisualSelection()
+                        self.scene.updateVisualSelection(self)
                     break

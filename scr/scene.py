@@ -16,13 +16,11 @@ class Scene:
         self.selectionSecond = None
 
         
-    def updateVisualSelection(self):
+    def updateVisualSelection(self, other):
         print("updating visual selection")
-        # if self.isVisualMode():
-        #     self.selectionsecond = [other, other.cursorposition()]
-
-        # print("selectionFirst", self.selectionFirst)
-        # print("selectionSecond", self.selectionSecond)
+        self.selectionSecond = [other, other.cursorPosition()]
+        print("selectionFirst", self.selectionFirst)
+        print("selectionSecond", self.selectionSecond)
 
 
     def clearSelection(self):
@@ -31,9 +29,10 @@ class Scene:
         self.selectionSecond = None
 
 
-    def addSelectionFirst(self, other):
-        print("adding selection first")
+    def startSelection(self, other):
+        print("adding selection first and second")
         self.selectionFirst = [other, other.cursorPosition()]
+        self.selectionSecond = [other, other.cursorPosition()]
 
 
     def updateFrames(self):
