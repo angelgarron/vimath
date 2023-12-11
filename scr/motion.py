@@ -15,9 +15,6 @@ class MoveLeft:
             other.previousLinedit.setCursorPosition(len(other.previousLinedit.text()))
             return
         other.cursorBackward(False)
-        if scene.isVisualMode():
-            scene.selectionSecond = [other, other.cursorPosition()]
-            scene.printSelection()
 
 
 class MoveVertical:

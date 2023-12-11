@@ -16,9 +16,24 @@ class Scene:
         self.selectionSecond = None
 
         
-    def printSelection(self):
-        print("selectionFirst", self.selectionFirst)
-        print("selectionSecond", self.selectionSecond)
+    def updateVisualSelection(self):
+        print("updating visual selection")
+        # if self.isVisualMode():
+        #     self.selectionsecond = [other, other.cursorposition()]
+
+        # print("selectionFirst", self.selectionFirst)
+        # print("selectionSecond", self.selectionSecond)
+
+
+    def clearSelection(self):
+        print("clearing selection")
+        self.selectionFirst = None
+        self.selectionSecond = None
+
+
+    def addSelectionFirst(self, other):
+        print("adding selection first")
+        self.selectionFirst = [other, other.cursorPosition()]
 
 
     def updateFrames(self):
@@ -49,6 +64,8 @@ class Scene:
 
 
     def enterNormalMode(self):
+        if self.isVisualMode():
+            self.clearSelection()
         self.mode = NORMAL_MODE
         for lineEdit in self.lineEdits:
             lineEdit.setStyle(ThickCursorStyle())
