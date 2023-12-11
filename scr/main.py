@@ -8,4 +8,5 @@ if __name__ == '__main__':
     window = MyMainWindow()
     window.setStyleSheet("background-color:white")
     window.show()
+    window.tp.raise_()
     sys.exit(app.exec())

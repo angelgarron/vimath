@@ -1,5 +1,6 @@
 from scene import scene
-from PySide6.QtWidgets import QMainWindow
+from PySide6.QtGui import QPainter, QPen, QPainterPath, QColor, QBrush, QFont
+from PySide6.QtWidgets import QMainWindow, QWidget
 from frame import MyFrame
 from lineedit import MyLineEdit
 
@@ -10,6 +11,8 @@ class MyMainWindow(QMainWindow):
         self.initUI()
         self.scene = scene
         self.scene.window = self
+        self.tp = SelectionRectangle(self)
+        self.tp.show()
 
         self.createMyMath()
 
@@ -28,3 +31,12 @@ class MyMainWindow(QMainWindow):
         # fractionInsideSquareFrame = squareRootFrame.squareRootArgumentFrame.createFrameMiddle(2, Fraction)
         # fractionInsideSquareFrame.numerator.createFrameMiddle(2, Subscript)
 
+
+class SelectionRectangle(QWidget):
+    def __init__(self, parent):
+        super().__init__(parent)
+
+
+    def paintEvent(self, event):
+        painter = QPainter(self)
+        painter.fillRect(self.rect(), QColor(0, 0, 255, 128))
