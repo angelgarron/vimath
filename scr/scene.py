@@ -16,9 +16,14 @@ class Scene:
         self.selectionSecond = None
 
         
-    def updateVisualSelection(self, other):
+    def getLineEditWithFocus(self):
+        return self.window.focusWidget()
+
+
+    def updateVisualSelection(self):
         print("updating visual selection")
-        self.selectionSecond = [other, other.cursorPosition()]
+        lineEditWithFocus = self.getLineEditWithFocus()
+        self.selectionSecond = [lineEditWithFocus, lineEditWithFocus.cursorPosition()]
         print("selectionFirst", self.selectionFirst)
         print("selectionSecond", self.selectionSecond)
 
@@ -29,10 +34,11 @@ class Scene:
         self.selectionSecond = None
 
 
-    def startSelection(self, other):
+    def startSelection(self):
         print("adding selection first and second")
-        self.selectionFirst = [other, other.cursorPosition()]
-        self.selectionSecond = [other, other.cursorPosition()]
+        lineEditWithFocus = self.getLineEditWithFocus()
+        self.selectionFirst = [lineEditWithFocus, lineEditWithFocus.cursorPosition()]
+        self.selectionSecond = [lineEditWithFocus, lineEditWithFocus.cursorPosition()]
 
 
     def updateFrames(self):
@@ -72,6 +78,7 @@ class Scene:
 
     def enterVisualMode(self):
         self.mode = VISUAL_MODE
+        self.startSelection()
         for lineEdit in self.lineEdits:
             lineEdit.setStyle(ThickCursorStyle())
 
