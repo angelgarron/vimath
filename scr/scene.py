@@ -1,5 +1,5 @@
 from PySide6.QtWidgets import QProxyStyle
-from lineedit import ThickCursorStyle
+from lineedit import ThickCursorStyle, MyLineEdit
 
 NORMAL_MODE = 0
 INSERT_MODE = 1
@@ -20,12 +20,39 @@ class Scene:
         return self.window.focusWidget()
 
 
+    def lookdowntree(self, element, secondelement):
+        if isinstance(element, MyLineEdit):
+            if element == secondelement:
+                return element
+            return
+        for child in element.children:
+            element = self.lookdowntree(child, secondelement)
+            if element:
+                return element
+
+
+    def lookuptree(self, firstelement, secondelement, currentbranch):
+        # if currentbranch.parent == self.window:
+        #     return "reached window"
+        for child in currentbranch.parent.children:
+            if child != currentbranch:
+                element = self.lookdowntree(child, secondelement)
+                if element:
+                    return element
+        return self.lookuptree(firstelement, secondelement, currentbranch.parent)
+
+        
     def updateVisualSelection(self):
         print("updating visual selection")
         lineEditWithFocus = self.getLineEditWithFocus()
         self.selectionSecond = [lineEditWithFocus, lineEditWithFocus.cursorPosition()]
         print("selectionFirst", self.selectionFirst)
         print("selectionSecond", self.selectionSecond)
+        if self.selectionFirst[0] == self.selectionSecond[0]:
+            print("same lineEdit")
+            return
+        element = self.lookuptree(self.selectionFirst[0], self.selectionSecond[0], self.selectionFirst[0])
+        print(element)
 
 
     def clearSelection(self):
