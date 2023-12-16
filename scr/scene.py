@@ -69,6 +69,7 @@ class Scene:
         print("clearing selection")
         self.selectionFirst = None
         self.selectionSecond = None
+        self.window.tp.hide()
 
 
     def startSelection(self):
@@ -76,6 +77,7 @@ class Scene:
         lineEditWithFocus = self.getLineEditWithFocus()
         self.selectionFirst = [lineEditWithFocus, lineEditWithFocus.cursorPosition()]
         self.selectionSecond = [lineEditWithFocus, lineEditWithFocus.cursorPosition()]
+        self.window.tp.show()
 
 
     def getAbsolutePosition(self, element, pos):

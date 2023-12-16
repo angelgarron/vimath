@@ -35,6 +35,7 @@ class MyMainWindow(QMainWindow):
 class SelectionRectangle(QWidget):
     def __init__(self, parent):
         super().__init__(parent)
+        self.hide()
 
 
     def paintEvent(self, event):
