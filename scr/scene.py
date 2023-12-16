@@ -88,15 +88,11 @@ class Scene:
     def getSelectionGeometry(self):
         if self.selection:
             width = 0
-            height = 0
-            y = 100000 # crazy high number, should be a better way
             for e in self.selection:
                 width += e.width()
-                height = max(height, e.height())
-                y = min(y, e.y())
             x = self.selection[0].x()
-            pos = self.getAbsolutePosition(self.selection[0].parent, QPoint(x, y))
-            self.window.tp.setGeometry(pos.x(), pos.y(), width, height)
+            pos = self.getAbsolutePosition(self.selection[0].parent, QPoint(x, 0))
+            self.window.tp.setGeometry(pos.x(), pos.y(), width, self.selection[0].parent.height())
 
 
     def updateFrames(self):
