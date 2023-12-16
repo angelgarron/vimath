@@ -12,7 +12,6 @@ class MyMainWindow(QMainWindow):
         self.scene = scene
         self.scene.window = self
         self.tp = SelectionRectangle(self)
-        self.tp.show()
 
         self.createMyMath()
 
