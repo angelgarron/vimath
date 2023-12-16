@@ -14,6 +14,7 @@ class Scene:
         self.storedKeys = []
         self.selectionFirst = None
         self.selectionSecond = None
+        self.selection = []
 
         
     def getLineEditWithFocus(self):
@@ -32,12 +33,16 @@ class Scene:
 
 
     def lookuptree(self, firstelement, secondelement, currentbranch):
-        # if currentbranch.parent == self.window:
-        #     return "reached window"
         for child in currentbranch.parent.children:
             if child != currentbranch:
                 element = self.lookdowntree(child, secondelement)
                 if element:
+                    start = currentbranch.parent.children.index(currentbranch)
+                    end = currentbranch.parent.children.index(child)
+                    if start>end:
+                        start, end = end, start
+                    for i in range(start, end+1):
+                        self.selection.append(currentbranch.parent.children[i])
                     return element
         return self.lookuptree(firstelement, secondelement, currentbranch.parent)
 
@@ -48,11 +53,13 @@ class Scene:
         self.selectionSecond = [lineEditWithFocus, lineEditWithFocus.cursorPosition()]
         print("selectionFirst", self.selectionFirst)
         print("selectionSecond", self.selectionSecond)
+        self.selection = []
         if self.selectionFirst[0] == self.selectionSecond[0]:
             print("same lineEdit")
             return
         element = self.lookuptree(self.selectionFirst[0], self.selectionSecond[0], self.selectionFirst[0])
         print(element)
+        print("the selection is", self.selection)
 
 
     def clearSelection(self):
