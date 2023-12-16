@@ -1,4 +1,5 @@
 from PySide6.QtWidgets import QProxyStyle
+from PySide6.QtCore import QPoint
 from lineedit import ThickCursorStyle, MyLineEdit
 
 NORMAL_MODE = 0
@@ -55,11 +56,13 @@ class Scene:
         print("selectionSecond", self.selectionSecond)
         self.selection = []
         if self.selectionFirst[0] == self.selectionSecond[0]:
+            self.selection.append(self.selectionFirst[0])
             print("same lineEdit")
-            return
-        element = self.lookuptree(self.selectionFirst[0], self.selectionSecond[0], self.selectionFirst[0])
-        print(element)
+        else:
+            element = self.lookuptree(self.selectionFirst[0], self.selectionSecond[0], self.selectionFirst[0])
+            print(element)
         print("the selection is", self.selection)
+        self.getSelectionGeometry()
 
 
     def clearSelection(self):
@@ -73,6 +76,19 @@ class Scene:
         lineEditWithFocus = self.getLineEditWithFocus()
         self.selectionFirst = [lineEditWithFocus, lineEditWithFocus.cursorPosition()]
         self.selectionSecond = [lineEditWithFocus, lineEditWithFocus.cursorPosition()]
+
+
+    def getSelectionGeometry(self):
+        if self.selection:
+            width = 0
+            height = 0
+            y = 100000 # crazy high number, should be a better way
+            for e in self.selection:
+                width += e.width()
+                height = max(height, e.height())
+                y = min(y, e.parent.mapToParent(QPoint(0, e.y())).y())
+            x = self.selection[0].parent.mapToParent(QPoint(self.selection[0].x(), 0)).x()
+            self.window.tp.setGeometry(x, y, width, height)
 
 
     def updateFrames(self):
