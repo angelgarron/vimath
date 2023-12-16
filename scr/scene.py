@@ -78,6 +78,13 @@ class Scene:
         self.selectionSecond = [lineEditWithFocus, lineEditWithFocus.cursorPosition()]
 
 
+    def getAbsolutePosition(self, element, pos):
+        pos += element.pos()
+        if element.parent == self.window:
+            return pos
+        return self.getAbsolutePosition(element.parent, pos)
+
+        
     def getSelectionGeometry(self):
         if self.selection:
             width = 0
@@ -86,9 +93,10 @@ class Scene:
             for e in self.selection:
                 width += e.width()
                 height = max(height, e.height())
-                y = min(y, e.parent.mapToParent(QPoint(0, e.y())).y())
-            x = self.selection[0].parent.mapToParent(QPoint(self.selection[0].x(), 0)).x()
-            self.window.tp.setGeometry(x, y, width, height)
+                y = min(y, e.y())
+            x = self.selection[0].x()
+            pos = self.getAbsolutePosition(self.selection[0].parent, QPoint(x, y))
+            self.window.tp.setGeometry(pos.x(), pos.y(), width, height)
 
 
     def updateFrames(self):
