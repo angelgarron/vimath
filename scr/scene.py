@@ -89,10 +89,14 @@ class Scene:
         
     def setSelectionGeometry(self):
         if self.selection:
-            start = self.selectionFirst[0].x()+self.selectionFirst[1]*12
-            end = self.selectionSecond[0].x()+self.selectionSecond[1]*12
-            if start>end:
-                start, end = end, start
+            start = self.selection[0].x()
+            end = self.selection[-1].x()+self.selection[-1].width()
+            for s in [self.selectionFirst, self.selectionSecond]:
+                if s[0] is self.selection[0]:
+                    start = s[0].x()+s[1]*12
+            for s in [self.selectionFirst, self.selectionSecond]:
+                if s[0] is self.selection[-1]:
+                    end = s[0].x()+s[1]*12
             pos = self.getAbsolutePosition(self.selection[0].parent, QPoint(start, 0))
             self.window.tp.setGeometry(pos.x(), pos.y(), end-start, self.selection[0].parent.height())
 
