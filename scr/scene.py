@@ -45,7 +45,7 @@ class Scene:
                     for i in range(start, end+1):
                         if self.selectionFirst[0] == currentbranch.parent.children[i]:
                             self.selection.append((currentbranch.parent.children[i], self.selectionFirst[1]))
-                        elif self.selectionFirst[0] == currentbranch.parent.children[i]:
+                        elif self.selectionSecond[0] == currentbranch.parent.children[i]:
                             self.selection.append((currentbranch.parent.children[i], self.selectionSecond[1]))
                         else:
                             self.selection.append((currentbranch.parent.children[i], None))
