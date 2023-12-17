@@ -62,7 +62,7 @@ class Scene:
             element = self.lookuptree(self.selectionFirst[0], self.selectionSecond[0], self.selectionFirst[0])
             print(element)
         print("the selection is", self.selection)
-        self.getSelectionGeometry()
+        self.setSelectionGeometry()
 
 
     def clearSelection(self):
@@ -87,12 +87,16 @@ class Scene:
         return self.getAbsolutePosition(element.parent, pos)
 
         
-    def getSelectionGeometry(self):
+    def setSelectionGeometry(self):
         if self.selection:
             width = 0
-            for e in self.selection:
-                width += e.width()
+            for element in self.selection[:-1]:
+                width += element.width()
             x = self.selection[0].x()
+            x += self.selectionFirst[1]*12
+            width += self.selectionSecond[1]*12
+            width -= x
+            print("x, width", x, width)
             pos = self.getAbsolutePosition(self.selection[0].parent, QPoint(x, 0))
             self.window.tp.setGeometry(pos.x(), pos.y(), width, self.selection[0].parent.height())
 
