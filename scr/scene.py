@@ -36,14 +36,19 @@ class Scene:
     def lookuptree(self, firstelement, secondelement, currentbranch):
         for child in currentbranch.parent.children:
             if child != currentbranch:
-                element = self.lookdowntree(child, secondelement)
+                element = self.lookdowntree(child, secondelement[0])
                 if element:
                     start = currentbranch.parent.children.index(currentbranch)
                     end = currentbranch.parent.children.index(child)
                     if start>end:
                         start, end = end, start
                     for i in range(start, end+1):
-                        self.selection.append(currentbranch.parent.children[i])
+                        if firstelement[0] == currentbranch.parent.children[i]:
+                            self.selection.append((currentbranch.parent.children[i], firstelement[1]))
+                        elif secondelement[0] == currentbranch.parent.children[i]:
+                            self.selection.append((currentbranch.parent.children[i], secondelement[1]))
+                        else:
+                            self.selection.append((currentbranch.parent.children[i], None))
                     return element
         return self.lookuptree(firstelement, secondelement, currentbranch.parent)
 
@@ -56,10 +61,15 @@ class Scene:
         print("selectionSecond", self.selectionSecond)
         self.selection = []
         if self.selectionFirst[0] == self.selectionSecond[0]:
-            self.selection.append(self.selectionFirst[0])
+            if self.selectionFirst[1]>self.selectionSecond[1]:
+                self.selection.append((self.selectionSecond[0], self.selectionSecond[1]))
+                self.selection.append((self.selectionFirst[0], self.selectionFirst[1]))
+            else:
+                self.selection.append((self.selectionFirst[0], self.selectionFirst[1]))
+                self.selection.append((self.selectionSecond[0], self.selectionSecond[1]))
             print("same lineEdit")
         else:
-            element = self.lookuptree(self.selectionFirst[0], self.selectionSecond[0], self.selectionFirst[0])
+            element = self.lookuptree(self.selectionFirst, self.selectionSecond, self.selectionFirst[0])
             print(element)
         print("the selection is", self.selection)
         self.setSelectionGeometry()
@@ -89,16 +99,16 @@ class Scene:
         
     def setSelectionGeometry(self):
         if self.selection:
-            start = self.selection[0].x()
-            end = self.selection[-1].x()+self.selection[-1].width()
-            for s in [self.selectionFirst, self.selectionSecond]:
-                if s[0] is self.selection[0]:
-                    start = s[0].x()+s[1]*12
-            for s in [self.selectionFirst, self.selectionSecond]:
-                if s[0] is self.selection[-1]:
-                    end = s[0].x()+s[1]*12
-            pos = self.getAbsolutePosition(self.selection[0].parent, QPoint(start, 0))
-            self.window.tp.setGeometry(pos.x(), pos.y(), end-start, self.selection[0].parent.height())
+            if self.selection[0][1] is not None:
+                start = self.selection[0][0].x()+self.selection[0][1]*12
+            else:
+                start = self.selection[0][0].x()
+            if self.selection[-1][1] is not None:
+                end = self.selection[-1][0].x()+self.selection[-1][1]*12
+            else:
+                end = self.selection[-1][0].x()+self.selection[-1][0].width()
+            pos = self.getAbsolutePosition(self.selection[0][0].parent, QPoint(start, 0))
+            self.window.tp.setGeometry(pos.x(), pos.y(), end-start, self.selection[0][0].parent.height())
 
 
     def updateFrames(self):
