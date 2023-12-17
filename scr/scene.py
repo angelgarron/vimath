@@ -89,16 +89,12 @@ class Scene:
         
     def setSelectionGeometry(self):
         if self.selection:
-            width = 0
-            for element in self.selection[:-1]:
-                width += element.width()
-            x = self.selection[0].x()
-            x += self.selectionFirst[1]*12
-            width += self.selectionSecond[1]*12
-            width -= x
-            print("x, width", x, width)
-            pos = self.getAbsolutePosition(self.selection[0].parent, QPoint(x, 0))
-            self.window.tp.setGeometry(pos.x(), pos.y(), width, self.selection[0].parent.height())
+            start = self.selectionFirst[0].x()+self.selectionFirst[1]*12
+            end = self.selectionSecond[0].x()+self.selectionSecond[1]*12
+            if start>end:
+                start, end = end, start
+            pos = self.getAbsolutePosition(self.selection[0].parent, QPoint(start, 0))
+            self.window.tp.setGeometry(pos.x(), pos.y(), end-start, self.selection[0].parent.height())
 
 
     def updateFrames(self):
