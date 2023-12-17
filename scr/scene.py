@@ -22,35 +22,35 @@ class Scene:
         return self.window.focusWidget()
 
 
-    def lookdowntree(self, element, secondelement):
+    def lookdowntree(self, element):
         if isinstance(element, MyLineEdit):
-            if element == secondelement:
+            if element == self.selectionSecond[0]:
                 return element
             return
         for child in element.children:
-            element = self.lookdowntree(child, secondelement)
+            element = self.lookdowntree(child)
             if element:
                 return element
 
 
-    def lookuptree(self, firstelement, secondelement, currentbranch):
+    def lookuptree(self, currentbranch):
         for child in currentbranch.parent.children:
             if child != currentbranch:
-                element = self.lookdowntree(child, secondelement[0])
+                element = self.lookdowntree(child)
                 if element:
                     start = currentbranch.parent.children.index(currentbranch)
                     end = currentbranch.parent.children.index(child)
                     if start>end:
                         start, end = end, start
                     for i in range(start, end+1):
-                        if firstelement[0] == currentbranch.parent.children[i]:
-                            self.selection.append((currentbranch.parent.children[i], firstelement[1]))
-                        elif secondelement[0] == currentbranch.parent.children[i]:
-                            self.selection.append((currentbranch.parent.children[i], secondelement[1]))
+                        if self.selectionFirst[0] == currentbranch.parent.children[i]:
+                            self.selection.append((currentbranch.parent.children[i], self.selectionFirst[1]))
+                        elif self.selectionFirst[0] == currentbranch.parent.children[i]:
+                            self.selection.append((currentbranch.parent.children[i], self.selectionSecond[1]))
                         else:
                             self.selection.append((currentbranch.parent.children[i], None))
                     return element
-        return self.lookuptree(firstelement, secondelement, currentbranch.parent)
+        return self.lookuptree(currentbranch.parent)
 
         
     def updateVisualSelection(self):
@@ -69,7 +69,7 @@ class Scene:
                 self.selection.append((self.selectionSecond[0], self.selectionSecond[1]))
             print("same lineEdit")
         else:
-            element = self.lookuptree(self.selectionFirst, self.selectionSecond, self.selectionFirst[0])
+            element = self.lookuptree(self.selectionFirst[0])
             print(element)
         print("the selection is", self.selection)
         self.setSelectionGeometry()
