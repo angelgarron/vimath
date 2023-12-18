@@ -83,6 +83,11 @@ class MyLineEdit(QLineEdit):
         return super().wheelEvent(event)
 
 
+    def deleteText(self):
+        if self.hasSelectedText():
+            self.del_()
+
+
     def keyPressEvent(self, event):
         if event.keyCombination() == Qt.ControlModifier | Qt.Key_C:
             self.scene.storedKeys = []

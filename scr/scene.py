@@ -118,19 +118,26 @@ class Scene:
         if first[0] == second[0]: # we are in the same lineEdit
             first[0].setCursorPosition(first[1])
             first[0].cursorForward(True, second[1]-first[1])
-            first[0].del_()
+            first[0].deleteText()
             return
 
-        first[0].setCursorPosition(first[1])
-        first[0].end(True)
-        first[0].del_()
+        start, end = 1, -1
+        if isinstance(first[0], MyLineEdit):
+            first[0].setCursorPosition(first[1])
+            first[0].end(True)
+            first[0].deleteText()
+        else:
+            start = 0
 
-        second[0].setCursorPosition(second[1])
-        second[0].home(True)
-        second[0].del_()
+        if isinstance(second[0], MyLineEdit):
+            second[0].setCursorPosition(second[1])
+            second[0].home(True)
+            second[0].deleteText()
+        else:
+            end = None
 
         # remove the frames inbetween
-        for s in self.selection[1:-1]:
+        for s in self.selection[start:end]:
             if not isinstance(s[0], MyLineEdit):
                 s[0].removeFrame()
 
