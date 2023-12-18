@@ -29,26 +29,38 @@ class BaseFrame(QFrame):
         print(self)
         return super().wheelEvent(event)
 
-
+        
     def removeFrame(self):
-        self.scene.removeFrame(self)
-        indexDeleted = self.parent.children.index(self)
-        leftLinedit = self.parent.children[indexDeleted-1]
-        rightLinedit = self.parent.children[indexDeleted+1]
-        leftText = leftLinedit.text()
-        rightText = rightLinedit.text()
-        mergedText = leftText+rightText
-        rightLinedit.setText(mergedText)
-        # give focus to someone else so it doesn't crash when self is deleted
-        rightLinedit.setFocus()
-        rightLinedit.setCursorPosition(len(leftText))
-        rightLinedit.previousLinedit = leftLinedit.previousLinedit
-        self.parent.children.remove(leftLinedit)
-        self.scene.removeLineEdit(leftLinedit)
-        leftLinedit.deleteLater()
-        self.parent.children.remove(self)
         self.deleteLater()
-        return rightLinedit
+        self.scene.removeFrame(self)
+        self.removeChildrenRecursevly(self)
+        indexDeleted = self.parent.children.index(self)
+        leftLineEdit = self.parent.children[indexDeleted-1]
+        rightLineEdit = self.parent.children[indexDeleted+1]
+        leftText = leftLineEdit.text()
+        rightText = rightLineEdit.text()
+        mergedText = leftText+rightText
+        rightLineEdit.setText(mergedText)
+        # give focus to someone else so it doesn't crash when self is deleted
+        rightLineEdit.setFocus()
+        rightLineEdit.setCursorPosition(len(leftText))
+        rightLineEdit.previousLinedit = leftLineEdit.previousLinedit
+        self.parent.children.remove(leftLineEdit)
+        self.scene.removeLineEdit(leftLineEdit)
+        leftLineEdit.deleteLater()
+        self.parent.children.remove(self)
+        self.scene.updateFrames()
+
+
+    def removeChildrenRecursevly(self, element):
+        for child in element.children:
+            child.deleteLater()
+            if not isinstance(child, MyLineEdit):
+                self.scene.removeFrame(child)
+                self.removeChildrenRecursevly(child)
+            else:
+                self.scene.removeLineEdit(child)
+        
 
 
     def createLinks(self, newLinedit, currentLinedit):
