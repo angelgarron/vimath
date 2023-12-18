@@ -136,9 +136,13 @@ class Scene:
         else:
             end = None
 
+        # clear the lineEdits inbetween
+        for i, s in enumerate(self.selection[start:end]):
+            if i%2 != 0:
+                s[0].clear()
         # remove the frames inbetween
-        for s in self.selection[start:end]:
-            if not isinstance(s[0], MyLineEdit):
+        for i, s in enumerate(self.selection[start:end]):
+            if i%2 == 0:
                 s[0].removeFrame()
 
 
