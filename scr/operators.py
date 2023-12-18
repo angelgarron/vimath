@@ -70,7 +70,7 @@ class DeleteInVisual:
 
 
     def performAction(self, other):
-        other.del_()
+        scene.deleteSelection()
         scene.enterNormalMode()
 
 
