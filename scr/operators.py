@@ -59,7 +59,8 @@ class ChangeInVisual:
 
 
     def performAction(self, other):
-        other.del_()
+        scene.deleteSelection()
+        scene.clearSelection()
         scene.enterInsertMode()
 
 
