@@ -49,6 +49,7 @@ class BaseFrame(QFrame):
         self.scene.removeLineEdit(leftLineEdit)
         leftLineEdit.deleteLater()
         self.parent.children.remove(self)
+        self.relinkLeft(rightLineEdit)
         self.scene.updateFrames()
 
 
@@ -69,7 +70,10 @@ class BaseFrame(QFrame):
         self.firstLinedit.nextLinedit = currentLinedit
         self.firstLinedit.previousLinedit = newLinedit
         newLinedit.nextLinedit = self.firstLinedit
+        self.relinkLeft(newLinedit)
 
+        
+    def relinkLeft(self, newLinedit):
         # the links that before were pointing to currentLinedit
         # should now point to newLinedit
         # find the element to the left to rearrange those links
@@ -87,7 +91,7 @@ class BaseFrame(QFrame):
         if scene.window == currentElement.parent:
             return
         indx = currentElement.parent.children.index(currentElement)-1
-        if indx == -1: # meaning that we do not have anything to the left
+        if indx == -1: # meaning that we do not have anything to the left, so keep looking up the tree
             return self.findElementLeft(currentElement.parent)
         element = currentElement.parent.children[indx]
         return element
