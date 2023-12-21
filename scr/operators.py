@@ -114,3 +114,13 @@ class RemoveFrame:
     def performAction(self, other):
         if not other.text():
             other = other.parent.parent.removeFrame()
+
+
+@RegisterAction("normal")
+class RemoveLine:
+    def __init__(self):
+        self.key = [Qt.Key_D, Qt.Key_D]
+
+        
+    def performAction(self, other):
+        scene.clear()

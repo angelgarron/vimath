@@ -200,6 +200,15 @@ class Scene:
         return self.mode == VISUAL_MODE
 
 
+    def clear(self):
+        """Clear the contents of the scene
+        """
+        for element in self.frames[0].children:
+            if  not isinstance(element, MyLineEdit):
+                element.removeFrame()
+        self.frames[0].firstLinedit.clear()
+
+
 scene = Scene()
 # initialize all actions
 import motion, operators, addconstructor
