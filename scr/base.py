@@ -50,3 +50,23 @@ class ToggleVisualMode:
             scene.enterVisualMode()
         else:
             scene.enterNormalMode()
+
+
+@RegisterAction("normal")
+class Load:
+    def __init__(self):
+        self.key = [Qt.ControlModifier | Qt.Key_L]
+
+
+    def performAction(self, other):
+        scene.loadFromFile("saved_scene.json")
+
+
+@RegisterAction("normal")
+class Save:
+    def __init__(self):
+        self.key = [Qt.ControlModifier | Qt.Key_S]
+
+
+    def performAction(self, other):
+        scene.saveToFile("saved_scene.json")

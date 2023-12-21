@@ -135,6 +135,20 @@ class BaseFrame(QFrame):
     def setFocus(self):
         self.firstLinedit.setFocus()
 
+        
+    def serialize(self):
+        elements = []
+        for element in self.children:
+            elements.append(element.serialize())
+
+        return {
+            str(type(self)): elements
+        }
+
+        
+    def deserialize(self, data):
+        return
+
 
 class MyFrame(BaseFrame):
     def __init__(self, parent):

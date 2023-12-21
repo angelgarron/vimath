@@ -126,3 +126,14 @@ class MyLineEdit(QLineEdit):
                     if self.scene.isVisualMode():
                         self.scene.updateVisualSelection()
                     break
+
+
+    def serialize(self):
+        return {
+            str(type(self)): self.text()
+        }
+
+        
+    def deserialize(self, data):
+        return
+        

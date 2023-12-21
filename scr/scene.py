@@ -1,3 +1,4 @@
+import json
 from PySide6.QtWidgets import QProxyStyle
 from PySide6.QtCore import QPoint
 from lineedit import ThickCursorStyle, MyLineEdit
@@ -207,6 +208,32 @@ class Scene:
             if  not isinstance(element, MyLineEdit):
                 element.removeFrame()
         self.frames[0].firstLinedit.clear()
+    
+
+    def saveToFile(self, filename):
+        with open(filename, "w") as file:
+            json.dump(self.serialize(), file, indent=4)
+
+
+    def loadFromFile(self, filename):
+        with open(filename) as file:
+            data = json.load(file)
+            self.deserialize(data)
+
+
+    def serialize(self):
+        mainFrame = self.frames[0]
+        elements = []
+        for element in mainFrame.children:
+            elements.append(element.serialize())
+
+        return {
+            "mainFrame": elements
+        }
+
+
+    def deserialize(self, data):
+        print("deserializating data", data)
 
 
 scene = Scene()
