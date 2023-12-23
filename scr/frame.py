@@ -143,7 +143,8 @@ class BaseFrame(QFrame):
             elements.append(element.serialize())
 
         return {
-            str(type(self)): elements
+            "constructor": str(self.__class__),
+            "elements": elements,
         }
 
         

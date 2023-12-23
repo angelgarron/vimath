@@ -207,7 +207,7 @@ class Scene:
         for element in self.frames[0].children:
             if  not isinstance(element, MyLineEdit):
                 element.removeFrame()
-        self.frames[0].firstLinedit.clear()
+        self.frames[0].children[0].clear()
     
 
     def saveToFile(self, filename):
@@ -234,6 +234,28 @@ class Scene:
 
     def deserialize(self, data):
         print("deserializating data", data)
+        self.clear()
+        mainFrame = self.frames[0]
+        lineEdit = mainFrame.children[0]
+        lineEdit.setText("exa")
+        newFrame = Fraction(mainFrame)
+        mainFrame.children.insert(1, newFrame)
+
+
+        newLineEdit = MyLineEdit(mainFrame)
+        mainFrame.children.insert(2, newLineEdit)
+        newLineEdit.setText("mple")
+
+        newFrame.createLinks(lineEdit, newLineEdit)
+
+        self.updateFrames()
+        # for element in data["mainFrame"]:
+        #     if not returnClass[element["constructor"]] == MyLineEdit:
+        #         newFrame = lineEdit.createFrameMiddle(MyFrame)
+        #         newFrame.deserialize(element)
+        #     else:
+        #         lineEdit.setText(element["text"])
+
 
 
 scene = Scene()
@@ -243,3 +265,9 @@ from base import actions, actionsVisual, actionsInsert
 scene.actions = actions
 scene.actionsVisual = actionsVisual
 scene.actionsInsert = actionsInsert
+
+from frame import MyFrame
+from constructors import Fraction
+
+returnClass = {"<class 'lineedit.MyLineEdit'>": MyLineEdit, 
+               "<class 'constructors.fraction.Fraction'>": MyFrame}
