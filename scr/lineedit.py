@@ -73,7 +73,6 @@ class MyLineEdit(QLineEdit):
         self.setText(self.text()[cursorPosition:])
         newFrame.createLinks(newLinedit, self)
         newFrame.firstLinedit.setFocus()
-        newFrame.show()
         self.scene.updateFrames()
         return newFrame
         

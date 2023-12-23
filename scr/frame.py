@@ -23,6 +23,7 @@ class BaseFrame(QFrame):
         self.pen.setColor("black")
         self.children = []
         self.scene.addFrame(self)
+        self.show()
 
         
     def wheelEvent(self, event):
