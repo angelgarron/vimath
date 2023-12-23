@@ -204,8 +204,8 @@ class Scene:
     def clear(self):
         """Clear the contents of the scene
         """
-        for element in self.frames[0].children:
-            if  not isinstance(element, MyLineEdit):
+        for element in self.frames[0].children.copy():
+            if not isinstance(element, MyLineEdit):
                 element.removeFrame()
         self.frames[0].children[0].clear()
     
