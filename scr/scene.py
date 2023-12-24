@@ -237,24 +237,21 @@ class Scene:
         self.clear()
         mainFrame = self.frames[0]
         lineEdit = mainFrame.children[0]
-        lineEdit.setText("exa")
-        newFrame = Fraction(mainFrame)
-        mainFrame.children.insert(1, newFrame)
+        lineEdit.setText(data["mainFrame"][0]["text"])
 
-
-        newLineEdit = MyLineEdit(mainFrame)
-        mainFrame.children.insert(2, newLineEdit)
-        newLineEdit.setText("mple")
+        for element in data["mainFrame"][1:]:
+            constructor = returnClass[element["constructor"]]
+            if constructor != MyLineEdit:
+                newFrame = constructor(mainFrame)
+                mainFrame.children.append(newFrame)
+            else:
+                newLineEdit = MyLineEdit(mainFrame)
+                mainFrame.children.append(newLineEdit)
+                newLineEdit.setText(data["mainFrame"][data["mainFrame"].index(element)]["text"])
 
         newFrame.createLinks(lineEdit, newLineEdit)
 
         self.updateFrames()
-        # for element in data["mainFrame"]:
-        #     if not returnClass[element["constructor"]] == MyLineEdit:
-        #         newFrame = lineEdit.createFrameMiddle(MyFrame)
-        #         newFrame.deserialize(element)
-        #     else:
-        #         lineEdit.setText(element["text"])
 
 
 
@@ -270,4 +267,4 @@ from frame import MyFrame
 from constructors import Fraction
 
 returnClass = {"<class 'lineedit.MyLineEdit'>": MyLineEdit, 
-               "<class 'constructors.fraction.Fraction'>": MyFrame}
+               "<class 'constructors.fraction.Fraction'>": Fraction}
