@@ -1,7 +1,7 @@
-from frame import MyFrame, BaseFrame
+from frame import MyFrame
 
 
-class SquareRoot(BaseFrame):
+class SquareRoot(MyFrame):
     VSPACE = 3
     LHSPACE = 8
     RHSPACE = 3
@@ -9,6 +9,10 @@ class SquareRoot(BaseFrame):
         super().__init__(parent)
         self.squareRootArgumentFrame = MyFrame(self)
         self.children.append(self.squareRootArgumentFrame)
+
+
+    def setFirstLineEdit(self):
+        self.squareRootArgumentFrame.setFirstLineEdit()
         self.firstLinedit = self.squareRootArgumentFrame.firstLinedit
 
 

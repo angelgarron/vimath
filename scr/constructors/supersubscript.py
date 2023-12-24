@@ -1,7 +1,7 @@
-from frame import MyFrame, BaseFrame
+from frame import MyFrame
 
 
-class SuperSubscript(BaseFrame):
+class SuperSubscript(MyFrame):
     VSPACE = 0.6
     def __init__(self, parent):
         super().__init__(parent)

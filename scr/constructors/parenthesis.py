@@ -1,7 +1,7 @@
-from frame import MyFrame, BaseFrame
+from frame import MyFrame
 
 
-class Parenthesis(BaseFrame):
+class Parenthesis(MyFrame):
     VSPACE = 3
     LHSPACE = 10
     RHSPACE = 10
@@ -9,6 +9,10 @@ class Parenthesis(BaseFrame):
         super().__init__(parent)
         self.base = MyFrame(self)
         self.children.append(self.base)
+
+
+    def setFirstLineEdit(self):
+        self.base.setFirstLineEdit()
         self.firstLinedit = self.base.firstLinedit
 
 

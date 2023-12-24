@@ -65,6 +65,7 @@ class MyLineEdit(QLineEdit):
     def createFrameMiddle(self, FrameConstructor):
         cursorPosition = self.cursorPosition()
         newFrame = FrameConstructor(self.parent)
+        newFrame.setFirstLineEdit()
         currentLineditPosition = self.parent.children.index(self)
         self.parent.children.insert(currentLineditPosition, newFrame)
         newLinedit = MyLineEdit(self.parent)

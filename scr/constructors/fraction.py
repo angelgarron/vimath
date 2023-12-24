@@ -1,7 +1,7 @@
-from frame import MyFrame, BaseFrame
+from frame import MyFrame
 
 
-class Fraction(BaseFrame):
+class Fraction(MyFrame):
     VSPACE = 3
     HSPACE = 5
     def __init__(self, parent):
@@ -10,9 +10,14 @@ class Fraction(BaseFrame):
         self.denominator = MyFrame(self)
         self.children.append(self.numerator)
         self.children.append(self.denominator)
+        
+        
+    def setFirstLineEdit(self):
+        self.numerator.setFirstLineEdit()
+        self.denominator.setFirstLineEdit()
         self.firstLinedit = self.numerator.firstLinedit
-        
-        
+
+
     def createLinks(self, newLinedit, currentLinedit):
         super().createLinks(newLinedit, currentLinedit)
         self.denominator.firstLinedit.nextLinedit = currentLinedit

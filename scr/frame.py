@@ -8,7 +8,7 @@ LINEDIT_SIZE = (8, 20)
 CURSOR_WIDTH = 12
 
 
-class BaseFrame(QFrame):
+class MyFrame(QFrame):
     def __init__(self, parent):
         super().__init__(parent)
         self.parent = parent
@@ -26,6 +26,11 @@ class BaseFrame(QFrame):
         self.show()
 
         
+    def setFirstLineEdit(self):
+        self.firstLinedit = MyLineEdit(self)
+        self.children.append(self.firstLinedit)
+
+
     def wheelEvent(self, event):
         print(self)
         return super().wheelEvent(event)
@@ -149,11 +154,13 @@ class BaseFrame(QFrame):
 
         
     def deserialize(self, data):
-        return
-
-
-class MyFrame(BaseFrame):
-    def __init__(self, parent):
-        super().__init__(parent)
-        self.firstLinedit = MyLineEdit(self)
-        self.children.append(self.firstLinedit)
+        for element in data:
+            constructor = self.scene.returnClass[element["constructor"]]
+            if constructor != MyLineEdit:
+                newFrame = constructor(self)
+                newFrame.deserialize(element["elements"])
+                self.children.append(newFrame)
+            else:
+                newLineEdit = MyLineEdit(self)
+                newLineEdit.setText(element["text"])
+                self.children.append(newLineEdit)
