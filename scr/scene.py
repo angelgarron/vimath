@@ -241,8 +241,6 @@ class Scene:
 
         mainFrame.deserialize(data["mainFrame"][1:])
 
-        # newFrame.createLinks(lineEdit, newLineEdit)
-
         self.updateFrames()
 
 

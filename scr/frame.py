@@ -163,9 +163,16 @@ class MyFrame(QFrame):
             constructor = self.scene.returnClass[element["constructor"]]
             if constructor != MyLineEdit:
                 newFrame = constructor(self)
-                newFrame.deserialize(element["elements"])
                 self.children.append(newFrame)
+                newFrame.deserialize(element["elements"])
             else:
                 newLineEdit = MyLineEdit(self)
                 newLineEdit.setText(element["text"])
                 self.children.append(newLineEdit)
+
+        if len(self.children)>1:
+            for i, element in enumerate(self.children):
+                if not isinstance(element, MyLineEdit):
+                    leftLineEdit = self.children[i-1]
+                    rightLineEdit = self.children[i+1]
+                    element.createLinks(leftLineEdit, rightLineEdit)
