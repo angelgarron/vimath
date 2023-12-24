@@ -239,17 +239,9 @@ class Scene:
         lineEdit = mainFrame.children[0]
         lineEdit.setText(data["mainFrame"][0]["text"])
 
-        for element in data["mainFrame"][1:]:
-            constructor = returnClass[element["constructor"]]
-            if constructor != MyLineEdit:
-                newFrame = constructor(mainFrame)
-                mainFrame.children.append(newFrame)
-            else:
-                newLineEdit = MyLineEdit(mainFrame)
-                mainFrame.children.append(newLineEdit)
-                newLineEdit.setText(data["mainFrame"][data["mainFrame"].index(element)]["text"])
+        mainFrame.deserialize(data["mainFrame"][1:])
 
-        newFrame.createLinks(lineEdit, newLineEdit)
+        # newFrame.createLinks(lineEdit, newLineEdit)
 
         self.updateFrames()
 
@@ -266,5 +258,7 @@ scene.actionsInsert = actionsInsert
 from frame import MyFrame
 from constructors import Fraction
 
-returnClass = {"<class 'lineedit.MyLineEdit'>": MyLineEdit, 
-               "<class 'constructors.fraction.Fraction'>": Fraction}
+returnClass = {"<class 'lineedit.MyLineEdit'>": MyLineEdit,
+               "<class 'constructors.fraction.Fraction'>": Fraction,
+               "<class 'frame.MyFrame'>": MyFrame}
+scene.returnClass = returnClass

@@ -49,3 +49,8 @@ class Fraction(MyFrame):
         super().paintEvent(event)
         painter = self.createPainter()
         painter.drawLine(0, self.u, self.width(), self.u)
+        
+        
+    def deserialize(self, data):
+        self.numerator.deserialize(data[0]["elements"])
+        self.denominator.deserialize(data[1]["elements"])
