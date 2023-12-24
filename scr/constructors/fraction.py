@@ -20,6 +20,11 @@ class Fraction(MyFrame):
     @property
     def firstLinedit(self):
         return self.numerator.firstLinedit
+    
+
+    @property
+    def lastLinedit(self):
+        return self.numerator.lastLinedit
 
 
     def createLinks(self, newLinedit, currentLinedit):

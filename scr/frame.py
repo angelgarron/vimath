@@ -34,6 +34,11 @@ class MyFrame(QFrame):
     @property
     def firstLinedit(self):
         return self.children[0]
+    
+
+    @property
+    def lastLinedit(self):
+        return self.children[-1]
 
 
     def wheelEvent(self, event):
@@ -77,8 +82,8 @@ class MyFrame(QFrame):
 
     def createLinks(self, newLinedit, currentLinedit):
         newLinedit.previousLinedit = currentLinedit.previousLinedit
-        currentLinedit.previousLinedit = self.firstLinedit
-        self.firstLinedit.nextLinedit = currentLinedit
+        currentLinedit.previousLinedit = self.lastLinedit
+        self.lastLinedit.nextLinedit = currentLinedit
         self.firstLinedit.previousLinedit = newLinedit
         newLinedit.nextLinedit = self.firstLinedit
         self.relinkLeft(newLinedit)

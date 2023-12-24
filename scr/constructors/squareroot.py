@@ -18,6 +18,11 @@ class SquareRoot(MyFrame):
     @property
     def firstLinedit(self):
         return self.squareRootArgumentFrame.firstLinedit
+    
+
+    @property
+    def lastLinedit(self):
+        return self.squareRootArgumentFrame.lastLinedit
 
 
     def createLinks(self, newLinedit, currentLinedit):
