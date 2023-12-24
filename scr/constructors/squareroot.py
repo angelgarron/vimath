@@ -13,7 +13,11 @@ class SquareRoot(MyFrame):
 
     def setFirstLineEdit(self):
         self.squareRootArgumentFrame.setFirstLineEdit()
-        self.firstLinedit = self.squareRootArgumentFrame.firstLinedit
+
+        
+    @property
+    def firstLinedit(self):
+        return self.squareRootArgumentFrame.firstLinedit
 
 
     def createLinks(self, newLinedit, currentLinedit):

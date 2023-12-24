@@ -27,8 +27,13 @@ class MyFrame(QFrame):
 
         
     def setFirstLineEdit(self):
-        self.firstLinedit = MyLineEdit(self)
-        self.children.append(self.firstLinedit)
+        firstLinedit = MyLineEdit(self)
+        self.children.append(firstLinedit)
+
+        
+    @property
+    def firstLinedit(self):
+        return self.children[0]
 
 
     def wheelEvent(self, event):

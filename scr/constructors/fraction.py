@@ -15,7 +15,11 @@ class Fraction(MyFrame):
     def setFirstLineEdit(self):
         self.numerator.setFirstLineEdit()
         self.denominator.setFirstLineEdit()
-        self.firstLinedit = self.numerator.firstLinedit
+
+
+    @property
+    def firstLinedit(self):
+        return self.numerator.firstLinedit
 
 
     def createLinks(self, newLinedit, currentLinedit):

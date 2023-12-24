@@ -13,7 +13,11 @@ class Parenthesis(MyFrame):
 
     def setFirstLineEdit(self):
         self.base.setFirstLineEdit()
-        self.firstLinedit = self.base.firstLinedit
+
+        
+    @property
+    def firstLinedit(self):
+        return self.base.firstLinedit
 
 
     def createLinks(self, newLinedit, currentLinedit):
