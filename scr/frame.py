@@ -65,7 +65,7 @@ class MyFrame(QFrame):
         self.scene.removeLineEdit(leftLineEdit)
         leftLineEdit.deleteLater()
         self.parent.children.remove(self)
-        self.relinkLeft(rightLineEdit)
+        self.relinkRight(rightLineEdit)
         self.scene.updateFrames()
 
 
@@ -81,46 +81,45 @@ class MyFrame(QFrame):
 
 
     def createLinks(self, leftLineEdit, rightLineEdit):
-        leftLineEdit.previousLinedit = rightLineEdit.previousLinedit
+        rightLineEdit.nextLinedit = leftLineEdit.nextLinedit
         rightLineEdit.previousLinedit = self.lastLinedit
         self.lastLinedit.nextLinedit = rightLineEdit
         self.firstLinedit.previousLinedit = leftLineEdit
         leftLineEdit.nextLinedit = self.firstLinedit
-        self.relinkLeft(leftLineEdit)
+        self.relinkRight(rightLineEdit)
 
         
-    def relinkLeft(self, leftLineEdit):
-        # the links that before were pointing to rightLineEdit
-        # should now point to leftLineEdit
+    def relinkRight(self, rightLineEdit):
+        # the links that before were pointing to leftLineEdit
+        # should now point to rightLineEdit
         # find the element to the left to rearrange those links
-        element = self.findElementLeft(leftLineEdit)
+        element = self.findElementRight(rightLineEdit)
         if element is not None:
-            self.rearrangeLinks(element, leftLineEdit)
+            self.rearrangeLinks(element, rightLineEdit)
 
         
-    def findElementLeft(self, currentElement):
+    def findElementRight(self, currentElement):
         # check if currentElement is a denominator frame so it doesn't go from numerator to denominator
-        if hasattr(currentElement.parent, "denominator"):
-            if currentElement.parent.denominator == currentElement:
-                return
+        if hasattr(currentElement, "isDenominator"):
+            return
         # don't keep looking if we reached parent window
         if scene.window == currentElement.parent:
             return
-        indx = currentElement.parent.children.index(currentElement)-1
-        if indx == -1: # meaning that we do not have anything to the left, so keep looking up the tree
-            return self.findElementLeft(currentElement.parent)
+        indx = currentElement.parent.children.index(currentElement)+1
+        if indx == len(currentElement.parent.children) or hasattr(currentElement.parent.children[indx], "isDenominator"): # meaning that we do not have anything to the right, so keep looking up the tree
+            return self.findElementRight(currentElement.parent)
         element = currentElement.parent.children[indx]
         return element
 
         
-    def rearrangeLinks(self, element, leftLineEdit):
-        """Make all the nextLinedit inside `element` (recursively) point to leftLineEdit
+    def rearrangeLinks(self, element, rightLineEdit):
+        """Make all the previousLinedit inside `element` (recursively) point to rightLineEdit
         """
         if not isinstance(element, MyLineEdit):
             for child in element.children:
-                self.rearrangeLinks(child, leftLineEdit)
+                self.rearrangeLinks(child, rightLineEdit)
         else:
-            element.nextLinedit = leftLineEdit
+            element.previousLinedit = rightLineEdit
 
 
     def updateFrameSizeAndPosition(self):

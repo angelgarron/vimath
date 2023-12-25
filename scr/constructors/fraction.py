@@ -7,7 +7,9 @@ class Fraction(MyFrame):
     def __init__(self, parent):
         super().__init__(parent)
         self.numerator = MyFrame(self)
+        self.numerator.isNumerator = True
         self.denominator = MyFrame(self)
+        self.denominator.isDenominator = True
         self.children.append(self.numerator)
         self.children.append(self.denominator)
         
@@ -33,10 +35,10 @@ class Fraction(MyFrame):
         self.denominator.firstLinedit.previousLinedit = leftLineEdit
         self.numerator.firstLinedit.lowerLinedit = self.denominator.firstLinedit
         self.denominator.firstLinedit.upperLinedit = self.numerator.firstLinedit
-        self.denominator.firstLinedit.lowerLinedit = rightLineEdit.lowerLinedit
-        leftLineEdit.lowerLinedit = rightLineEdit.lowerLinedit
-        self.numerator.firstLinedit.upperLinedit = rightLineEdit.upperLinedit
-        leftLineEdit.upperLinedit = rightLineEdit.upperLinedit
+        self.denominator.firstLinedit.lowerLinedit = leftLineEdit.lowerLinedit
+        rightLineEdit.lowerLinedit = leftLineEdit.lowerLinedit
+        self.numerator.firstLinedit.upperLinedit = leftLineEdit.upperLinedit
+        rightLineEdit.upperLinedit = leftLineEdit.upperLinedit
 
 
     def updateFrameSizeAndPosition(self):
