@@ -47,9 +47,7 @@ class Fraction(MyFrame):
     def __init__(self, parent):
         super().__init__(parent)
         self.numerator = Numerator(self)
-        self.numerator.isNumerator = True
         self.denominator = Denominator(self)
-        self.denominator.isDenominator = True
         self.children.append(self.numerator)
         self.children.append(self.denominator)
         
