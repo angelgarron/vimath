@@ -166,10 +166,3 @@ class MyFrame(QFrame):
                 newLineEdit = MyLineEdit(self)
                 newLineEdit.setText(element["text"])
                 self.children.append(newLineEdit)
-
-        if len(self.children)>1:
-            for i, element in enumerate(self.children):
-                if not isinstance(element, MyLineEdit):
-                    leftLineEdit = self.children[i-1]
-                    rightLineEdit = self.children[i+1]
-                    element.createLinks(leftLineEdit, rightLineEdit)
