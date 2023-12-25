@@ -80,22 +80,22 @@ class MyFrame(QFrame):
         
 
 
-    def createLinks(self, newLinedit, currentLinedit):
-        newLinedit.previousLinedit = currentLinedit.previousLinedit
-        currentLinedit.previousLinedit = self.lastLinedit
-        self.lastLinedit.nextLinedit = currentLinedit
-        self.firstLinedit.previousLinedit = newLinedit
-        newLinedit.nextLinedit = self.firstLinedit
-        self.relinkLeft(newLinedit)
+    def createLinks(self, leftLineEdit, rightLineEdit):
+        leftLineEdit.previousLinedit = rightLineEdit.previousLinedit
+        rightLineEdit.previousLinedit = self.lastLinedit
+        self.lastLinedit.nextLinedit = rightLineEdit
+        self.firstLinedit.previousLinedit = leftLineEdit
+        leftLineEdit.nextLinedit = self.firstLinedit
+        self.relinkLeft(leftLineEdit)
 
         
-    def relinkLeft(self, newLinedit):
-        # the links that before were pointing to currentLinedit
-        # should now point to newLinedit
+    def relinkLeft(self, leftLineEdit):
+        # the links that before were pointing to rightLineEdit
+        # should now point to leftLineEdit
         # find the element to the left to rearrange those links
-        element = self.findElementLeft(newLinedit)
+        element = self.findElementLeft(leftLineEdit)
         if element is not None:
-            self.rearrangeLinks(element, newLinedit)
+            self.rearrangeLinks(element, leftLineEdit)
 
         
     def findElementLeft(self, currentElement):
@@ -113,14 +113,14 @@ class MyFrame(QFrame):
         return element
 
         
-    def rearrangeLinks(self, element, newLinedit):
-        """Make all the nextLinedit inside `element` (recursively) point to newLinedit
+    def rearrangeLinks(self, element, leftLineEdit):
+        """Make all the nextLinedit inside `element` (recursively) point to leftLineEdit
         """
         if not isinstance(element, MyLineEdit):
             for child in element.children:
-                self.rearrangeLinks(child, newLinedit)
+                self.rearrangeLinks(child, leftLineEdit)
         else:
-            element.nextLinedit = newLinedit
+            element.nextLinedit = leftLineEdit
 
 
     def updateFrameSizeAndPosition(self):

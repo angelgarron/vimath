@@ -27,16 +27,16 @@ class Fraction(MyFrame):
         return self.numerator.lastLinedit
 
 
-    def createLinks(self, newLinedit, currentLinedit):
-        super().createLinks(newLinedit, currentLinedit)
-        self.denominator.firstLinedit.nextLinedit = currentLinedit
-        self.denominator.firstLinedit.previousLinedit = newLinedit
+    def createLinks(self, leftLineEdit, rightLineEdit):
+        super().createLinks(leftLineEdit, rightLineEdit)
+        self.denominator.firstLinedit.nextLinedit = rightLineEdit
+        self.denominator.firstLinedit.previousLinedit = leftLineEdit
         self.numerator.firstLinedit.lowerLinedit = self.denominator.firstLinedit
         self.denominator.firstLinedit.upperLinedit = self.numerator.firstLinedit
-        self.denominator.firstLinedit.lowerLinedit = currentLinedit.lowerLinedit
-        newLinedit.lowerLinedit = currentLinedit.lowerLinedit
-        self.numerator.firstLinedit.upperLinedit = currentLinedit.upperLinedit
-        newLinedit.upperLinedit = currentLinedit.upperLinedit
+        self.denominator.firstLinedit.lowerLinedit = rightLineEdit.lowerLinedit
+        leftLineEdit.lowerLinedit = rightLineEdit.lowerLinedit
+        self.numerator.firstLinedit.upperLinedit = rightLineEdit.upperLinedit
+        leftLineEdit.upperLinedit = rightLineEdit.upperLinedit
 
 
     def updateFrameSizeAndPosition(self):
