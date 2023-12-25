@@ -254,9 +254,12 @@ scene.actionsVisual = actionsVisual
 scene.actionsInsert = actionsInsert
 
 from frame import MyFrame
-from constructors import Fraction
+from constructors import Fraction, SquareRoot
 
-returnClass = {"<class 'lineedit.MyLineEdit'>": MyLineEdit,
-               "<class 'constructors.fraction.Fraction'>": Fraction,
-               "<class 'frame.MyFrame'>": MyFrame}
+returnClass = {
+    "<class 'lineedit.MyLineEdit'>": MyLineEdit,
+    "<class 'constructors.fraction.Fraction'>": Fraction,
+    "<class 'frame.MyFrame'>": MyFrame,
+    "<class 'constructors.squareroot.SquareRoot'>": SquareRoot,
+}
 scene.returnClass = returnClass
