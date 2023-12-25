@@ -48,3 +48,7 @@ class SquareRoot(MyFrame):
         painter.drawLine(0, 2*self.height()/3, 2*SquareRoot.LHSPACE/3, self.height())
         painter.drawLine(2*SquareRoot.LHSPACE/3, self.height(), SquareRoot.LHSPACE, SquareRoot.VSPACE)
         painter.drawLine(SquareRoot.LHSPACE, SquareRoot.VSPACE, self.width(), SquareRoot.VSPACE)
+
+
+    def deserialize(self, data):
+        self.squareRootArgumentFrame.deserialize(data[0]["elements"])
