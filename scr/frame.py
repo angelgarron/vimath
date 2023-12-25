@@ -41,6 +41,44 @@ class MyFrame(QFrame):
         return self.children[-1]
 
 
+    @property
+    def nextLinedit(self):
+        if self == self.scene.frames[0]:
+            return None
+        indx = self.parent.children.index(self)+1
+        try:
+            return self.parent.children[indx]
+        except IndexError:
+            return self.parent.nextLinedit
+
+
+    @property
+    def previousLinedit(self):
+        if self == self.scene.frames[0]:
+            return None
+        indx = self.parent.children.index(self)-1
+        try:
+            if indx < 0:
+                raise IndexError
+            return self.parent.children[indx]
+        except IndexError:
+            return self.parent.previousLinedit
+
+
+    @property
+    def upperLinedit(self):
+        if self == self.scene.frames[0]:
+            return None
+        return self.parent.upperLinedit
+    
+
+    @property
+    def lowerLinedit(self):
+        if self == self.scene.frames[0]:
+            return None
+        return self.parent.lowerLinedit
+            
+            
     def wheelEvent(self, event):
         print(self)
         return super().wheelEvent(event)
@@ -60,12 +98,10 @@ class MyFrame(QFrame):
         # give focus to someone else so it doesn't crash when self is deleted
         leftLineEdit.setFocus()
         leftLineEdit.setCursorPosition(len(leftText))
-        leftLineEdit.nextLinedit = rightLineEdit.nextLinedit
         self.parent.children.remove(rightLineEdit)
         self.scene.removeLineEdit(rightLineEdit)
         rightLineEdit.deleteLater()
         self.parent.children.remove(self)
-        self.relinkRight(leftLineEdit)
         self.scene.updateFrames()
 
 
@@ -78,49 +114,6 @@ class MyFrame(QFrame):
             else:
                 self.scene.removeLineEdit(child)
         
-
-
-    def createLinks(self, leftLineEdit, rightLineEdit):
-        rightLineEdit.nextLinedit = leftLineEdit.nextLinedit
-        rightLineEdit.previousLinedit = self.lastLinedit
-        self.lastLinedit.nextLinedit = rightLineEdit
-        self.firstLinedit.previousLinedit = leftLineEdit
-        leftLineEdit.nextLinedit = self.firstLinedit
-        self.relinkRight(rightLineEdit)
-
-        
-    def relinkRight(self, rightLineEdit):
-        # the links that before were pointing to leftLineEdit
-        # should now point to rightLineEdit
-        # find the element to the left to rearrange those links
-        element = self.findElementRight(rightLineEdit)
-        if element is not None:
-            self.rearrangeLinks(element, rightLineEdit)
-
-        
-    def findElementRight(self, currentElement):
-        # check if currentElement is a denominator frame so it doesn't go from numerator to denominator
-        if hasattr(currentElement, "isDenominator"):
-            return
-        # don't keep looking if we reached parent window
-        if scene.window == currentElement.parent:
-            return
-        indx = currentElement.parent.children.index(currentElement)+1
-        if indx == len(currentElement.parent.children) or hasattr(currentElement.parent.children[indx], "isDenominator"): # meaning that we do not have anything to the right, so keep looking up the tree
-            return self.findElementRight(currentElement.parent)
-        element = currentElement.parent.children[indx]
-        return element
-
-        
-    def rearrangeLinks(self, element, rightLineEdit):
-        """Make all the previousLinedit inside `element` (recursively) point to rightLineEdit
-        """
-        if not isinstance(element, MyLineEdit):
-            for child in element.children:
-                self.rearrangeLinks(child, rightLineEdit)
-        else:
-            element.previousLinedit = rightLineEdit
-
 
     def updateFrameSizeAndPosition(self):
         self.u = 0

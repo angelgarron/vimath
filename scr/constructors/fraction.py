@@ -1,14 +1,54 @@
 from frame import MyFrame
 
 
+class Numerator(MyFrame):
+    def __init__(self, parent):
+        super().__init__(parent)
+
+        
+    @property
+    def nextLinedit(self):
+        return self.parent.nextLinedit
+    
+
+    @property
+    def previousLinedit(self):
+        return self.parent.previousLinedit
+    
+
+    @property
+    def lowerLinedit(self):
+        return self.parent.denominator.firstLinedit
+
+
+class Denominator(MyFrame):
+    def __init__(self, parent):
+        super().__init__(parent)
+
+        
+    @property
+    def nextLinedit(self):
+        return self.parent.nextLinedit
+    
+
+    @property
+    def previousLinedit(self):
+        return self.parent.previousLinedit
+    
+
+    @property
+    def upperLinedit(self):
+        return self.parent.numerator.firstLinedit
+
+
 class Fraction(MyFrame):
     VSPACE = 3
     HSPACE = 5
     def __init__(self, parent):
         super().__init__(parent)
-        self.numerator = MyFrame(self)
+        self.numerator = Numerator(self)
         self.numerator.isNumerator = True
-        self.denominator = MyFrame(self)
+        self.denominator = Denominator(self)
         self.denominator.isDenominator = True
         self.children.append(self.numerator)
         self.children.append(self.denominator)
@@ -27,18 +67,6 @@ class Fraction(MyFrame):
     @property
     def lastLinedit(self):
         return self.numerator.lastLinedit
-
-
-    def createLinks(self, leftLineEdit, rightLineEdit):
-        super().createLinks(leftLineEdit, rightLineEdit)
-        self.denominator.firstLinedit.nextLinedit = rightLineEdit
-        self.denominator.firstLinedit.previousLinedit = leftLineEdit
-        self.numerator.firstLinedit.lowerLinedit = self.denominator.firstLinedit
-        self.denominator.firstLinedit.upperLinedit = self.numerator.firstLinedit
-        self.denominator.firstLinedit.lowerLinedit = leftLineEdit.lowerLinedit
-        rightLineEdit.lowerLinedit = leftLineEdit.lowerLinedit
-        self.numerator.firstLinedit.upperLinedit = leftLineEdit.upperLinedit
-        rightLineEdit.upperLinedit = leftLineEdit.upperLinedit
 
 
     def updateFrameSizeAndPosition(self):

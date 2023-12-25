@@ -34,14 +34,40 @@ class MyLineEdit(QLineEdit):
         self.setGeometry(0, 0, LINEDIT_SIZE[0], self.u+self.d)
         self.textChanged.connect(self.updateWidth)
         self.textEdited.connect(self.wasEdited)
-        self.nextLinedit = None
-        self.previousLinedit = None
-        self.upperLinedit = None
-        self.lowerLinedit = None
         self.updateWidth()
         self.show()
     
 
+    @property
+    def nextLinedit(self):
+        indx = self.parent.children.index(self)+1
+        try:
+            return self.parent.children[indx].firstLinedit
+        except IndexError:
+            return self.parent.nextLinedit
+    
+
+    @property
+    def previousLinedit(self):
+        indx = self.parent.children.index(self)-1
+        try:
+            if indx < 0:
+                raise IndexError
+            return self.parent.children[indx].lastLinedit
+        except IndexError:
+            return self.parent.previousLinedit
+        
+        
+    @property
+    def upperLinedit(self):
+        return self.parent.upperLinedit
+    
+
+    @property
+    def lowerLinedit(self):
+        return self.parent.lowerLinedit
+        
+        
     def wasEdited(self):
         text = self.text()
         for action in self.scene.actionsInsert.values():
@@ -72,7 +98,6 @@ class MyLineEdit(QLineEdit):
         self.parent.children.insert(currentLineditPosition+2, rightLineEdit)
         rightLineEdit.setText(self.text()[cursorPosition:])
         self.setText(self.text()[:cursorPosition])
-        newFrame.createLinks(self, rightLineEdit)
         newFrame.firstLinedit.setFocus()
         self.scene.updateFrames()
         return newFrame
