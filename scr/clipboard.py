@@ -7,15 +7,20 @@ class Clipboard:
         self.clipboardElements = []
     
     
-    def serializeSelected(self):
-        self.clipboardElements = []
+    def serializeSelected(self, selection=None, register=None):
+        if selection is None:
+            selection = self.scene.selection
+        if register is None:
+            self.clipboardElements = []
+            register = self.clipboardElements
 
-        first = self.scene.selection[0]
-        second = self.scene.selection[-1]
+        first = selection[0]
+        second = selection[-1]
         
-        if first[0] == second[0]: # we are in the same lineEdit
-            self.clipboardElements.append(first[0].serialize(first[1], second[1]))
-            print("the serialized elements are", self.clipboardElements)
+        # we are in the same lineEdit
+        if isinstance(first[0], MyLineEdit) and isinstance(second[0], MyLineEdit) and first[0] == second[0]:
+            register.append(first[0].serialize(first[1], second[1]))
+            print("the serialized elements are", register)
             return
 
         start, end = 1, -1
@@ -25,28 +30,31 @@ class Clipboard:
             end = None
 
         if isinstance(first[0], MyLineEdit):
-            self.clipboardElements.append(first[0].serialize(first[1], None))
+            register.append(first[0].serialize(first[1], None))
 
-        for i, s in enumerate(self.scene.selection[start:end]):
+        for i, s in enumerate(selection[start:end]):
             if i%2 != 0:
-                self.clipboardElements.append(s[0].serialize())
+                register.append(s[0].serialize())
             else:
-                self.clipboardElements.append(s[0].serialize())
+                register.append(s[0].serialize())
 
         if isinstance(second[0], MyLineEdit):
-            self.clipboardElements.append(second[0].serialize(None, second[1]))
+            register.append(second[0].serialize(None, second[1]))
 
-        print("the serialized elements are", self.clipboardElements)
+        print("the serialized elements are", register)
 
 
-    def deserializeFromClipboard(self):
+    def deserializeFromClipboard(self, register=None):
+        if register is None:
+            register = self.clipboardElements
+
         leftLineEdit = self.scene.getLineEditWithFocus()
         cursorPosition = leftLineEdit.cursorPosition()
 
         leftText = leftLineEdit.text()[:cursorPosition]
         rightText = leftLineEdit.text()[cursorPosition:]
         
-        clipboardElements = self.clipboardElements.copy()
+        clipboardElements = register.copy()
         if not self.scene.returnClass[clipboardElements[0]["constructor"]] == MyLineEdit:
             clipboardElements.insert(0, {"constructor":str(MyLineEdit), "text": ""})
         if not self.scene.returnClass[clipboardElements[-1]["constructor"]] == MyLineEdit:
