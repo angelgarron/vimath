@@ -59,6 +59,7 @@ class ChangeInVisual:
 
 
     def performAction(self, other):
+        scene.clipboard.serializeSelected()
         scene.deleteSelection()
         scene.clearSelection()
         scene.enterInsertMode()
@@ -71,6 +72,7 @@ class DeleteInVisual:
 
 
     def performAction(self, other):
+        scene.clipboard.serializeSelected()
         scene.deleteSelection()
         scene.enterNormalMode()
 
@@ -127,13 +129,12 @@ class RemoveLine:
 
 
 @RegisterAction("visual")
-class Cut:
+class Yank:
     def __init__(self):
-        self.key = [Qt.ControlModifier | Qt.Key_X]
+        self.key = [Qt.Key_Y]
 
         
     def performAction(self, other):
-        print("cutting")
         scene.clipboard.serializeSelected()
         scene.enterNormalMode()
 
@@ -141,9 +142,8 @@ class Cut:
 @RegisterAction("normal")
 class Paste:
     def __init__(self):
-        self.key = [Qt.ControlModifier | Qt.Key_V]
+        self.key = [Qt.Key_P]
 
         
     def performAction(self, other):
-        print("pasting")
         scene.clipboard.deserializeFromClipboard()
