@@ -147,3 +147,23 @@ class Paste:
         
     def performAction(self, other):
         scene.clipboard.deserializeFromClipboard()
+
+
+@RegisterAction("normal")
+class Undo:
+    def __init__(self):
+        self.key = [Qt.Key_U]
+
+        
+    def performAction(self, other):
+        scene.history.undo()
+
+
+@RegisterAction("normal")
+class Redo:
+    def __init__(self):
+        self.key = [Qt.ControlModifier | Qt.Key_R]
+
+        
+    def performAction(self, other):
+        scene.history.redo()

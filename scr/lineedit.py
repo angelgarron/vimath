@@ -100,6 +100,7 @@ class MyLineEdit(QLineEdit):
         self.setText(self.text()[:cursorPosition])
         newFrame.firstLinedit.setFocus()
         self.scene.updateFrames()
+        self.scene.history.store(f"create frame {FrameConstructor}")
         return newFrame
         
 
@@ -119,6 +120,7 @@ class MyLineEdit(QLineEdit):
             if not self.scene.isNormalMode():
                 self.cursorBackward(False)
                 self.scene.enterNormalMode()
+                self.scene.history.store("enter normal mode from insert mode")
             return
 
         if self.scene.isInsertMode():

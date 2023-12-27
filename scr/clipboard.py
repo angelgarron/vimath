@@ -75,3 +75,5 @@ class Clipboard:
         rightLineEdit.setText(clipboardElements[-1]["text"]+rightText)
         
         self.scene.updateFrames()
+
+        self.scene.history.store("deserializing from clipboard")

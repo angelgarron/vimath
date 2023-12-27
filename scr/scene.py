@@ -3,6 +3,7 @@ from PySide6.QtWidgets import QProxyStyle
 from PySide6.QtCore import QPoint
 from lineedit import ThickCursorStyle, MyLineEdit
 from clipboard import Clipboard
+from history import History
 
 NORMAL_MODE = 0
 INSERT_MODE = 1
@@ -19,6 +20,7 @@ class Scene:
         self.selectionSecond = None
         self.selection = []
         self.clipboard = Clipboard(self)
+        self.history = History(self)
 
         
     def getLineEditWithFocus(self):
@@ -122,6 +124,7 @@ class Scene:
             first[0].setCursorPosition(first[1])
             first[0].cursorForward(True, second[1]-first[1])
             first[0].deleteText()
+            scene.history.store("delete selection")
             return
 
         start, end = 1, -1
@@ -147,6 +150,8 @@ class Scene:
         for i, s in enumerate(self.selection[start:end]):
             if i%2 == 0:
                 s[0].removeFrame()
+
+        scene.history.store("delete selection")
 
 
     def updateFrames(self):
@@ -221,6 +226,7 @@ class Scene:
         with open(filename) as file:
             data = json.load(file)
             self.deserialize(data)
+        scene.history.store("loaded from file")
 
 
     def serialize(self):

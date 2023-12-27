@@ -13,6 +13,9 @@ class MyMainWindow(QMainWindow):
         self.scene.window = self
         self.tp = SelectionRectangle(self)
 
+        self.mainMathFrame = MyFrame(self)
+        self.mainMathFrame.setFirstLineEdit()
+        self.scene.history.store("first stamp")
         self.createMyMath()
 
 
