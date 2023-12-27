@@ -21,7 +21,7 @@ class Base(MyFrame):
         return self.parent.subscript.firstLinedit
 
 
-class Superior(MyFrame):
+class Inferior(MyFrame):
     def __init__(self, parent):
         super().__init__(parent)
 
@@ -46,7 +46,7 @@ class Subscript(MyFrame):
     def __init__(self, parent):
         super().__init__(parent)
         self.base = Base(self)
-        self.subscript = Superior(self)
+        self.subscript = Inferior(self)
         self.children.append(self.base)
         self.children.append(self.subscript)
         
