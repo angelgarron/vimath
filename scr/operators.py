@@ -124,3 +124,26 @@ class RemoveLine:
         
     def performAction(self, other):
         scene.clear()
+
+
+@RegisterAction("visual")
+class Cut:
+    def __init__(self):
+        self.key = [Qt.ControlModifier | Qt.Key_X]
+
+        
+    def performAction(self, other):
+        print("cutting")
+        scene.clipboard.serializeSelected()
+        scene.enterNormalMode()
+
+
+@RegisterAction("normal")
+class Paste:
+    def __init__(self):
+        self.key = [Qt.ControlModifier | Qt.Key_V]
+
+        
+    def performAction(self, other):
+        print("pasting")
+        scene.clipboard.deserializeFromClipboard()

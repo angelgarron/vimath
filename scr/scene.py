@@ -2,6 +2,7 @@ import json
 from PySide6.QtWidgets import QProxyStyle
 from PySide6.QtCore import QPoint
 from lineedit import ThickCursorStyle, MyLineEdit
+from clipboard import Clipboard
 
 NORMAL_MODE = 0
 INSERT_MODE = 1
@@ -17,6 +18,7 @@ class Scene:
         self.selectionFirst = None
         self.selectionSecond = None
         self.selection = []
+        self.clipboard = Clipboard(self)
 
         
     def getLineEditWithFocus(self):
