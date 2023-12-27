@@ -40,37 +40,35 @@ class CreateIntegral:
         other.setCursorPosition(cursorPosition+1)
 
 
-@RegisterAction("insert")
+@RegisterAction("normal")
 class CreateSubscript:
     def __init__(self):
-        self.key = ["_"]
+        self.key = [Qt.Key_1]
 
         
-    def performAction(self, other, cursorPosition, text):
-        smallText = other.text()
-        wasSuperscript = False
-        if isinstance(other.parent.parent, Superscript):
-            other = other.parent.parent.removeFrame() # the one that we leave after removing
-            longText = other.text()
-            cursorPosition = other.cursorPosition()
+    def performAction(self, other):
+        newFrame = other.createFrameMiddle(Subscript)
 
-            text = longText[:cursorPosition]+smallText+longText[cursorPosition:]
-            cursorPosition += 1
-            wasSuperscript = True
+        if len(other.text()) == 0:
+            # look for the frame to the left
+            indx = other.parent.children.index(other)
+            if indx == 0: # there is nothing to the left
+                return
+            leftElement = other.parent.children[indx-1]
+            selection = [(leftElement, None)]
+            register = []
+            scene.clipboard.serializeSelected(selection, register)
+            leftElement.removeFrame()
+            newFrame.base.firstLinedit.setFocus()
+            scene.clipboard.deserializeFromClipboard(register)
+            return
 
-        text = list(text)
-        text.pop(cursorPosition)
-        character = text.pop(cursorPosition-1)
-        other.setText("".join(text))
-        other.setCursorPosition(cursorPosition-1)
-        if wasSuperscript:
-            newFrame = other.createFrameMiddle(SuperSubscript)
-        else:
-            newFrame = other.createFrameMiddle(Subscript)
-        newFrame.baseCharacter.children[0].setText(character)
-        newFrame.subscript.children[0].setFocus()
-        scene.enterInsertMode()
-        other.parent.updateFrames()
+        # if we are in the middle of a lineEdit, just take the character to the left
+        characterLeft = other.text()[-1]
+        if characterLeft:
+            newFrame.base.firstLinedit.setText(characterLeft)
+            other.setText(other.text()[:-1])
+            return
 
 
 @RegisterAction("insert")

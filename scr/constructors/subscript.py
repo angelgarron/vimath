@@ -1,39 +1,80 @@
 from frame import MyFrame
 
 
+class Base(MyFrame):
+    def __init__(self, parent):
+        super().__init__(parent)
+
+        
+    @property
+    def nextLinedit(self):
+        return self.parent.nextLinedit
+    
+
+    @property
+    def previousLinedit(self):
+        return self.parent.previousLinedit
+    
+
+    @property
+    def lowerLinedit(self):
+        return self.parent.subscript.firstLinedit
+
+
+class Superior(MyFrame):
+    def __init__(self, parent):
+        super().__init__(parent)
+
+        
+    @property
+    def nextLinedit(self):
+        return self.parent.nextLinedit
+    
+
+    @property
+    def previousLinedit(self):
+        return self.parent.previousLinedit
+    
+
+    @property
+    def upperLinedit(self):
+        return self.parent.base.firstLinedit
+
+
 class Subscript(MyFrame):
     VSPACE = 0.6
     def __init__(self, parent):
         super().__init__(parent)
-        self.baseCharacter = MyFrame(self)
-        self.fontSize = 10
-        self.subscript = MyFrame(self)
-        self.children.append(self.baseCharacter)
+        self.base = Base(self)
+        self.subscript = Superior(self)
+        self.children.append(self.base)
         self.children.append(self.subscript)
-        self.firstLinedit = self.baseCharacter.firstLinedit
         
-        
-    def createLinks(self, newLinedit, currentLinedit):
-        super().createLinks(newLinedit, currentLinedit)
-        self.subscript.firstLinedit.nextLinedit = currentLinedit
-        self.subscript.firstLinedit.previousLinedit = newLinedit
-        self.baseCharacter.firstLinedit.lowerLinedit = self.subscript.firstLinedit
-        self.subscript.firstLinedit.upperLinedit = self.baseCharacter.firstLinedit
-        self.subscript.firstLinedit.lowerLinedit = currentLinedit.lowerLinedit
-        newLinedit.lowerLinedit = currentLinedit.lowerLinedit
-        self.baseCharacter.firstLinedit.upperLinedit = currentLinedit.upperLinedit
-        newLinedit.upperLinedit = currentLinedit.upperLinedit
+    
+    def setFirstLineEdit(self):
+        self.base.setFirstLineEdit()
+        self.subscript.setFirstLineEdit()
+
+
+    @property
+    def firstLinedit(self):
+        return self.base.firstLinedit
+    
+
+    @property
+    def lastLinedit(self):
+        return self.base.lastLinedit
 
 
     def updateFrameSizeAndPosition(self):
-        self.baseCharacter.updateFrameSizeAndPosition()
+        self.base.updateFrameSizeAndPosition()
         self.subscript.updateFrameSizeAndPosition()
-        self.u = self.baseCharacter.u
-        subscriptGap = max(Subscript.VSPACE, self.subscript.u-self.baseCharacter.d)
-        self.d = self.baseCharacter.d+subscriptGap+self.subscript.d
-        width = self.baseCharacter.width()+self.subscript.width()
+        self.u = self.base.u
+        subscriptGap = max(Subscript.VSPACE, self.subscript.u-self.base.d)
+        self.d = self.base.d+subscriptGap+self.subscript.d
+        width = self.base.width()+self.subscript.width()
         self.setGeometry(self.x(), self.y(), width, self.u+self.d)
-        xi = self.baseCharacter.width()
-        yi = self.baseCharacter.height()+subscriptGap-self.subscript.u
-        self.baseCharacter.setGeometry(0, 0, self.baseCharacter.width(), self.baseCharacter.height())
+        xi = self.base.width()
+        yi = self.base.height()+subscriptGap-self.subscript.u
+        self.base.setGeometry(0, 0, self.base.width(), self.base.height())
         self.subscript.setGeometry(xi, yi, self.subscript.width(), self.subscript.height())
