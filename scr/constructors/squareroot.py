@@ -25,14 +25,6 @@ class SquareRoot(MyFrame):
         return self.squareRootArgumentFrame.lastLinedit
 
 
-    def createLinks(self, newLinedit, currentLinedit):
-        super().createLinks(newLinedit, currentLinedit)
-        self.squareRootArgumentFrame.firstLinedit.upperLinedit = currentLinedit.upperLinedit
-        newLinedit.upperLinedit = currentLinedit.upperLinedit
-        self.squareRootArgumentFrame.firstLinedit.lowerLinedit = currentLinedit.lowerLinedit
-        newLinedit.lowerLinedit = currentLinedit.lowerLinedit
-
-
     def updateFrameSizeAndPosition(self):
         self.squareRootArgumentFrame.updateFrameSizeAndPosition()
         self.u = self.squareRootArgumentFrame.u+2*SquareRoot.VSPACE

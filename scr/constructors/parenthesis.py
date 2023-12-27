@@ -25,14 +25,6 @@ class Parenthesis(MyFrame):
         return self.base.lastLinedit
 
 
-    def createLinks(self, newLinedit, currentLinedit):
-        super().createLinks(newLinedit, currentLinedit)
-        self.base.firstLinedit.upperLinedit = currentLinedit.upperLinedit
-        newLinedit.upperLinedit = currentLinedit.upperLinedit
-        self.base.firstLinedit.lowerLinedit = currentLinedit.lowerLinedit
-        newLinedit.lowerLinedit = currentLinedit.lowerLinedit
-
-
     def updateFrameSizeAndPosition(self):
         self.base.updateFrameSizeAndPosition()
         self.u = self.base.u+Parenthesis.VSPACE
@@ -47,3 +39,7 @@ class Parenthesis(MyFrame):
         painter = self.createPainter()
         painter.drawArc(4, 0, 19, self.height(), 135*16, 90*16)
         painter.drawArc(self.width()-24, 0, 19, self.height(), -45*16, 90*16)
+
+
+    def deserialize(self, data):
+        self.base.deserialize(data[0]["elements"])
