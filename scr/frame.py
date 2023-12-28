@@ -48,7 +48,7 @@ class MyFrame(QFrame):
         indx = self.parent.children.index(self)+1
         try:
             return self.parent.children[indx]
-        except IndexError:
+        except IndexError: # we were in the last element of the frame
             return self.parent.nextLinedit
 
 
@@ -57,12 +57,9 @@ class MyFrame(QFrame):
         if self == self.scene.frames[0]:
             return None
         indx = self.parent.children.index(self)-1
-        try:
-            if indx < 0:
-                raise IndexError
-            return self.parent.children[indx]
-        except IndexError:
+        if indx == -1: # we were in the first element of the frame
             return self.parent.previousLinedit
+        return self.parent.children[indx]
 
 
     @property
