@@ -75,7 +75,7 @@ class CreateSubscript:
 
 
 @RegisterAction("normal")
-class CreateSuperscriptDebug:
+class CreateSuperscript:
     def __init__(self):
         self.key = [Qt.Key_2]
 
@@ -86,35 +86,46 @@ class CreateSuperscriptDebug:
         cursorPosition = other.cursorPosition()
         if cursorPosition == 0:
             if indx == 0:
-                print("there is nothing to the left")
                 return
             # check what we have to the left
             leftElement = other.parent.children[indx-1]
             if isinstance(leftElement, Superscript): 
-                print("leftElement is superscript")
                 return
             if isinstance(leftElement, SuperSubscript): 
-                print("leftElement is supersubscript")
                 return
             if isinstance(leftElement, Subscript): 
-                print("leftElement is subscript")
+                leftElement.__class__ = SuperSubscript
+                leftElement.base.__class__ = supersubscript.Base
+                leftElement.superscript = supersubscript.Superior(leftElement)
+                leftElement.superscript.setFirstLineEdit()
+                leftElement.children.append(leftElement.superscript)
+                leftElement.subscript.__class__ = supersubscript.Inferior
+                scene.updateFrames()
                 return
-            print("leftElement is not a superscript, supersubscript or subscript")
             return
                 
         # check if we are at the end of the base of a script
         if cursorPosition == len(other.text()):
             if isinstance(other.parent, subscript.Base):
-                print("at the end of subscript base")
+                element = other.parent.parent
+                element.__class__ = SuperSubscript
+                element.base.__class__ = supersubscript.Base
+                element.superscript = supersubscript.Superior(element)
+                element.superscript.setFirstLineEdit()
+                element.children.append(element.superscript)
+                element.subscript.__class__ = supersubscript.Inferior
+                scene.updateFrames()
                 return
             if isinstance(other.parent, supersubscript.Base):
-                print("at the end of supersubscript base")
                 return
             if isinstance(other.parent, superscript.Base):
-                print("at the end of superscript base")
                 return
 
-        print("in the middle of a lineEdit")
+        # we are in the middle of a lineEdit
+        newFrame = other.createFrameMiddle(Superscript)
+        characterLeft = other.text()[-1]
+        newFrame.base.firstLinedit.setText(characterLeft)
+        other.setText(other.text()[:-1])
 
 
 @RegisterAction("normal")
@@ -136,24 +147,6 @@ class CreateJustSuperscriptDebug:
     def performAction(self, other):
         other.createFrameMiddle(SuperSubscript)
 
-
-@RegisterAction("insert")
-class CreateSuperscript:
-    def __init__(self):
-        self.key = ["^"]
-
-        
-    def performAction(self, other, cursorPosition, text):
-        # need to transform to a list in order to use pop
-        text = list(text)
-        text.pop(cursorPosition)
-        character = text.pop(cursorPosition-1)
-        other.setText("".join(text))
-        other.setCursorPosition(cursorPosition-1)
-        newFrame = other.createFrameMiddle(Superscript)
-        newFrame.baseCharacter.children[0].setText(character)
-        newFrame.superscript.children[0].setFocus()
-        newFrame.scene.enterInsertMode()
 
         
 @RegisterAction("normal")
