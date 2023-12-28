@@ -1,5 +1,8 @@
 from base import RegisterAction
 from constructors import Fraction, Parenthesis, SquareRoot, Subscript, Superscript, SuperSubscript
+from constructors import subscript
+from constructors import supersubscript
+from constructors import superscript
 from PySide6.QtGui import Qt
 from scene import scene
 
@@ -69,6 +72,69 @@ class CreateSubscript:
             newFrame.base.firstLinedit.setText(characterLeft)
             other.setText(other.text()[:-1])
             return
+
+
+@RegisterAction("normal")
+class CreateSuperscriptDebug:
+    def __init__(self):
+        self.key = [Qt.Key_2]
+
+        
+    def performAction(self, other):
+        # look for the frame to the left
+        indx = other.parent.children.index(other)
+        cursorPosition = other.cursorPosition()
+        if cursorPosition == 0:
+            if indx == 0:
+                print("there is nothing to the left")
+                return
+            # check what we have to the left
+            leftElement = other.parent.children[indx-1]
+            if isinstance(leftElement, Superscript): 
+                print("leftElement is superscript")
+                return
+            if isinstance(leftElement, SuperSubscript): 
+                print("leftElement is supersubscript")
+                return
+            if isinstance(leftElement, Subscript): 
+                print("leftElement is subscript")
+                return
+            print("leftElement is not a superscript, supersubscript or subscript")
+            return
+                
+        # check if we are at the end of the base of a script
+        if cursorPosition == len(other.text()):
+            if isinstance(other.parent, subscript.Base):
+                print("at the end of subscript base")
+                return
+            if isinstance(other.parent, supersubscript.Base):
+                print("at the end of supersubscript base")
+                return
+            if isinstance(other.parent, superscript.Base):
+                print("at the end of superscript base")
+                return
+
+        print("in the middle of a lineEdit")
+
+
+@RegisterAction("normal")
+class CreateJustSuperscriptDebug:
+    def __init__(self):
+        self.key = [Qt.Key_3]
+
+        
+    def performAction(self, other):
+        other.createFrameMiddle(Superscript)
+
+
+@RegisterAction("normal")
+class CreateJustSuperscriptDebug:
+    def __init__(self):
+        self.key = [Qt.Key_4]
+
+        
+    def performAction(self, other):
+        other.createFrameMiddle(SuperSubscript)
 
 
 @RegisterAction("insert")
