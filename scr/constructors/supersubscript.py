@@ -12,7 +12,7 @@ class Superior(MyFrame):
 
     @property
     def previousLinedit(self):
-        return self.parent.previousLinedit
+        return self.parent.lastLinedit
     
 
     @property
@@ -57,7 +57,7 @@ class Inferior(MyFrame):
 
     @property
     def previousLinedit(self):
-        return self.parent.previousLinedit
+        return self.parent.lastLinedit
     
 
     @property
