@@ -62,6 +62,7 @@ class Clipboard:
 
         if len(clipboardElements) == 1: # just one lineEdit
             leftLineEdit.setText(leftText+clipboardElements[0]["text"]+rightText)
+            leftLineEdit.setCursorPosition(cursorPosition)
             return
 
         leftLineEdit.setText(leftText+clipboardElements[0]["text"])
