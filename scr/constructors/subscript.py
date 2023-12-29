@@ -1,4 +1,5 @@
 from frame import MyFrame
+from lineedit import MyLineEdit
 
 
 class Base(MyFrame):
@@ -39,6 +40,32 @@ class Inferior(MyFrame):
     @property
     def upperLinedit(self):
         return self.parent.base.firstLinedit
+
+
+    def setFirstLineEdit(self):
+        super().setFirstLineEdit()
+        self.firstLinedit.focusOutEvent = self.fo
+
+
+    def fo(self, event):
+        if len(self.firstLinedit.text()) == 0:
+            indx = self.parent.parent.children.index(self.parent)
+            rightLineEditOld = self.parent.parent.children[indx+1]
+            selection = []
+            for element in self.parent.base.children:
+                selection.append((element, None))
+            register = []
+            self.scene.clipboard.serializeSelected(selection, register)
+            self.parent.removeFrame()
+            self.scene.clipboard.deserializeFromClipboard(register)
+            if len(selection) == 1 and isinstance(selection[0][0], MyLineEdit):
+                rightLineEdit = self.parent.parent.children[indx-1]
+                rightLineEdit.setCursorPosition(len(rightLineEdit.text())-len(rightLineEditOld.text()))
+            else:
+                rightLineEdit = self.parent.parent.children[indx+1]
+                rightLineEdit.setCursorPosition(0)
+            rightLineEdit.setFocus()
+        return super(MyLineEdit, self.firstLinedit).focusOutEvent(event)
 
 
 class Subscript(MyFrame):
