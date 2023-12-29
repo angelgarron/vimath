@@ -81,6 +81,22 @@ class CreateSuperscript:
 
         
     def performAction(self, other):
+        # check if we are in a lineEdit in the base of a script
+        if isinstance(other.parent, subscript.Base):
+            element = other.parent.parent
+            element.__class__ = SuperSubscript
+            element.base.__class__ = supersubscript.Base
+            element.superscript = supersubscript.Superior(element)
+            element.superscript.setFirstLineEdit()
+            element.children.append(element.superscript)
+            element.subscript.__class__ = supersubscript.Inferior
+            scene.updateFrames()
+            return
+        if isinstance(other.parent, supersubscript.Base):
+            return
+        if isinstance(other.parent, superscript.Base):
+            return
+
         # look for the frame to the left
         indx = other.parent.children.index(other)
         cursorPosition = other.cursorPosition()
@@ -111,23 +127,6 @@ class CreateSuperscript:
             scene.clipboard.deserializeFromClipboard(register)
             return
                 
-        # check if we are at the end of the base of a script
-        if cursorPosition == len(other.text()):
-            if isinstance(other.parent, subscript.Base):
-                element = other.parent.parent
-                element.__class__ = SuperSubscript
-                element.base.__class__ = supersubscript.Base
-                element.superscript = supersubscript.Superior(element)
-                element.superscript.setFirstLineEdit()
-                element.children.append(element.superscript)
-                element.subscript.__class__ = supersubscript.Inferior
-                scene.updateFrames()
-                return
-            if isinstance(other.parent, supersubscript.Base):
-                return
-            if isinstance(other.parent, superscript.Base):
-                return
-
         # we are in the middle of a lineEdit
         newFrame = other.createFrameMiddle(Superscript)
         characterLeft = other.text()[-1]
