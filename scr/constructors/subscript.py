@@ -48,7 +48,7 @@ class Inferior(MyFrame):
 
 
     def fo(self, event):
-        if len(self.firstLinedit.text()) == 0:
+        if self.children == 1 and len(self.firstLinedit.text()) == 0:
             indx = self.parent.parent.children.index(self.parent)
             rightLineEditOld = self.parent.parent.children[indx+1]
             selection = []
