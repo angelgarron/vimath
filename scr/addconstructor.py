@@ -102,6 +102,13 @@ class CreateSuperscript:
                 leftElement.subscript.__class__ = supersubscript.Inferior
                 scene.updateFrames()
                 return
+            selection = [(leftElement, None)]
+            register = []
+            scene.clipboard.serializeSelected(selection, register)
+            newFrame = other.createFrameMiddle(Superscript)
+            leftElement.removeFrame()
+            newFrame.base.firstLinedit.setFocus()
+            scene.clipboard.deserializeFromClipboard(register)
             return
                 
         # check if we are at the end of the base of a script
