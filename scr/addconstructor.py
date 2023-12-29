@@ -50,28 +50,57 @@ class CreateSubscript:
 
         
     def performAction(self, other):
-        newFrame = other.createFrameMiddle(Subscript)
+        # check if we are in a lineEdit in the base of a script
+        if isinstance(other.parent, superscript.Base):
+            element = other.parent.parent
+            element.__class__ = SuperSubscript
+            element.base.__class__ = supersubscript.Base
+            element.subscript = supersubscript.Inferior(element)
+            element.subscript.setFirstLineEdit()
+            element.children.append(element.subscript)
+            element.superscript.__class__ = supersubscript.Superior
+            scene.updateFrames()
+            return
+        if isinstance(other.parent, supersubscript.Base):
+            return
+        if isinstance(other.parent, subscript.Base):
+            return
 
-        if len(other.text()) == 0:
-            # look for the frame to the left
-            indx = other.parent.children.index(other)
-            if indx == 0: # there is nothing to the left
+        # look for the frame to the left
+        indx = other.parent.children.index(other)
+        cursorPosition = other.cursorPosition()
+        if cursorPosition == 0:
+            if indx == 0:
                 return
+            # check what we have to the left
             leftElement = other.parent.children[indx-1]
+            if isinstance(leftElement, Subscript): 
+                return
+            if isinstance(leftElement, SuperSubscript): 
+                return
+            if isinstance(leftElement, Superscript): 
+                leftElement.__class__ = SuperSubscript
+                leftElement.base.__class__ = supersubscript.Base
+                leftElement.subscript = supersubscript.Inferior(leftElement)
+                leftElement.subscript.setFirstLineEdit()
+                leftElement.children.append(leftElement.subscript)
+                leftElement.superscript.__class__ = supersubscript.Superior
+                scene.updateFrames()
+                return
             selection = [(leftElement, None)]
             register = []
             scene.clipboard.serializeSelected(selection, register)
+            newFrame = other.createFrameMiddle(Subscript)
             leftElement.removeFrame()
             newFrame.base.firstLinedit.setFocus()
             scene.clipboard.deserializeFromClipboard(register)
             return
-
-        # if we are in the middle of a lineEdit, just take the character to the left
+                
+        # we are in the middle of a lineEdit
+        newFrame = other.createFrameMiddle(Subscript)
         characterLeft = other.text()[-1]
-        if characterLeft:
-            newFrame.base.firstLinedit.setText(characterLeft)
-            other.setText(other.text()[:-1])
-            return
+        newFrame.base.firstLinedit.setText(characterLeft)
+        other.setText(other.text()[:-1])
 
 
 @RegisterAction("normal")
