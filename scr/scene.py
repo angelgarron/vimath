@@ -270,5 +270,8 @@ returnClass = {
     "<class 'frame.MyFrame'>": MyFrame,
     "<class 'constructors.squareroot.SquareRoot'>": constructors.SquareRoot,
     "<class 'constructors.parenthesis.Parenthesis'>": constructors.Parenthesis,
+    "<class 'constructors.subscript.Subscript'>": constructors.Subscript,
+    "<class 'constructors.superscript.Superscript'>": constructors.Superscript,
+    "<class 'constructors.supersubscript.SuperSubscript'>": constructors.SuperSubscript,
 }
 scene.returnClass = returnClass

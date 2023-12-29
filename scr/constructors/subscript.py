@@ -105,3 +105,8 @@ class Subscript(MyFrame):
         yi = self.base.height()+subscriptGap-self.subscript.u
         self.base.setGeometry(0, 0, self.base.width(), self.base.height())
         self.subscript.setGeometry(xi, yi, self.subscript.width(), self.subscript.height())
+    
+
+    def deserialize(self, data):
+        self.base.deserialize(data[0]["elements"])
+        self.subscript.deserialize(data[1]["elements"])

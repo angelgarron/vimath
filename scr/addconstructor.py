@@ -127,7 +127,7 @@ class CreateSuperscript:
             element.base.__class__ = supersubscript.Base
             element.superscript = supersubscript.Superior(element)
             element.superscript.setFirstLineEdit()
-            element.children.append(element.superscript)
+            element.children.insert(0, element.superscript)
             element.subscript.__class__ = supersubscript.Inferior
             element.subscript.firstLinedit.focusOutEvent = lambda event: supersubscript.Inferior.fo(element.subscript, event)
             scene.updateFrames()
@@ -159,7 +159,7 @@ class CreateSuperscript:
                 leftElement.base.__class__ = supersubscript.Base
                 leftElement.superscript = supersubscript.Superior(leftElement)
                 leftElement.superscript.setFirstLineEdit()
-                leftElement.children.append(leftElement.superscript)
+                leftElement.children.insert(0, leftElement.superscript)
                 leftElement.subscript.__class__ = supersubscript.Inferior
                 leftElement.subscript.firstLinedit.focusOutEvent = lambda event: supersubscript.Inferior.fo(leftElement.subscript, event)
                 scene.updateFrames()

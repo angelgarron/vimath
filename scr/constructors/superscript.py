@@ -105,3 +105,8 @@ class Superscript(MyFrame):
         yb = self.superscript.u+superscriptGap
         self.base.setGeometry(0, yb, self.base.width(), self.base.height())
         self.superscript.setGeometry(xi, 0, self.superscript.width(), self.superscript.height())
+
+
+    def deserialize(self, data):
+        self.superscript.deserialize(data[0]["elements"])
+        self.base.deserialize(data[1]["elements"])
