@@ -1,4 +1,7 @@
 from frame import MyFrame
+from lineedit import MyLineEdit
+from constructors import subscript
+from constructors import superscript
 
 class Superior(MyFrame):
     def __init__(self, parent):
@@ -18,6 +21,26 @@ class Superior(MyFrame):
     @property
     def lowerLinedit(self):
         return self.parent.base.firstLinedit
+    
+
+    def setFirstLineEdit(self):
+        super().setFirstLineEdit()
+        self.firstLinedit.focusOutEvent = self.fo
+
+
+    def fo(self, event):
+        if len(self.children) == 1 and len(self.firstLinedit.text()) == 0:
+            pass
+            self.parent.__class__ = subscript.Subscript
+            self.parent.base.__class__ = subscript.Base
+            self.parent.subscript.__class__ = subscript.Inferior
+            self.parent.children.remove(self)
+            self.scene.removeLineEdit(self.firstLinedit)
+            self.scene.removeFrame(self)
+            self.deleteLater()
+            self.firstLinedit.deleteLater()
+            self.scene.updateFrames()
+        return super(MyLineEdit, self.firstLinedit).focusOutEvent(event)
 
 
 class Base(MyFrame):
