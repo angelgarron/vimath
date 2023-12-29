@@ -51,8 +51,8 @@ class CreateSubscript:
         
     def performAction(self, other):
         # check if we are in a lineEdit in the base of a script
+        element = other.parent.parent
         if isinstance(other.parent, superscript.Base):
-            element = other.parent.parent
             element.__class__ = SuperSubscript
             element.base.__class__ = supersubscript.Base
             element.subscript = supersubscript.Inferior(element)
@@ -60,10 +60,13 @@ class CreateSubscript:
             element.children.append(element.subscript)
             element.superscript.__class__ = supersubscript.Superior
             scene.updateFrames()
+            element.subscript.firstLinedit.setFocus()
             return
         if isinstance(other.parent, supersubscript.Base):
+            element.subscript.firstLinedit.setFocus()
             return
         if isinstance(other.parent, subscript.Base):
+            element.subscript.firstLinedit.setFocus()
             return
 
         # look for the frame to the left
@@ -75,8 +78,10 @@ class CreateSubscript:
             # check what we have to the left
             leftElement = other.parent.children[indx-1]
             if isinstance(leftElement, Subscript): 
+                leftElement.subscript.firstLinedit.setFocus()
                 return
             if isinstance(leftElement, SuperSubscript): 
+                leftElement.subscript.firstLinedit.setFocus()
                 return
             if isinstance(leftElement, Superscript): 
                 leftElement.__class__ = SuperSubscript
@@ -86,6 +91,7 @@ class CreateSubscript:
                 leftElement.children.append(leftElement.subscript)
                 leftElement.superscript.__class__ = supersubscript.Superior
                 scene.updateFrames()
+                leftElement.subscript.firstLinedit.setFocus()
                 return
             selection = [(leftElement, None)]
             register = []
@@ -94,6 +100,7 @@ class CreateSubscript:
             leftElement.removeFrame()
             newFrame.base.firstLinedit.setFocus()
             scene.clipboard.deserializeFromClipboard(register)
+            newFrame.subscript.firstLinedit.setFocus()
             return
                 
         # we are in the middle of a lineEdit
@@ -101,6 +108,7 @@ class CreateSubscript:
         characterLeft = other.text()[-1]
         newFrame.base.firstLinedit.setText(characterLeft)
         other.setText(other.text()[:-1])
+        newFrame.subscript.firstLinedit.setFocus()
 
 
 @RegisterAction("normal")
@@ -111,8 +119,8 @@ class CreateSuperscript:
         
     def performAction(self, other):
         # check if we are in a lineEdit in the base of a script
+        element = other.parent.parent
         if isinstance(other.parent, subscript.Base):
-            element = other.parent.parent
             element.__class__ = SuperSubscript
             element.base.__class__ = supersubscript.Base
             element.superscript = supersubscript.Superior(element)
@@ -120,10 +128,13 @@ class CreateSuperscript:
             element.children.append(element.superscript)
             element.subscript.__class__ = supersubscript.Inferior
             scene.updateFrames()
+            element.superscript.firstLinedit.setFocus()
             return
         if isinstance(other.parent, supersubscript.Base):
+            element.superscript.firstLinedit.setFocus()
             return
         if isinstance(other.parent, superscript.Base):
+            element.superscript.firstLinedit.setFocus()
             return
 
         # look for the frame to the left
@@ -135,8 +146,10 @@ class CreateSuperscript:
             # check what we have to the left
             leftElement = other.parent.children[indx-1]
             if isinstance(leftElement, Superscript): 
+                leftElement.superscript.firstLinedit.setFocus()
                 return
             if isinstance(leftElement, SuperSubscript): 
+                leftElement.superscript.firstLinedit.setFocus()
                 return
             if isinstance(leftElement, Subscript): 
                 leftElement.__class__ = SuperSubscript
@@ -146,6 +159,7 @@ class CreateSuperscript:
                 leftElement.children.append(leftElement.superscript)
                 leftElement.subscript.__class__ = supersubscript.Inferior
                 scene.updateFrames()
+                leftElement.superscript.firstLinedit.setFocus()
                 return
             selection = [(leftElement, None)]
             register = []
@@ -154,6 +168,7 @@ class CreateSuperscript:
             leftElement.removeFrame()
             newFrame.base.firstLinedit.setFocus()
             scene.clipboard.deserializeFromClipboard(register)
+            newFrame.superscript.firstLinedit.setFocus()
             return
                 
         # we are in the middle of a lineEdit
@@ -161,29 +176,9 @@ class CreateSuperscript:
         characterLeft = other.text()[-1]
         newFrame.base.firstLinedit.setText(characterLeft)
         other.setText(other.text()[:-1])
+        newFrame.superscript.firstLinedit.setFocus()
 
 
-@RegisterAction("normal")
-class CreateJustSuperscriptDebug:
-    def __init__(self):
-        self.key = [Qt.Key_3]
-
-        
-    def performAction(self, other):
-        other.createFrameMiddle(Superscript)
-
-
-@RegisterAction("normal")
-class CreateJustSuperscriptDebug:
-    def __init__(self):
-        self.key = [Qt.Key_4]
-
-        
-    def performAction(self, other):
-        other.createFrameMiddle(SuperSubscript)
-
-
-        
 @RegisterAction("normal")
 class CreateParenthesis:
     def __init__(self):
