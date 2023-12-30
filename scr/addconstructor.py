@@ -27,6 +27,22 @@ class CreateSquareRoot:
         other.createFrameMiddle(SquareRoot)
 
 
+@RegisterAction("visual")
+class CreateSquareRootAround:
+    def __init__(self):
+        self.key = [Qt.AltModifier | Qt.Key_M, Qt.Key_S]
+
+        
+    def performAction(self, other):
+        register = []
+        scene.clipboard.serializeSelected(scene.selection, register)
+        newFrame = other.createFrameMiddle(SquareRoot, storeHistory=False)
+        scene.deleteSelection()
+        newFrame.squareRootArgumentFrame.firstLinedit.setFocus()
+        scene.clipboard.deserializeFromClipboard(register)
+        scene.enterNormalMode()
+
+
 @RegisterAction("normal")
 class CreateIntegral:
     def __init__(self):
