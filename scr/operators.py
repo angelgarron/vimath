@@ -147,7 +147,7 @@ class Paste:
         
     def performAction(self, other):
         scene.clipboard.deserializeFromClipboard()
-        self.scene.history.store("deserializing from clipboard")
+        scene.history.store("deserializing from clipboard")
 
 
 @RegisterAction("normal")
