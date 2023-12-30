@@ -59,7 +59,6 @@ class CreateSubscript:
             element.subscript.setFirstLineEdit()
             element.children.append(element.subscript)
             element.superscript.__class__ = supersubscript.Superior
-            element.superscript.firstLinedit.focusOutEvent = lambda event: supersubscript.Superior.fo(element.superscript, event)
             scene.updateFrames()
             element.subscript.firstLinedit.setFocus()
             return
@@ -91,7 +90,6 @@ class CreateSubscript:
                 leftElement.subscript.setFirstLineEdit()
                 leftElement.children.append(leftElement.subscript)
                 leftElement.superscript.__class__ = supersubscript.Superior
-                leftElement.superscript.firstLinedit.focusOutEvent = lambda event: supersubscript.Superior.fo(leftElement.superscript, event)
                 scene.updateFrames()
                 leftElement.subscript.firstLinedit.setFocus()
                 return
@@ -129,7 +127,6 @@ class CreateSuperscript:
             element.superscript.setFirstLineEdit()
             element.children.insert(0, element.superscript)
             element.subscript.__class__ = supersubscript.Inferior
-            element.subscript.firstLinedit.focusOutEvent = lambda event: supersubscript.Inferior.fo(element.subscript, event)
             scene.updateFrames()
             element.superscript.firstLinedit.setFocus()
             return
@@ -161,7 +158,6 @@ class CreateSuperscript:
                 leftElement.superscript.setFirstLineEdit()
                 leftElement.children.insert(0, leftElement.superscript)
                 leftElement.subscript.__class__ = supersubscript.Inferior
-                leftElement.subscript.firstLinedit.focusOutEvent = lambda event: supersubscript.Inferior.fo(leftElement.subscript, event)
                 scene.updateFrames()
                 leftElement.superscript.firstLinedit.setFocus()
                 return

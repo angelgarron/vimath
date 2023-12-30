@@ -23,9 +23,11 @@ class Superior(MyFrame):
         return self.parent.base.firstLinedit
     
 
-    def setFirstLineEdit(self):
-        super().setFirstLineEdit()
-        self.firstLinedit.focusOutEvent = self.fo
+    @property
+    def firstLinedit(self):
+        fl = super().firstLinedit
+        fl.focusOutEvent = self.fo
+        return fl
 
 
     def fo(self, event):
@@ -89,9 +91,11 @@ class Inferior(MyFrame):
         return self.parent.base.firstLinedit
     
 
-    def setFirstLineEdit(self):
-        super().setFirstLineEdit()
-        self.firstLinedit.focusOutEvent = self.fo
+    @property
+    def firstLinedit(self):
+        fl = super().firstLinedit
+        fl.focusOutEvent = self.fo
+        return fl
 
 
     def fo(self, event):
