@@ -126,6 +126,7 @@ class RemoveLine:
         
     def performAction(self, other):
         scene.clear()
+        scene.history.store("remove line")
 
 
 @RegisterAction("visual")
