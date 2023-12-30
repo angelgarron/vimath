@@ -36,11 +36,11 @@ class CreateSquareRootAround:
     def performAction(self, other):
         register = []
         scene.clipboard.serializeSelected(scene.selection, register)
-        newFrame = other.createFrameMiddle(SquareRoot, storeHistory=False)
-        scene.deleteSelection()
-        newFrame.squareRootArgumentFrame.firstLinedit.setFocus()
+        scene.deleteSelection(storeHistory=False)
+        scene.getLineEditWithFocus().createFrameMiddle(SquareRoot, storeHistory=False)
         scene.clipboard.deserializeFromClipboard(register)
         scene.enterNormalMode()
+        scene.history.store("surrounded with square root")
 
 
 @RegisterAction("normal")

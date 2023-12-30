@@ -116,7 +116,7 @@ class Scene:
             self.window.tp.setGeometry(pos.x(), pos.y(), end-start, self.selection[0][0].parent.height())
 
 
-    def deleteSelection(self):
+    def deleteSelection(self, storeHistory=True):
         first = self.selection[0]
         second = self.selection[-1]
         
@@ -124,7 +124,8 @@ class Scene:
             first[0].setCursorPosition(first[1])
             first[0].cursorForward(True, second[1]-first[1])
             first[0].deleteText()
-            scene.history.store("delete selection")
+            if storeHistory:
+                scene.history.store("delete selection")
             return
 
         start, end = 1, -1
@@ -151,7 +152,8 @@ class Scene:
             if i%2 == 0:
                 s[0].removeFrame()
 
-        scene.history.store("delete selection")
+        if storeHistory:
+            scene.history.store("delete selection")
 
 
     def updateFrames(self):
