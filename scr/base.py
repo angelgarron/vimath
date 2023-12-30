@@ -5,7 +5,7 @@ actions = {}
 actionsVisual = {}
 actionsInsert = {}
 def RegisterAction(whichMode="normal"):
-    def wrapper(constructor):
+    def decorator(constructor):
         if whichMode == "normal":
             actions.update({constructor.__name__:constructor()})
         elif whichMode == "visual": 
@@ -16,7 +16,7 @@ def RegisterAction(whichMode="normal"):
         elif whichMode == "insert":
             actionsInsert.update({constructor.__name__:constructor()})
         return constructor
-    return wrapper
+    return decorator
 
 
 @RegisterAction("normal")

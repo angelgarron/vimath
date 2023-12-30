@@ -7,6 +7,23 @@ from PySide6.QtGui import Qt
 from scene import scene
 
 
+def visualSurrond(originalConstructor):
+    class newConstructor(originalConstructor):
+        def performAction(self, other):
+            register = []
+            scene.clipboard.serializeSelected(scene.selection, register)
+            scene.deleteSelection(storeHistory=False)
+            super().performAction(scene.getLineEditWithFocus())
+            scene.clipboard.deserializeFromClipboard(register)
+            scene.enterNormalMode()
+            scene.history.store(f"surrounded version of {originalConstructor.__name__}")
+    newConstructor.__name__ = f"Surround{originalConstructor.__name__}"
+    newConstructor.__qualname__ = f"Surround{originalConstructor.__name__}"
+    RegisterAction("visual")(newConstructor)
+    return newConstructor
+
+
+@visualSurrond
 @RegisterAction("normal")
 class CreateFraction:
     def __init__(self):
@@ -16,19 +33,7 @@ class CreateFraction:
     def performAction(self, other):
         other.createFrameMiddle(Fraction)
 
-
-@RegisterAction("visual")
-class CreateFractionAround(CreateFraction):
-    def performAction(self, other):
-        register = []
-        scene.clipboard.serializeSelected(scene.selection, register)
-        scene.deleteSelection(storeHistory=False)
-        super().performAction(scene.getLineEditWithFocus())
-        scene.clipboard.deserializeFromClipboard(register)
-        scene.enterNormalMode()
-        scene.history.store("surrounded with fraction")
-
-
+    
 @RegisterAction("normal")
 class CreateSquareRoot:
     def __init__(self):
