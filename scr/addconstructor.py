@@ -98,7 +98,7 @@ class CreateSubscript:
             selection = [(leftElement, None)]
             register = []
             scene.clipboard.serializeSelected(selection, register)
-            newFrame = other.createFrameMiddle(Subscript)
+            newFrame = other.createFrameMiddle(Subscript, storeHistory=False)
             leftElement.removeFrame()
             newFrame.base.firstLinedit.setFocus()
             scene.clipboard.deserializeFromClipboard(register)
@@ -106,7 +106,7 @@ class CreateSubscript:
             return
                 
         # we are in the middle of a lineEdit
-        newFrame = other.createFrameMiddle(Subscript)
+        newFrame = other.createFrameMiddle(Subscript, storeHistory=False)
         characterLeft = other.text()[-1]
         newFrame.base.firstLinedit.setText(characterLeft)
         other.setText(other.text()[:-1])
@@ -168,7 +168,7 @@ class CreateSuperscript:
             selection = [(leftElement, None)]
             register = []
             scene.clipboard.serializeSelected(selection, register)
-            newFrame = other.createFrameMiddle(Superscript)
+            newFrame = other.createFrameMiddle(Superscript, storeHistory=False)
             leftElement.removeFrame()
             newFrame.base.firstLinedit.setFocus()
             scene.clipboard.deserializeFromClipboard(register)
@@ -176,7 +176,7 @@ class CreateSuperscript:
             return
                 
         # we are in the middle of a lineEdit
-        newFrame = other.createFrameMiddle(Superscript)
+        newFrame = other.createFrameMiddle(Superscript, storeHistory=False)
         characterLeft = other.text()[-1]
         newFrame.base.firstLinedit.setText(characterLeft)
         other.setText(other.text()[:-1])

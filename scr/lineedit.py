@@ -85,7 +85,7 @@ class MyLineEdit(QLineEdit):
         self.scene.updateFrames()
     
 
-    def createFrameMiddle(self, FrameConstructor):
+    def createFrameMiddle(self, FrameConstructor, storeHistory=True):
         cursorPosition = self.cursorPosition()
         newFrame = FrameConstructor(self.parent)
         newFrame.setFirstLineEdit()
@@ -97,7 +97,8 @@ class MyLineEdit(QLineEdit):
         self.setText(self.text()[:cursorPosition])
         newFrame.firstLinedit.setFocus()
         self.scene.updateFrames()
-        self.scene.history.store(f"create frame {FrameConstructor}")
+        if storeHistory:
+            self.scene.history.store(f"create frame {FrameConstructor}")
         return newFrame
         
 

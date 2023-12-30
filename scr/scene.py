@@ -211,6 +211,17 @@ class Scene:
     def clear(self):
         """Clear the contents of the scene
         """
+        # give focus to the base if we have focus on an empty script when clearing
+        # this is to avoid the focusOutEvent trying to remove the script before
+        lineEditWithFocus = self.getLineEditWithFocus()
+        if isinstance(lineEditWithFocus.parent, (
+           constructors.subscript.Inferior,
+           constructors.superscript.Superior,
+           constructors.supersubscript.Superior,
+           constructors.supersubscript.Inferior, 
+        )) and len(lineEditWithFocus.text()) == 0:
+            lineEditWithFocus.parent.parent.base.firstLinedit.setFocus()
+
         for element in self.frames[0].children.copy():
             if not isinstance(element, MyLineEdit):
                 element.removeFrame()
