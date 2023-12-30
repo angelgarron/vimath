@@ -8,17 +8,22 @@ from scene import scene
 
 
 def visualSurrond(originalConstructor):
-    class newConstructor(originalConstructor):
-        def performAction(self, other):
-            register = []
-            scene.clipboard.serializeSelected(scene.selection, register)
-            scene.deleteSelection(storeHistory=False)
-            super().performAction(scene.getLineEditWithFocus())
-            scene.clipboard.deserializeFromClipboard(register)
-            scene.enterNormalMode()
-            scene.history.store(f"surrounded version of {originalConstructor.__name__}")
-    newConstructor.__name__ = f"Surround{originalConstructor.__name__}"
-    newConstructor.__qualname__ = f"Surround{originalConstructor.__name__}"
+    def performAction(self, other):
+        register = []
+        scene.clipboard.serializeSelected(scene.selection, register)
+        scene.deleteSelection(storeHistory=False)
+        originalConstructor.performAction(self, scene.getLineEditWithFocus())
+        scene.clipboard.deserializeFromClipboard(register)
+        scene.enterNormalMode()
+        scene.history.store(f"surrounded version of {originalConstructor.__name__}")
+
+    newConstructor = type(
+        f"Surround{originalConstructor.__name__}",
+        (originalConstructor, ),
+        {
+            "performAction": performAction
+        }
+    )
     RegisterAction("visual")(newConstructor)
     return newConstructor
 
@@ -34,6 +39,7 @@ class CreateFraction:
         other.createFrameMiddle(Fraction)
 
     
+@visualSurrond
 @RegisterAction("normal")
 class CreateSquareRoot:
     def __init__(self):
@@ -42,22 +48,6 @@ class CreateSquareRoot:
         
     def performAction(self, other):
         other.createFrameMiddle(SquareRoot)
-
-
-@RegisterAction("visual")
-class CreateSquareRootAround:
-    def __init__(self):
-        self.key = [Qt.AltModifier | Qt.Key_M, Qt.Key_S]
-
-        
-    def performAction(self, other):
-        register = []
-        scene.clipboard.serializeSelected(scene.selection, register)
-        scene.deleteSelection(storeHistory=False)
-        scene.getLineEditWithFocus().createFrameMiddle(SquareRoot, storeHistory=False)
-        scene.clipboard.deserializeFromClipboard(register)
-        scene.enterNormalMode()
-        scene.history.store("surrounded with square root")
 
 
 @RegisterAction("normal")
@@ -212,6 +202,7 @@ class CreateSuperscript:
         newFrame.superscript.firstLinedit.setFocus()
 
 
+@visualSurrond
 @RegisterAction("normal")
 class CreateParenthesis:
     def __init__(self):
