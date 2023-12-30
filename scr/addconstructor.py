@@ -17,6 +17,18 @@ class CreateFraction:
         other.createFrameMiddle(Fraction)
 
 
+@RegisterAction("visual")
+class CreateFractionAround(CreateFraction):
+    def performAction(self, other):
+        register = []
+        scene.clipboard.serializeSelected(scene.selection, register)
+        scene.deleteSelection(storeHistory=False)
+        super().performAction(scene.getLineEditWithFocus())
+        scene.clipboard.deserializeFromClipboard(register)
+        scene.enterNormalMode()
+        scene.history.store("surrounded with fraction")
+
+
 @RegisterAction("normal")
 class CreateSquareRoot:
     def __init__(self):

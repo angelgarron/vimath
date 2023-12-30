@@ -5,16 +5,17 @@ actions = {}
 actionsVisual = {}
 actionsInsert = {}
 def RegisterAction(whichMode="normal"):
-    def wrapper(f):
+    def wrapper(constructor):
         if whichMode == "normal":
-            actions.update({f.__name__:f()})
+            actions.update({constructor.__name__:constructor()})
         elif whichMode == "visual": 
-            actionsVisual.update({f.__name__:f()})
+            actionsVisual.update({constructor.__name__:constructor()})
         elif whichMode == "both":
-            actions.update({f.__name__:f()})
-            actionsVisual.update({f.__name__:f()})
+            actions.update({constructor.__name__:constructor()})
+            actionsVisual.update({constructor.__name__:constructor()})
         elif whichMode == "insert":
-            actionsInsert.update({f.__name__:f()})
+            actionsInsert.update({constructor.__name__:constructor()})
+        return constructor
     return wrapper
 
 
