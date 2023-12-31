@@ -7,12 +7,12 @@ from PySide6.QtGui import Qt
 from scene import scene
 
 
-def visualSurrond(originalConstructor):
+def visualSurround(originalConstructor):
     def performAction(self, other):
         register = []
         scene.clipboard.serializeSelected(scene.selection, register)
         scene.deleteSelection(storeHistory=False)
-        originalConstructor.performAction(self, scene.getLineEditWithFocus())
+        scene.getLineEditWithFocus().createFrameMiddle(self.constructor, storeHistory=False)
         scene.clipboard.deserializeFromClipboard(register)
         scene.enterNormalMode()
         scene.history.store(f"surrounded version of {originalConstructor.__name__}")
@@ -28,26 +28,25 @@ def visualSurrond(originalConstructor):
     return newConstructor
 
 
-@visualSurrond
+class Constructor:
+    def performAction(self, other):
+        other.createFrameMiddle(self.constructor)
+
+
+@visualSurround
 @RegisterAction("normal")
-class CreateFraction:
+class CreateFraction(Constructor):
     def __init__(self):
         self.key = [Qt.AltModifier | Qt.Key_M, Qt.Key_F]
-
-        
-    def performAction(self, other):
-        other.createFrameMiddle(Fraction)
+        self.constructor = Fraction
 
     
-@visualSurrond
+@visualSurround
 @RegisterAction("normal")
-class CreateSquareRoot:
+class CreateSquareRoot(Constructor):
     def __init__(self):
         self.key = [Qt.AltModifier | Qt.Key_M, Qt.Key_S]
-
-        
-    def performAction(self, other):
-        other.createFrameMiddle(SquareRoot)
+        self.constructor = SquareRoot
 
 
 @RegisterAction("normal")
@@ -202,12 +201,9 @@ class CreateSuperscript:
         newFrame.superscript.firstLinedit.setFocus()
 
 
-@visualSurrond
+@visualSurround
 @RegisterAction("normal")
-class CreateParenthesis:
+class CreateParenthesis(Constructor):
     def __init__(self):
         self.key = [Qt.ShiftModifier | Qt.Key_ParenLeft]
-
-        
-    def performAction(self, other):
-        other.createFrameMiddle(Parenthesis)
+        self.constructor = Parenthesis
