@@ -1,7 +1,6 @@
 import json
-from PySide6.QtWidgets import QProxyStyle
 from PySide6.QtCore import QPoint
-from lineedit import ThickCursorStyle, MyLineEdit
+from lineedit import  MyLineEdit
 from clipboard import Clipboard
 from history import History
 
@@ -180,7 +179,7 @@ class Scene:
     def enterInsertMode(self):
         self.mode = INSERT_MODE
         for lineEdit in self.lineEdits:
-            lineEdit.setStyle(QProxyStyle())
+            lineEdit.setThinCursorStyle()
 
 
     def enterNormalMode(self):
@@ -188,14 +187,14 @@ class Scene:
             self.clearSelection()
         self.mode = NORMAL_MODE
         for lineEdit in self.lineEdits:
-            lineEdit.setStyle(ThickCursorStyle())
+            lineEdit.setThickCursorStyle()
 
 
     def enterVisualMode(self):
         self.mode = VISUAL_MODE
         self.startSelection()
         for lineEdit in self.lineEdits:
-            lineEdit.setStyle(ThickCursorStyle())
+            lineEdit.setThickCursorStyle()
 
             
     def isNormalMode(self):

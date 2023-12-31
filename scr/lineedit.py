@@ -12,9 +12,14 @@ background: transparent;
 """
 
 class ThickCursorStyle(QProxyStyle):
+    def __init__(self, fontSize):
+        super().__init__()
+        self.fontSize = fontSize
+    
+
     def pixelMetric(self, metric, option=None, widget=None):
         if metric == QProxyStyle.PM_TextCursorWidth:
-            return CURSOR_WIDTH
+            return self.fontSize
 
         return super().pixelMetric(metric, option, widget)
 
@@ -23,10 +28,13 @@ class MyLineEdit(QLineEdit):
     def __init__(self, parent):
         super().__init__(parent)
         self.parent = parent
-        self.setStyle(ThickCursorStyle())
         self.setStyleSheet(LINEDIT_STYLESHEET)
         self.setAlignment(Qt.AlignmentFlag.AlignTop)
-        self.setFont(QFont("monospace", self.parent.fontSize))
+        self.fontSize = self.parent.fontSize
+        self.thickCursorStyle = ThickCursorStyle(self.fontSize)
+        self.thinCursorStyle = QProxyStyle()
+        self.setThickCursorStyle()
+        self.setFont(QFont("monospace", self.fontSize))
         self.scene = self.parent.scene
         self.scene.addLineEdit(self)
         self.u = self.parent.fontSize/2+2
@@ -38,6 +46,14 @@ class MyLineEdit(QLineEdit):
         self.show()
     
 
+    def setThickCursorStyle(self):
+        self.setStyle(self.thickCursorStyle)
+    
+
+    def setThinCursorStyle(self):
+        self.setStyle(self.thinCursorStyle)
+
+        
     @property
     def nextLinedit(self):
         indx = self.parent.children.index(self)+1
