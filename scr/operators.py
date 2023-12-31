@@ -188,16 +188,9 @@ class InsideParenthesis:
                 return
             currentElement = currentElement.parent
         # we found that we where inside a parenthesis, let's remove its contents
-        scene.selection = []
-        scene.selection.append((currentElement.base.children[0], 0))
-        scene.selectionFirst = scene.selection[0]
-        for element in currentElement.base.children[1:-1]:
-            scene.selection.append((element, None))
-        scene.selection.append((currentElement.base.children[-1], len(currentElement.base.children[-1].text())))
-        scene.selectionSecond = scene.selection[-1]
-        scene.selection[-1][0].setFocus()
-        scene.selection[-1][0].setCursorPosition(scene.selection[-1][1])
-        scene.setSelectionGeometry()
+        scene.selectionFirst = [currentElement.base.children[0], 0]
+        currentElement.base.children[-1].setFocus()
+        currentElement.base.children[-1].setCursorPosition(len(currentElement.base.children[-1].text()))
 
         self.lastAction()
 
@@ -211,10 +204,11 @@ class DeleteInsideParenthesis(InsideParenthesis):
     
     
     def lastAction(self):
+        scene.updateVisualSelection()
         scene.clipboard.serializeSelected()
         scene.deleteSelection(selection=None, storeHistory=False)
+        scene.clearSelection()
         scene.history.store("removed inside parenthesis")
-        pass
 
 
 @RegisterAction("normal")
@@ -226,8 +220,10 @@ class ChangeInsideParenthesis(InsideParenthesis):
     
     
     def lastAction(self):
+        scene.updateVisualSelection()
         scene.clipboard.serializeSelected()
         scene.deleteSelection(selection=None, storeHistory=False)
+        scene.clearSelection()
         scene.history.store("removed inside parenthesis")
         scene.enterInsertMode()
 
