@@ -188,16 +188,18 @@ class InsideParenthesis:
                 return
             currentElement = currentElement.parent
         # we found that we where inside a parenthesis, let's remove its contents
-        selection = []
-        selection.append((currentElement.base.children[0], 0))
+        scene.selection = []
+        scene.selection.append((currentElement.base.children[0], 0))
+        scene.selectionFirst = scene.selection[0]
         for element in currentElement.base.children[1:-1]:
-            selection.append((element, None))
-        selection.append((currentElement.base.children[-1], len(currentElement.base.children[-1].text())))
-        scene.clipboard.serializeSelected(selection)
-        scene.deleteSelection(selection=selection, storeHistory=False)
-        scene.history.store("removed inside parenthesis")
+            scene.selection.append((element, None))
+        scene.selection.append((currentElement.base.children[-1], len(currentElement.base.children[-1].text())))
+        scene.selectionSecond = scene.selection[-1]
+        scene.selection[-1][0].setFocus()
+        scene.selection[-1][0].setCursorPosition(scene.selection[-1][1])
+        scene.setSelectionGeometry()
 
-        self.lastAction(other)
+        self.lastAction()
 
 
 @RegisterAction("normal")
@@ -208,7 +210,10 @@ class DeleteInsideParenthesis(InsideParenthesis):
             combination.insert(0, Qt.Key_D)
     
     
-    def lastAction(self, other):
+    def lastAction(self):
+        scene.clipboard.serializeSelected()
+        scene.deleteSelection(selection=None, storeHistory=False)
+        scene.history.store("removed inside parenthesis")
         pass
 
 
@@ -220,5 +225,18 @@ class ChangeInsideParenthesis(InsideParenthesis):
             combination.insert(0, Qt.Key_C)
     
     
-    def lastAction(self, other):
+    def lastAction(self):
+        scene.clipboard.serializeSelected()
+        scene.deleteSelection(selection=None, storeHistory=False)
+        scene.history.store("removed inside parenthesis")
         scene.enterInsertMode()
+
+
+@RegisterAction("visual")
+class VisualInsideParenthesis(InsideParenthesis):
+    def __init__(self):
+        super().__init__()
+    
+    
+    def lastAction(self):
+        pass
