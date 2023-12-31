@@ -115,9 +115,12 @@ class Scene:
             self.window.tp.setGeometry(pos.x(), pos.y(), end-start, self.selection[0][0].parent.height())
 
 
-    def deleteSelection(self, storeHistory=True):
-        first = self.selection[0]
-        second = self.selection[-1]
+    def deleteSelection(self, selection=None, storeHistory=True):
+        if selection is None:
+            selection = self.selection
+
+        first = selection[0]
+        second = selection[-1]
         
         if first[0] == second[0]: # we are in the same lineEdit
             first[0].setCursorPosition(first[1])
@@ -143,11 +146,11 @@ class Scene:
             end = None
 
         # clear the lineEdits inbetween
-        for i, s in enumerate(self.selection[start:end]):
+        for i, s in enumerate(selection[start:end]):
             if i%2 != 0:
                 s[0].clear()
         # remove the frames inbetween
-        for i, s in enumerate(self.selection[start:end]):
+        for i, s in enumerate(selection[start:end]):
             if i%2 == 0:
                 s[0].removeFrame()
 
