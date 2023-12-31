@@ -187,7 +187,7 @@ class InsideParenthesis:
             if currentElement == scene.frames[0]:
                 return
             currentElement = currentElement.parent
-        # we found that we where inside a parenthesis, let's remove its contents
+        # we found that we where inside a parenthesis, let's select its contents
         scene.selectionFirst = [currentElement.base.children[0], 0]
         currentElement.base.children[-1].setFocus()
         currentElement.base.children[-1].setCursorPosition(len(currentElement.base.children[-1].text()))
@@ -230,6 +230,71 @@ class ChangeInsideParenthesis(InsideParenthesis):
 
 @RegisterAction("visual")
 class VisualInsideParenthesis(InsideParenthesis):
+    def __init__(self):
+        super().__init__()
+    
+    
+    def lastAction(self):
+        pass
+
+
+class AroundParenthesis:
+    def __init__(self):
+        self.key = [
+            [Qt.Key_A, Qt.ShiftModifier | Qt.Key_ParenLeft],
+            [Qt.Key_A, Qt.ShiftModifier | Qt.Key_ParenRight],
+            ]
+
+
+    def performAction(self, other):
+        currentElement = other.parent
+        while not isinstance(currentElement, Parenthesis):
+            if currentElement == scene.frames[0]:
+                return
+            currentElement = currentElement.parent
+        # we found that we where inside a parenthesis, let's select it
+        scene.selectionFirst = [currentElement.base.children[0], 0]
+        currentElement.base.children[-1].nextLinedit.setFocus()
+        currentElement.base.children[-1].nextLinedit.setCursorPosition(0)
+
+        self.lastAction()
+
+
+@RegisterAction("normal")
+class DeleteAroundParenthesis(AroundParenthesis):
+    def __init__(self):
+        super().__init__()
+        for combination in self.key:
+            combination.insert(0, Qt.Key_D)
+    
+    
+    def lastAction(self):
+        scene.updateVisualSelection()
+        scene.clipboard.serializeSelected()
+        scene.deleteSelection(selection=None, storeHistory=False)
+        scene.clearSelection()
+        scene.history.store("removed around parenthesis")
+
+
+@RegisterAction("normal")
+class ChangeAroundParenthesis(AroundParenthesis):
+    def __init__(self):
+        super().__init__()
+        for combination in self.key:
+            combination.insert(0, Qt.Key_C)
+    
+    
+    def lastAction(self):
+        scene.updateVisualSelection()
+        scene.clipboard.serializeSelected()
+        scene.deleteSelection(selection=None, storeHistory=False)
+        scene.clearSelection()
+        scene.history.store("removed around parenthesis")
+        scene.enterInsertMode()
+
+
+@RegisterAction("visual")
+class VisualAroundParenthesis(AroundParenthesis):
     def __init__(self):
         super().__init__()
     
