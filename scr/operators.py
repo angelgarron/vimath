@@ -173,12 +173,11 @@ class Redo:
         scene.history.redo()
 
         
-@RegisterAction("normal")
-class DeleteInsideParenthesis:
+class InsideParenthesis:
     def __init__(self):
         self.key = [
-            [Qt.Key_D, Qt.Key_I, Qt.ShiftModifier | Qt.Key_ParenLeft],
-            [Qt.Key_D, Qt.Key_I, Qt.ShiftModifier | Qt.Key_ParenRight],
+            [Qt.Key_I, Qt.ShiftModifier | Qt.Key_ParenLeft],
+            [Qt.Key_I, Qt.ShiftModifier | Qt.Key_ParenRight],
             ]
 
 
@@ -197,3 +196,29 @@ class DeleteInsideParenthesis:
         scene.clipboard.serializeSelected(selection)
         scene.deleteSelection(selection=selection, storeHistory=False)
         scene.history.store("removed inside parenthesis")
+
+        self.lastAction(other)
+
+
+@RegisterAction("normal")
+class DeleteInsideParenthesis(InsideParenthesis):
+    def __init__(self):
+        super().__init__()
+        for combination in self.key:
+            combination.insert(0, Qt.Key_D)
+    
+    
+    def lastAction(self, other):
+        pass
+
+
+@RegisterAction("normal")
+class ChangeInsideParenthesis(InsideParenthesis):
+    def __init__(self):
+        super().__init__()
+        for combination in self.key:
+            combination.insert(0, Qt.Key_C)
+    
+    
+    def lastAction(self, other):
+        scene.enterInsertMode()
