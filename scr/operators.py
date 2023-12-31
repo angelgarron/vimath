@@ -188,8 +188,12 @@ class DeleteInsideParenthesis:
             if currentElement == scene.frames[0]:
                 return
             currentElement = currentElement.parent
-        for element in currentElement.base.children:
-            if not isinstance(element, MyLineEdit):
-                element.removeFrame()
-        currentElement.firstLinedit.clear()
+        # we found that we where inside a parenthesis, let's remove its contents
+        selection = []
+        selection.append((currentElement.base.children[0], 0))
+        for element in currentElement.base.children[1:-1]:
+            selection.append((element, None))
+        selection.append((currentElement.base.children[-1], len(currentElement.base.children[-1].text())))
+        scene.clipboard.serializeSelected(selection)
+        scene.deleteSelection(selection=selection, storeHistory=False)
         scene.history.store("removed inside parenthesis")
