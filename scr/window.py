@@ -12,6 +12,7 @@ class MyMainWindow(QMainWindow):
         self.scene = scene
         self.scene.window = self
         self.tp = SelectionRectangle(self)
+        self.fontSize = self.scene.fontSize
 
         self.mainMathFrame = MyFrame(self)
         self.mainMathFrame.setFirstLineEdit()
