@@ -301,3 +301,31 @@ class VisualAroundParenthesis(AroundParenthesis):
     
     def lastAction(self):
         pass
+
+
+@RegisterAction("normal")
+class DeleteSurroundingParenthesis(AroundParenthesis):
+    def __init__(self):
+        self.key = [
+            [Qt.Key_D, Qt.Key_S, Qt.ShiftModifier | Qt.Key_ParenLeft],
+            [Qt.Key_D, Qt.Key_S, Qt.ShiftModifier | Qt.Key_ParenRight],
+            ]
+
+
+    def performAction(self, other):
+        currentElement = other.parent
+        while not isinstance(currentElement, Parenthesis):
+            if currentElement == scene.frames[0]:
+                return
+            currentElement = currentElement.parent
+        # we found that we where inside a parenthesis, let's select it
+        selection = []
+        register = []
+        selection.append((currentElement.base.children[0], 0))
+        for element in currentElement.base.children[1:-1]:
+            selection.append((element, None))
+        selection.append((currentElement.base.children[-1], len(currentElement.base.children[-1].text())))
+        scene.clipboard.serializeSelected(selection=selection, register=register)
+        currentElement.removeFrame()
+        scene.clipboard.deserializeFromClipboard(register)
+        scene.history.store("removed surrounding parenthesis")
