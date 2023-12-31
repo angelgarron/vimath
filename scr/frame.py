@@ -16,7 +16,7 @@ class MyFrame(QFrame):
         self.u = 0
         self.d = 0
         self.setGeometry(0, 0, LINEDIT_SIZE[0], LINEDIT_SIZE[1])
-        self.fontSize = self.scene.fontSize
+        self.fontSize = self.getFontSize()
         self.setFont(QFont("monospace", self.fontSize))
         self.setStyleSheet("border:1px dashed red")
         self.pen = QPen()
@@ -26,6 +26,11 @@ class MyFrame(QFrame):
         self.show()
 
         
+    def getFontSize(self):
+        fontSize = self.parent.fontSize
+        return fontSize
+
+
     def setFirstLineEdit(self):
         firstLinedit = MyLineEdit(self)
         self.children.append(firstLinedit)

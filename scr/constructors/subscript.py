@@ -27,6 +27,12 @@ class Inferior(MyFrame):
         super().__init__(parent)
 
         
+    def getFontSize(self):
+        if self.parent.fontSize > self.scene.fontSize*0.75*0.75:
+            return self.parent.fontSize*0.75
+        return self.parent.fontSize
+
+
     @property
     def nextLinedit(self):
         return self.parent.nextLinedit
