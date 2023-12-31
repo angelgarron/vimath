@@ -1,3 +1,5 @@
+from lineedit import MyLineEdit
+from constructors import Parenthesis
 from base import RegisterAction
 from scene import scene
 from PySide6.QtGui import Qt
@@ -169,3 +171,25 @@ class Redo:
         
     def performAction(self, other):
         scene.history.redo()
+
+        
+@RegisterAction("normal")
+class DeleteInsideParenthesis:
+    def __init__(self):
+        self.key = [
+            [Qt.Key_D, Qt.Key_I, Qt.ShiftModifier | Qt.Key_ParenLeft],
+            [Qt.Key_D, Qt.Key_I, Qt.ShiftModifier | Qt.Key_ParenRight],
+            ]
+
+
+    def performAction(self, other):
+        currentElement = other.parent
+        while not isinstance(currentElement, Parenthesis):
+            if currentElement == scene.frames[0]:
+                return
+            currentElement = currentElement.parent
+        for element in currentElement.base.children:
+            if not isinstance(element, MyLineEdit):
+                element.removeFrame()
+        currentElement.firstLinedit.clear()
+        scene.history.store("removed inside parenthesis")
