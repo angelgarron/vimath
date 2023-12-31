@@ -80,7 +80,7 @@ class Clipboard:
                 leftLineEdit.parent.children.insert(indx+i+1, newLineEdit)
 
         rightLineEdit = MyLineEdit(leftLineEdit.parent)
-        leftLineEdit.parent.children.append(rightLineEdit)
+        leftLineEdit.parent.children.insert(indx+i+2, rightLineEdit)
         rightLineEdit.setText(clipboardElements[-1]["text"]+rightText)
         
         self.scene.updateFrames()
