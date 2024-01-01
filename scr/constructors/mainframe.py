@@ -86,8 +86,3 @@ class MainFrame(MyFrame):
             line.setGeometry(0, y, line.width(), line.height())
             y += line.height()+MainFrame.VSPACE
         self.setGeometry(0, 0, 500, height)
-
-
-    def deserialize(self, data):
-        for i, line in enumerate(self.children):
-            line.deserialize(data[i]["elements"])

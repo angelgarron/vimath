@@ -217,7 +217,7 @@ class Scene:
         """
         # remove all lines except for the first one
         # the last line will just be cleared
-        for line in self.frames[0].children[1:].copy():
+        for line in self.frames[0].children.copy():
             line.removeLine()
 
 
@@ -267,13 +267,9 @@ class Scene:
         print("deserializating data", data)
         self.clear()
         mainFrame = self.frames[0]
-        lineEdit = mainFrame.children[0]
-        lineEdit.setText(data["mainFrame"][0]["text"])
-
-        mainFrame.deserialize(data["mainFrame"][1:])
-
+        mainFrame.deserialize(data["mainFrame"])
+        mainFrame.children[0].removeLine()
         self.updateFrames()
-
 
 
 scene = Scene()
@@ -296,5 +292,6 @@ returnClass = {
     "<class 'constructors.subscript.Subscript'>": constructors.Subscript,
     "<class 'constructors.superscript.Superscript'>": constructors.Superscript,
     "<class 'constructors.supersubscript.SuperSubscript'>": constructors.SuperSubscript,
+    "<class 'constructors.mainframe.Line'>": constructors.mainframe.Line,
 }
 scene.returnClass = returnClass
