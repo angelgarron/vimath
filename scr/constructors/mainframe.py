@@ -38,15 +38,16 @@ class Line(MyFrame):
             if indx == 0: # there is only one line
                 self.scene.clearLine(self)
                 return
-            self.upperLinedit.setFocus()
+            lineEditToFocus = self.upperLinedit
         else:
-            self.lowerLinedit.setFocus()
+            lineEditToFocus = self.lowerLinedit
         self.scene.clearLine(self)
         self.firstLinedit.deleteLater()
         self.scene.removeLineEdit(self.firstLinedit)
         self.deleteLater()
         self.scene.removeFrame(self)
         self.parent.children.remove(self)
+        lineEditToFocus.setFocus()
         self.scene.updateFrames()
 
 
