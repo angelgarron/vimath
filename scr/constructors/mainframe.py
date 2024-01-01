@@ -33,9 +33,8 @@ class Line(MyFrame):
 
         
     def removeLine(self):
-        indx = self.parent.children.index(self)
-        if indx+1 == len(self.parent.children): # we are in the last line
-            if indx == 0: # there is only one line
+        if self.lineNumber+1 == len(self.parent.children): # we are in the last line
+            if self.lineNumber == 0: # there is only one line
                 self.scene.clearLine(self)
                 return
             lineEditToFocus = self.upperLinedit
@@ -49,6 +48,11 @@ class Line(MyFrame):
         self.parent.children.remove(self)
         lineEditToFocus.setFocus()
         self.scene.updateFrames()
+
+        
+    @property
+    def lineNumber(self):
+        return self.parent.children.index(self)
 
 
 class MainFrame(MyFrame):

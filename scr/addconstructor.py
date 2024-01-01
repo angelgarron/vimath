@@ -221,8 +221,7 @@ class InsertNewLine:
         currentLine = other
         while not isinstance(currentLine, mainframe.Line):
             currentLine = currentLine.parent
-        indx = scene.window.mainMathFrame.children.index(currentLine)
-        newFrame = scene.window.mainMathFrame.createLine(indx+1)
+        newFrame = scene.window.mainMathFrame.createLine(currentLine.lineNumber+1)
         newFrame.firstLinedit.setFocus()
         scene.enterInsertMode()
 
@@ -238,7 +237,6 @@ class InsertNewLineUp:
         currentLine = other
         while not isinstance(currentLine, mainframe.Line):
             currentLine = currentLine.parent
-        indx = scene.window.mainMathFrame.children.index(currentLine)
-        newFrame = scene.window.mainMathFrame.createLine(indx)
+        newFrame = scene.window.mainMathFrame.createLine(currentLine.lineNumber)
         newFrame.firstLinedit.setFocus()
         scene.enterInsertMode()
