@@ -207,3 +207,15 @@ class CreateParenthesis(Constructor):
     def __init__(self):
         self.key = [Qt.ShiftModifier | Qt.Key_ParenLeft]
         self.constructor = Parenthesis
+
+
+@RegisterAction("normal")
+class InsertNewLine:
+    def __init__(self):
+        self.key = [Qt.Key_O]
+
+        
+    def performAction(self, other):
+        newFrame = scene.window.mainMathFrame.createLine()
+        newFrame.firstLinedit.setFocus()
+        scene.enterInsertMode()

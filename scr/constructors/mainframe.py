@@ -43,6 +43,8 @@ class MainFrame(MyFrame):
         line = Line(self)
         line.setFirstLineEdit()
         self.children.append(line)
+        self.scene.updateFrames()
+        return line
         
         
     @property
