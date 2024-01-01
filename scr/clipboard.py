@@ -49,9 +49,15 @@ class Clipboard:
             register = self.clipboardElements
 
         leftLineEdit = self.scene.getLineEditWithFocus()
-        if "Line" in register[0]["constructor"]:
-            indx = self.scene.window.mainMathFrame.children.index(leftLineEdit.parent)
-            newLine = self.scene.window.mainMathFrame.createLine(indx+1)
+
+        # we are pasting a line
+        if register[0]["constructor"] == "<class 'constructors.mainframe.Line'>":
+            currentLine = leftLineEdit
+            # find the Line where we are
+            while not hasattr(currentLine, "lineNumber"):
+                currentLine = currentLine.parent
+
+            newLine = self.scene.window.mainMathFrame.createLine(currentLine.lineNumber+1)
             newLine.firstLinedit.deleteLater()
             self.scene.removeLineEdit(newLine.firstLinedit)
             newLine.children.remove(newLine.firstLinedit)
