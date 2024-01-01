@@ -36,16 +36,15 @@ class MainFrame(MyFrame):
     VSPACE = 3
     def __init__(self, parent):
         super().__init__(parent)
-        self.children.append(Line(self))
-        self.children.append(Line(self))
-        self.children.append(Line(self))
+        self.createLine()
+
+        
+    def createLine(self):
+        line = Line(self)
+        line.setFirstLineEdit()
+        self.children.append(line)
         
         
-    def setFirstLineEdit(self):
-        for line in self.children:
-            line.setFirstLineEdit()
-
-
     @property
     def firstLinedit(self):
         return self.children[0].firstLinedit

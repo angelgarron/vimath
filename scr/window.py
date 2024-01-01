@@ -16,7 +16,6 @@ class MyMainWindow(QMainWindow):
         self.fontSize = self.scene.fontSize
 
         self.mainMathFrame = MainFrame(self)
-        self.mainMathFrame.setFirstLineEdit()
         self.scene.history.store("first stamp")
         self.createMyMath()
 
