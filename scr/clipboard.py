@@ -49,6 +49,17 @@ class Clipboard:
             register = self.clipboardElements
 
         leftLineEdit = self.scene.getLineEditWithFocus()
+        if "Line" in register[0]["constructor"]:
+            indx = self.scene.window.mainMathFrame.children.index(leftLineEdit.parent)
+            newLine = self.scene.window.mainMathFrame.createLine(indx+1)
+            newLine.firstLinedit.deleteLater()
+            self.scene.removeLineEdit(newLine.firstLinedit)
+            newLine.children.remove(newLine.firstLinedit)
+            newLine.deserialize(register[0]["elements"])
+            self.scene.updateFrames()
+            newLine.firstLinedit.setFocus()
+            return
+
         cursorPosition = leftLineEdit.cursorPosition()
 
         leftText = leftLineEdit.text()[:cursorPosition]

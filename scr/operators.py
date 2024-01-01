@@ -132,6 +132,9 @@ class RemoveLine:
         currentLine = other
         while not isinstance(currentLine, mainframe.Line):
             currentLine = currentLine.parent
+        selection = []
+        selection.append((currentLine, None))
+        scene.clipboard.serializeSelected(selection=selection)
         currentLine.removeLine()
         scene.history.store("remove line")
 
