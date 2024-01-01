@@ -57,11 +57,12 @@ class Clipboard:
             while not hasattr(currentLine, "lineNumber"):
                 currentLine = currentLine.parent
 
-            newLine = self.scene.window.mainMathFrame.createLine(currentLine.lineNumber+1)
-            newLine.firstLinedit.deleteLater()
-            self.scene.removeLineEdit(newLine.firstLinedit)
-            newLine.children.remove(newLine.firstLinedit)
-            newLine.deserialize(register[0]["elements"])
+            for element in register:
+                constructor = self.scene.returnClass[element["constructor"]]
+                newLine = constructor(self.scene.window.mainMathFrame)
+                self.scene.window.mainMathFrame.children.insert(currentLine.lineNumber+1, newLine)
+                newLine.deserialize(element["elements"])
+            
             self.scene.updateFrames()
             newLine.firstLinedit.setFocus()
             return
