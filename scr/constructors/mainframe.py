@@ -31,6 +31,24 @@ class Line(MyFrame):
             return
         return self.parent.children[indx-1].firstLinedit
 
+        
+    def removeLine(self):
+        indx = self.parent.children.index(self)
+        if indx+1 == len(self.parent.children): # we are in the last line
+            if indx == 0: # there is only one line
+                self.scene.clearLine(self)
+                return
+            self.upperLinedit.setFocus()
+        else:
+            self.lowerLinedit.setFocus()
+        self.scene.clearLine(self)
+        self.firstLinedit.deleteLater()
+        self.scene.removeLineEdit(self.firstLinedit)
+        self.deleteLater()
+        self.scene.removeFrame(self)
+        self.parent.children.remove(self)
+        self.scene.updateFrames()
+
 
 class MainFrame(MyFrame):
     VSPACE = 3

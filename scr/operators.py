@@ -1,5 +1,6 @@
 from lineedit import MyLineEdit
 from constructors import Parenthesis
+from constructors import mainframe
 from base import RegisterAction
 from scene import scene
 from PySide6.QtGui import Qt
@@ -127,7 +128,11 @@ class RemoveLine:
 
         
     def performAction(self, other):
-        scene.clear()
+        # find the Line where we are
+        currentLine = other
+        while not isinstance(currentLine, mainframe.Line):
+            currentLine = currentLine.parent
+        currentLine.removeLine()
         scene.history.store("remove line")
 
 

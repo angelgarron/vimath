@@ -215,6 +215,13 @@ class Scene:
     def clear(self):
         """Clear the contents of the scene
         """
+        # remove all lines except for the first one
+        # the last line will just be cleared
+        for line in self.frames[0].children[1:].copy():
+            line.removeLine()
+
+
+    def clearLine(self, line):
         # give focus to the base if we have focus on an empty script when clearing
         # this is to avoid the focusOutEvent trying to remove the script before
         lineEditWithFocus = self.getLineEditWithFocus()
@@ -226,10 +233,11 @@ class Scene:
         )) and len(lineEditWithFocus.text()) == 0:
             lineEditWithFocus.parent.parent.base.firstLinedit.setFocus()
 
-        for element in self.frames[0].children.copy():
+        for element in line.children.copy():
             if not isinstance(element, MyLineEdit):
                 element.removeFrame()
-        self.frames[0].children[0].clear()
+        # clear the remaining lineEdit
+        line.children[0].clear()
     
 
     def saveToFile(self, filename):
