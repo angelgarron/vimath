@@ -3,6 +3,7 @@ from PySide6.QtGui import QPainter, QPen, QPainterPath, QColor, QBrush, QFont
 from PySide6.QtWidgets import QMainWindow, QWidget
 from frame import MyFrame
 from lineedit import MyLineEdit
+from constructors import Fraction, MainFrame
 
 class MyMainWindow(QMainWindow):
     def __init__(self):
@@ -14,7 +15,7 @@ class MyMainWindow(QMainWindow):
         self.tp = SelectionRectangle(self)
         self.fontSize = self.scene.fontSize
 
-        self.mainMathFrame = MyFrame(self)
+        self.mainMathFrame = MainFrame(self)
         self.mainMathFrame.setFirstLineEdit()
         self.scene.history.store("first stamp")
         self.createMyMath()
