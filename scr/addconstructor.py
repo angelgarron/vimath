@@ -3,6 +3,7 @@ from constructors import Fraction, Parenthesis, SquareRoot, Subscript, Superscri
 from constructors import subscript
 from constructors import supersubscript
 from constructors import superscript
+from constructors import mainframe
 from PySide6.QtGui import Qt
 from scene import scene
 
@@ -216,6 +217,11 @@ class InsertNewLine:
 
         
     def performAction(self, other):
-        newFrame = scene.window.mainMathFrame.createLine()
+        # find the Line where we are
+        currentLine = other
+        while not isinstance(currentLine, mainframe.Line):
+            currentLine = currentLine.parent
+        indx = scene.window.mainMathFrame.children.index(currentLine)
+        newFrame = scene.window.mainMathFrame.createLine(indx+1)
         newFrame.firstLinedit.setFocus()
         scene.enterInsertMode()

@@ -39,10 +39,12 @@ class MainFrame(MyFrame):
         self.createLine()
 
         
-    def createLine(self):
+    def createLine(self, position=None):
+        if position is None:
+            position = len(self.children)
         line = Line(self)
         line.setFirstLineEdit()
-        self.children.append(line)
+        self.children.insert(position, line)
         self.scene.updateFrames()
         return line
         
