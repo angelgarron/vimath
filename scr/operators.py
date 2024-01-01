@@ -337,3 +337,19 @@ class DeleteSurroundingParenthesis(AroundParenthesis):
         currentElement.removeFrame()
         scene.clipboard.deserializeFromClipboard(register)
         scene.history.store("removed surrounding parenthesis")
+
+
+@RegisterAction("normal")
+class YankLine:
+    def __init__(self):
+        self.key = [Qt.Key_Y, Qt.Key_Y]
+
+        
+    def performAction(self, other):
+        # find the Line where we are
+        currentLine = other
+        while not isinstance(currentLine, mainframe.Line):
+            currentLine = currentLine.parent
+        selection = []
+        selection.append((currentLine, None))
+        scene.clipboard.serializeSelected(selection=selection)
