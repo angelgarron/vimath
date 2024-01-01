@@ -18,12 +18,18 @@ class Line(MyFrame):
 
     @property
     def lowerLinedit(self):
-        return self.parent.children[1].firstLinedit
+        indx = self.parent.children.index(self)
+        if indx+2 > len(self.parent.children):
+            return
+        return self.parent.children[indx+1].firstLinedit
 
 
     @property
     def upperLinedit(self):
-        return self.parent.children[0].firstLinedit
+        indx = self.parent.children.index(self)
+        if indx == 0:
+            return
+        return self.parent.children[indx-1].firstLinedit
 
 
 class MainFrame(MyFrame):
@@ -51,16 +57,14 @@ class MainFrame(MyFrame):
 
 
     def updateFrameSizeAndPosition(self):
-        for line in self.children:
-            line.updateFrameSizeAndPosition()
         height = 0
-        for line in self.children:
-            height += line.height()+MainFrame.VSPACE
-        self.setGeometry(0, 0, 500, height)
         y = 0
         for line in self.children:
+            line.updateFrameSizeAndPosition()
+            height += line.height()+MainFrame.VSPACE
             line.setGeometry(0, y, line.width(), line.height())
             y += line.height()+MainFrame.VSPACE
+        self.setGeometry(0, 0, 500, height)
 
 
     def deserialize(self, data):
