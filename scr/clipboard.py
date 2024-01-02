@@ -44,7 +44,7 @@ class Clipboard:
         print("the serialized elements are", register)
 
 
-    def deserializeFromClipboard(self, register=None):
+    def deserializeFromClipboard(self, register=None, up=False):
         if register is None:
             register = self.clipboardElements
 
@@ -57,17 +57,23 @@ class Clipboard:
             while not hasattr(currentLine, "lineNumber"):
                 currentLine = currentLine.parent
 
-            for element in register:
+            for i, element in enumerate(register):
                 constructor = self.scene.returnClass[element["constructor"]]
                 newLine = constructor(self.scene.window.mainMathFrame)
-                self.scene.window.mainMathFrame.children.insert(currentLine.lineNumber+1, newLine)
+                if up:
+                    self.scene.window.mainMathFrame.children.insert(currentLine.lineNumber+i, newLine)
+                else:
+                    self.scene.window.mainMathFrame.children.insert(currentLine.lineNumber+i+1, newLine)
                 newLine.deserialize(element["elements"])
             
             self.scene.updateFrames()
             newLine.firstLinedit.setFocus()
             return
 
-        cursorPosition = leftLineEdit.cursorPosition()
+        if up:
+            cursorPosition = leftLineEdit.cursorPosition()
+        else:
+            cursorPosition = leftLineEdit.cursorPosition()+1
 
         leftText = leftLineEdit.text()[:cursorPosition]
         rightText = leftLineEdit.text()[cursorPosition:]

@@ -162,6 +162,17 @@ class Paste:
 
 
 @RegisterAction("normal")
+class PasteUp:
+    def __init__(self):
+        self.key = [Qt.ShiftModifier | Qt.Key_P]
+
+        
+    def performAction(self, other):
+        scene.clipboard.deserializeFromClipboard(up=True)
+        scene.history.store("deserializing from clipboard up")
+
+
+@RegisterAction("normal")
 class Undo:
     def __init__(self):
         self.key = [Qt.Key_U]
