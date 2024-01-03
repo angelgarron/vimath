@@ -66,7 +66,7 @@ class Inferior(MyFrame):
             register = []
             self.scene.clipboard.serializeSelected(selection, register)
             self.parent.removeFrame()
-            self.scene.clipboard.deserializeFromClipboard(register)
+            self.scene.clipboard.deserializeFromClipboard(register, up=True)
             if len(selection) == 1 and isinstance(selection[0][0], MyLineEdit):
                 rightLineEdit = self.parent.parent.children[indx-1]
                 rightLineEdit.setCursorPosition(len(rightLineEdit.text())-len(rightLineEditOld.text()))
