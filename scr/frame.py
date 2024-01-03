@@ -23,6 +23,7 @@ class MyFrame(QFrame):
         self.pen.setColor("black")
         self.children = []
         self.scene.addFrame(self)
+        self.emptyWidth = 0
         self.show()
 
         
@@ -121,7 +122,9 @@ class MyFrame(QFrame):
         self.u = 0
         self.d = 0
         for child in self.children:
-            if not isinstance(child, MyLineEdit):
+            if isinstance(child, MyLineEdit):
+                child.updateWidth()
+            else:
                 child.updateFrameSizeAndPosition()
             self.u = max(self.u, child.u)
             self.d = max(self.d, child.d)

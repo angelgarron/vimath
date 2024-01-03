@@ -6,6 +6,7 @@ from constructors import superscript
 class Superior(MyFrame):
     def __init__(self, parent):
         super().__init__(parent)
+        self.emptyWidth = self.fontSize
 
 
     def getFontSize(self):
@@ -80,6 +81,7 @@ class Base(MyFrame):
 class Inferior(MyFrame):
     def __init__(self, parent):
         super().__init__(parent)
+        self.emptyWidth = self.fontSize
 
         
     def getFontSize(self):

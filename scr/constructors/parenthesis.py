@@ -8,6 +8,7 @@ class Parenthesis(MyFrame):
     def __init__(self, parent):
         super().__init__(parent)
         self.base = MyFrame(self)
+        self.base.emptyWidth = self.fontSize
         self.children.append(self.base)
 
 

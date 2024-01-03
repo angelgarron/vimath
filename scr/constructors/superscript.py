@@ -5,6 +5,7 @@ from lineedit import MyLineEdit
 class Superior(MyFrame):
     def __init__(self, parent):
         super().__init__(parent)
+        self.emptyWidth = self.fontSize
     
 
     def getFontSize(self):

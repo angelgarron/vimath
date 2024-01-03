@@ -4,6 +4,7 @@ from frame import MyFrame
 class Numerator(MyFrame):
     def __init__(self, parent):
         super().__init__(parent)
+        self.emptyWidth = self.fontSize
 
         
     @property
@@ -24,6 +25,7 @@ class Numerator(MyFrame):
 class Denominator(MyFrame):
     def __init__(self, parent):
         super().__init__(parent)
+        self.emptyWidth = self.fontSize
 
         
     @property

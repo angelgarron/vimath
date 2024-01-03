@@ -8,6 +8,7 @@ class SquareRoot(MyFrame):
     def __init__(self, parent):
         super().__init__(parent)
         self.squareRootArgumentFrame = MyFrame(self)
+        self.squareRootArgumentFrame.emptyWidth = self.fontSize
         self.children.append(self.squareRootArgumentFrame)
 
 
