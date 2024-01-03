@@ -346,7 +346,7 @@ class DeleteSurroundingParenthesis(AroundParenthesis):
         selection.append((currentElement.base.children[-1], len(currentElement.base.children[-1].text())))
         scene.clipboard.serializeSelected(selection=selection, register=register)
         currentElement.removeFrame()
-        scene.clipboard.deserializeFromClipboard(register)
+        scene.clipboard.deserializeFromClipboard(register, up=True)
         scene.history.store("removed surrounding parenthesis")
 
 
