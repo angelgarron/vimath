@@ -18,7 +18,6 @@ class MyFrame(QFrame):
         self.setGeometry(0, 0, LINEDIT_SIZE[0], LINEDIT_SIZE[1])
         self.fontSize = self.getFontSize()
         self.setFont(QFont("monospace", self.fontSize))
-        self.setStyleSheet("border:1px dashed red")
         self.pen = QPen()
         self.pen.setColor("black")
         self.children = []

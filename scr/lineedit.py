@@ -4,12 +4,6 @@ from PySide6.QtCore import Qt, QSize
 
 LINEDIT_SIZE = (8, 20)
 CURSOR_WIDTH = 12
-LINEDIT_STYLESHEET = """
-color: black;
-border: 1px solid gray;
-border-radius: 4px;
-background: transparent;
-"""
 
 class ThickCursorStyle(QProxyStyle):
     def __init__(self, fontSize):
@@ -28,7 +22,6 @@ class MyLineEdit(QLineEdit):
     def __init__(self, parent):
         super().__init__(parent)
         self.parent = parent
-        self.setStyleSheet(LINEDIT_STYLESHEET)
         self.setAlignment(Qt.AlignmentFlag.AlignTop)
         self.fontSize = self.parent.fontSize
         self.thickCursorStyle = ThickCursorStyle(self.fontSize)
