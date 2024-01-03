@@ -92,20 +92,19 @@ class MyLineEdit(QLineEdit):
         if len(self.text()) == 0: # how to display empty lineEdit
             if len(self.parent.children) == 1:
                 self.setFixedWidth(self.parent.emptyWidth)
+                self.setFixedHeight(self.parent.emptyWidth*1.2)
             else:
                 self.setFixedWidth(0)
+                self.setFixedHeight(0)
         else:
             width = self.fontMetrics().horizontalAdvance(self.text())
             self.setFixedWidth(width+8)
-        tight = self.fontMetrics().tightBoundingRect(self.text())
-        if tight.height() == 0:
-            self.setFixedHeight(self.fontSize)
-        else:
+            tight = self.fontMetrics().tightBoundingRect(self.text())
             self.setFixedHeight(tight.height()+6)
-        self.setTextMargins(0, -tight.top()-self.font().pointSize()-2, 0, 0)
-        self.u = -tight.top()
-        self.d = self.height()-self.u
-        self.setGeometry(self.x(), self.y(), self.width(), self.u+self.d)
+            self.setTextMargins(0, -tight.top()-self.font().pointSize()-2, 0, 0)
+            self.u = -tight.top()
+            self.d = self.height()-self.u
+            self.setGeometry(self.x(), self.y(), self.width(), self.u+self.d)
 
 
     def createFrameMiddle(self, FrameConstructor, storeHistory=True):
