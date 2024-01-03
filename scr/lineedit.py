@@ -3,7 +3,7 @@ from PySide6.QtGui import QPainter, QPen, QPainterPath, QColor, QBrush, QFont
 from PySide6.QtCore import Qt, QSize
 
 LINEDIT_SIZE = (8, 20)
-CURSOR_WIDTH = 12
+
 
 class ThickCursorStyle(QProxyStyle):
     def __init__(self, fontSize):
@@ -18,14 +18,24 @@ class ThickCursorStyle(QProxyStyle):
         return super().pixelMetric(metric, option, widget)
 
 
+class EmptyCursorStyle(QProxyStyle):
+    def pixelMetric(self, metric, option=None, widget=None):
+        if metric == QProxyStyle.PM_TextCursorWidth:
+            return 0
+
+        return super().pixelMetric(metric, option, widget)
+
+
 class MyLineEdit(QLineEdit):
     def __init__(self, parent):
         super().__init__(parent)
         self.parent = parent
         self.setAlignment(Qt.AlignmentFlag.AlignTop)
         self.fontSize = self.parent.fontSize
+        self.isEmpty = False
         self.thickCursorStyle = ThickCursorStyle(self.fontSize)
         self.thinCursorStyle = QProxyStyle()
+        self.emptyCursorStyle = EmptyCursorStyle()
         self.setThickCursorStyle()
         self.setFont(QFont("monospace", self.fontSize))
         self.scene = self.parent.scene
@@ -35,16 +45,37 @@ class MyLineEdit(QLineEdit):
         self.setGeometry(0, 0, LINEDIT_SIZE[0], self.u+self.d)
         self.textChanged.connect(self.scene.updateFrames)
         self.textEdited.connect(self.wasEdited)
+        self.pen = QPen()
+        self.color_blue = QColor(36, 143, 230)
+        self.color_blue_dark = QColor(30, 112, 180)
+        self.pen.setColor(self.color_blue_dark)
+        self.pen.setStyle(Qt.DashLine)
+        self.brush = QBrush()
+        self.brush.setStyle(Qt.SolidPattern)
         self.show()
     
 
     def setThickCursorStyle(self):
-        self.setStyle(self.thickCursorStyle)
+        if not self.isEmpty:
+            self.setStyle(self.thickCursorStyle)
     
 
     def setThinCursorStyle(self):
-        self.setStyle(self.thinCursorStyle)
+        if not self.isEmpty:
+            self.setStyle(self.thinCursorStyle)
+    
 
+    def setEmpty(self, flag):
+        if flag:
+            self.setStyle(self.emptyCursorStyle)
+            self.isEmpty = True
+        else:
+            self.isEmpty = False
+            if self.scene.isInsertMode():
+                self.setThinCursorStyle()
+            elif self.scene.isNormalMode() or self.scene.isVisualMode():
+                self.setThickCursorStyle()
+                
         
     @property
     def nextLinedit(self):
@@ -86,10 +117,13 @@ class MyLineEdit(QLineEdit):
             if len(self.parent.children) == 1:
                 self.setFixedWidth(self.parent.emptyWidth)
                 self.setFixedHeight(self.parent.emptyWidth*1.2)
+                self.setEmpty(True)
             else:
-                self.setFixedWidth(0)
-                self.setFixedHeight(0)
+                self.setFixedWidth(4)
+                self.setFixedHeight(self.parent.emptyWidth*1.2)
+                self.setEmpty(False)
         else:
+            self.setEmpty(False)
             width = self.fontMetrics().horizontalAdvance(self.text())
             self.setFixedWidth(width+8)
             tight = self.fontMetrics().tightBoundingRect(self.text())
@@ -177,4 +211,22 @@ class MyLineEdit(QLineEdit):
         
     def deserialize(self, data):
         return
+        
+
+    def paintEvent(self, event):
+        super().paintEvent(event)
+        if self.isEmpty:
+            with QPainter(self) as painter:
+                if self.hasFocus():
+                    self.brush.setColor(self.color_blue_dark.darker())
+                else:
+                    self.brush.setColor(self.color_blue)
+                rect = self.contentsRect()
+                rect.setHeight(rect.height()-2.5)
+                rect.setWidth(rect.width()-2.5)
+                rect.setX(rect.x()+2.5)
+                rect.setY(rect.y()+2.5)
+                painter.setPen(self.pen)
+                painter.setBrush(self.brush)
+                painter.drawRect(rect)
         
