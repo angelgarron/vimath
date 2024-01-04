@@ -85,9 +85,11 @@ class MainFrame(MyFrame):
     def updateFrameSizeAndPosition(self):
         height = 0
         y = 0
+        maxWidthLines = 0
         for line in self.children:
             line.updateFrameSizeAndPosition()
             height += line.height()+MainFrame.VSPACE
             line.setGeometry(0, y, line.width(), line.height())
             y += line.height()+MainFrame.VSPACE
-        self.setGeometry(0, 0, 500, height)
+            maxWidthLines = max(maxWidthLines, line.width())
+        self.setGeometry(0, 0, maxWidthLines, height)
