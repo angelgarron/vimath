@@ -115,12 +115,12 @@ class MyLineEdit(QLineEdit):
     def updateWidth(self):
         if len(self.text()) == 0: # how to display empty lineEdit
             if len(self.parent.children) == 1:
-                self.setFixedWidth(self.parent.emptyWidth)
-                self.setFixedHeight(self.parent.emptyWidth*1.2)
+                self.setFixedWidth(self.parent.fontSize)
+                self.setFixedHeight(self.parent.fontSize*1.2)
                 self.setEmpty(True)
             else:
                 self.setFixedWidth(4)
-                self.setFixedHeight(self.parent.emptyWidth*1.2)
+                self.setFixedHeight(self.parent.fontSize*1.2)
                 self.setEmpty(False)
         else:
             self.setEmpty(False)

@@ -22,7 +22,6 @@ class MyFrame(QFrame):
         self.pen.setColor("black")
         self.children = []
         self.scene.addFrame(self)
-        self.emptyWidth = 0
         self.show()
 
         

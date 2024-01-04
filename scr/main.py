@@ -12,6 +12,7 @@ QFrame {
 }
 QLineEdit {
     color: black;
+    border: transparent;
 }
 """
 
