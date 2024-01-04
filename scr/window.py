@@ -1,6 +1,6 @@
 from scene import scene
 from PySide6.QtGui import QPainter, QPen, QPainterPath, QColor, QBrush, QFont
-from PySide6.QtWidgets import QMainWindow, QWidget
+from PySide6.QtWidgets import QMainWindow, QWidget, QLabel
 from frame import MyFrame
 from lineedit import MyLineEdit
 from constructors import Fraction, MainFrame
@@ -24,8 +24,20 @@ class MyMainWindow(QMainWindow):
         self.mainMathFrame = MainFrame(self)
         self.scene.history.store("first stamp")
         self.createMyMath()
+        self.modeInfoLabel = QLabel("")
+        self.statusBar().addWidget(self.modeInfoLabel, 1)
+        self.storedKeysLabel = QLabel("")
+        self.statusBar().addWidget(self.storedKeysLabel)
+        self.updateStatusBar()
 
 
+    def updateStatusBar(self):
+        modeInfo = f"--{MODE_NAME[self.scene.mode]}--"
+        storedKeys = "".join(map(lambda k: str(k.key())[-1].lower(), self.scene.storedKeys))
+        self.storedKeysLabel.setText(storedKeys)
+        self.modeInfoLabel.setText(modeInfo)
+
+    
     def initUI(self):
         self.setGeometry(100, 100, 400, 300)
 
