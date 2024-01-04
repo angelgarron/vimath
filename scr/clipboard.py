@@ -20,7 +20,6 @@ class Clipboard:
         # we are in the same lineEdit
         if isinstance(first[0], MyLineEdit) and isinstance(second[0], MyLineEdit) and first[0] == second[0]:
             register.append(first[0].serialize(first[1], second[1]))
-            print("the serialized elements are", register)
             return
 
         start, end = 1, -1
@@ -40,8 +39,6 @@ class Clipboard:
 
         if isinstance(second[0], MyLineEdit):
             register.append(second[0].serialize(None, second[1]))
-
-        print("the serialized elements are", register)
 
 
     def deserializeFromClipboard(self, register=None, up=False):

@@ -151,11 +151,6 @@ class MyLineEdit(QLineEdit):
         return newFrame
         
 
-    def wheelEvent(self, event):
-        print(self)
-        return super().wheelEvent(event)
-
-
     def deleteText(self):
         if self.hasSelectedText():
             self.del_()

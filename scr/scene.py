@@ -58,11 +58,8 @@ class Scene:
 
         
     def updateVisualSelection(self):
-        print("updating visual selection")
         lineEditWithFocus = self.getLineEditWithFocus()
         self.selectionSecond = [lineEditWithFocus, lineEditWithFocus.cursorPosition()]
-        print("selectionFirst", self.selectionFirst)
-        print("selectionSecond", self.selectionSecond)
         self.selection = []
         if self.selectionFirst[0] == self.selectionSecond[0]:
             if self.selectionFirst[1]>self.selectionSecond[1]:
@@ -71,23 +68,18 @@ class Scene:
             else:
                 self.selection.append((self.selectionFirst[0], self.selectionFirst[1]))
                 self.selection.append((self.selectionSecond[0], self.selectionSecond[1]))
-            print("same lineEdit")
         else:
             element = self.lookuptree(self.selectionFirst[0])
-            print(element)
-        print("the selection is", self.selection)
         self.setSelectionGeometry()
 
 
     def clearSelection(self):
-        print("clearing selection")
         self.selectionFirst = None
         self.selectionSecond = None
         self.window.tp.hide()
 
 
     def startSelection(self):
-        print("adding selection first and second")
         lineEditWithFocus = self.getLineEditWithFocus()
         self.selectionFirst = [lineEditWithFocus, lineEditWithFocus.cursorPosition()]
         self.selectionSecond = [lineEditWithFocus, lineEditWithFocus.cursorPosition()]
@@ -264,7 +256,6 @@ class Scene:
 
 
     def deserialize(self, data):
-        print("deserializating data", data)
         self.clear()
         mainFrame = self.frames[0]
         mainFrame.deserialize(data["mainFrame"])

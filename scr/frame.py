@@ -80,11 +80,6 @@ class MyFrame(QFrame):
         return self.parent.lowerLinedit
             
             
-    def wheelEvent(self, event):
-        print(self)
-        return super().wheelEvent(event)
-
-        
     def removeFrame(self):
         self.deleteLater()
         self.scene.removeFrame(self)
