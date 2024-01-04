@@ -6,12 +6,12 @@ from window import MyMainWindow
 STYLE_SHEET = """
 * {
     background: white;
+    color: black;
 }
 QFrame {
     background: transparent;
 }
 QLineEdit {
-    color: black;
     border: transparent;
 }
 """

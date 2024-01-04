@@ -5,6 +5,12 @@ from frame import MyFrame
 from lineedit import MyLineEdit
 from constructors import Fraction, MainFrame
 
+MODE_NAME = {
+    0: "NORMAL",
+    1: "INSERT",
+    2: "VISUAL",
+}
+
 class MyMainWindow(QMainWindow):
     def __init__(self):
         super().__init__()

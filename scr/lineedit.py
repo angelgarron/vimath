@@ -159,6 +159,7 @@ class MyLineEdit(QLineEdit):
     def keyPressEvent(self, event):
         if event.keyCombination() == Qt.ControlModifier | Qt.Key_C:
             self.scene.storedKeys = []
+            self.scene.window.updateStatusBar()
             if not self.scene.isNormalMode():
                 self.cursorBackward(False)
                 self.scene.enterNormalMode()
@@ -178,6 +179,7 @@ class MyLineEdit(QLineEdit):
             return
 
         self.scene.storedKeys.append(event.keyCombination())
+        self.scene.window.updateStatusBar()
 
         for action in actions.values():
             if isinstance(action.key[0], list):
@@ -185,6 +187,7 @@ class MyLineEdit(QLineEdit):
                     if key == self.scene.storedKeys:
                         action.performAction(self)
                         self.scene.storedKeys = []
+                        self.scene.window.updateStatusBar()
                         if self.scene.isVisualMode():
                             self.scene.updateVisualSelection()
                         break
@@ -192,6 +195,7 @@ class MyLineEdit(QLineEdit):
                 if action.key == self.scene.storedKeys:
                     action.performAction(self)
                     self.scene.storedKeys = []
+                    self.scene.window.updateStatusBar()
                     if self.scene.isVisualMode():
                         self.scene.updateVisualSelection()
                     break
