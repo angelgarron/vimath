@@ -55,6 +55,13 @@ class MyLineEdit(QLineEdit):
         self.show()
     
 
+    def inputMethodEvent(self, event):
+        if event.commitString() == "^":
+            self.scene.actions["CreateSuperscript"].performAction(self)
+            return
+        return super().inputMethodEvent(event)
+
+
     def setThickCursorStyle(self):
         if not self.isEmpty:
             self.setStyle(self.thickCursorStyle)
