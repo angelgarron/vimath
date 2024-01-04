@@ -4,17 +4,14 @@ from window import MyMainWindow
 
 
 STYLE_SHEET = """
-QMainWindow {
-    background-color: white;
+* {
+    background: white;
+}
+QFrame {
+    background: transparent;
 }
 QLineEdit {
     color: black;
-    border: 1px solid gray;
-    border-radius: 4px;
-    background: transparent;
-}
-QFrame {
-    border: 1px dashed red;
 }
 """
 
