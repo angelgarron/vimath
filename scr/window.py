@@ -1,7 +1,7 @@
 from scene import scene
 from PySide6.QtGui import QPainter, QPen, QPainterPath, QColor, QBrush, QFont
 from PySide6.QtWidgets import QMainWindow, QWidget, QLabel
-from PySide6.QtCore import QPoint
+from PySide6.QtCore import QPoint, QTimer
 from frame import MyFrame
 from lineedit import MyLineEdit
 from constructors import Fraction, MainFrame
@@ -31,6 +31,7 @@ class MyMainWindow(QMainWindow):
         self.storedKeysLabel = QLabel("")
         self.statusBar().addWidget(self.storedKeysLabel)
         self.updateStatusBar()
+        self.graphicCursor.updatePosition()
 
 
     def updateStatusBar(self):
@@ -70,8 +71,21 @@ class GraphicalCursor(QWidget):
     def __init__(self, parent, scene):
         super().__init__(parent)
         self.scene = scene
+        self.timer = QTimer(self)
+        self.timer.setInterval(500)
+        self.timer.timeout.connect(self.blink)
+        self.timer.start()
+        self.isShowing = True
         self.pos = QPoint(0, 0)
-        self.show()
+
+        
+    def blink(self):
+        if self.isShowing:
+            self.hide()
+            self.isShowing = False
+        else:
+            self.show()
+            self.isShowing = True
 
 
     def getAbsolutePosition(self, element, pos):
@@ -82,7 +96,7 @@ class GraphicalCursor(QWidget):
 
 
     def updatePosition(self):
-        self.hide()
+        self.show()
         lineEditWithFocus = self.scene.getLineEditWithFocus()
         if lineEditWithFocus is not None:
             cursorPosition = lineEditWithFocus.cursorPosition()
@@ -91,7 +105,6 @@ class GraphicalCursor(QWidget):
                                                                         cursorPosition)
             self.pos = self.getAbsolutePosition(lineEditWithFocus.parent, QPoint(start, lineEditWithFocus.y()))
             self.setGeometry(self.pos.x(), self.pos.y(), 1, lineEditWithFocus.fontSize*1.2)
-            self.show()
 
 
     def paintEvent(self, event):
