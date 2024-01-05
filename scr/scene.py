@@ -96,11 +96,15 @@ class Scene:
     def setSelectionGeometry(self):
         if self.selection:
             if self.selection[0][1] is not None:
-                start = self.selection[0][0].x()+self.selection[0][1]*12
+                start = self.selection[0][0].x()+\
+                self.selection[0][0].fontMetrics().horizontalAdvance(self.selection[0][0].text(), 
+                                                                     self.selection[0][1])
             else:
                 start = self.selection[0][0].x()
             if self.selection[-1][1] is not None:
-                end = self.selection[-1][0].x()+self.selection[-1][1]*12
+                end = self.selection[-1][0].x()+\
+                self.selection[-1][0].fontMetrics().horizontalAdvance(self.selection[-1][0].text(), 
+                                                                      self.selection[-1][1])
             else:
                 end = self.selection[-1][0].x()+self.selection[-1][0].width()
             pos = self.getAbsolutePosition(self.selection[0][0].parent, QPoint(start, 0))
