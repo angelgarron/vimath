@@ -84,14 +84,16 @@ class GraphicalCursor(QWidget):
     def updatePosition(self):
         self.hide()
         lineEditWithFocus = self.scene.getLineEditWithFocus()
-        cursorPosition = lineEditWithFocus.cursorPosition()
-        start = lineEditWithFocus.x()+\
-        lineEditWithFocus.fontMetrics().horizontalAdvance(lineEditWithFocus.text(), 
-                                                                     cursorPosition)
-        self.pos = self.getAbsolutePosition(lineEditWithFocus.parent, QPoint(start, 0))
-        self.show()
+        if lineEditWithFocus is not None:
+            cursorPosition = lineEditWithFocus.cursorPosition()
+            start = lineEditWithFocus.x()+\
+            lineEditWithFocus.fontMetrics().horizontalAdvance(lineEditWithFocus.text(), 
+                                                                        cursorPosition)
+            self.pos = self.getAbsolutePosition(lineEditWithFocus.parent, QPoint(start, lineEditWithFocus.y()))
+            self.setGeometry(self.pos.x(), self.pos.y(), 1, lineEditWithFocus.fontSize*1.2)
+            self.show()
 
 
     def paintEvent(self, event):
         with QPainter(self) as painter:
-            painter.fillRect(self.pos.x(), self.pos.y(), 3, 200, QColor("black"))
+            painter.fillRect(self.rect(), QColor("black"))
