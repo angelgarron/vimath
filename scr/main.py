@@ -23,4 +23,5 @@ if __name__ == '__main__':
     window.setStyleSheet(STYLE_SHEET)
     window.show()
     window.tp.raise_()
+    window.graphicCursor.raise_()
     sys.exit(app.exec())

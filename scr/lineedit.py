@@ -45,6 +45,7 @@ class MyLineEdit(QLineEdit):
         self.setGeometry(0, 0, LINEDIT_SIZE[0], self.u+self.d)
         self.textChanged.connect(self.scene.updateFrames)
         self.textEdited.connect(self.wasEdited)
+        self.cursorPositionChanged.connect(self.scene.window.graphicCursor.updatePosition)
         self.pen = QPen()
         self.color_blue = QColor(36, 143, 230)
         self.color_blue_dark = QColor(30, 112, 180)

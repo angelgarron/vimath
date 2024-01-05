@@ -1,6 +1,7 @@
 from scene import scene
 from PySide6.QtGui import QPainter, QPen, QPainterPath, QColor, QBrush, QFont
 from PySide6.QtWidgets import QMainWindow, QWidget, QLabel
+from PySide6.QtCore import QPoint
 from frame import MyFrame
 from lineedit import MyLineEdit
 from constructors import Fraction, MainFrame
@@ -19,6 +20,7 @@ class MyMainWindow(QMainWindow):
         self.scene = scene
         self.scene.window = self
         self.tp = SelectionRectangle(self)
+        self.graphicCursor = GraphicalCursor(self, self.scene)
         self.fontSize = self.scene.fontSize
 
         self.mainMathFrame = MainFrame(self)
@@ -60,5 +62,36 @@ class SelectionRectangle(QWidget):
 
 
     def paintEvent(self, event):
-        painter = QPainter(self)
-        painter.fillRect(self.rect(), QColor(0, 0, 255, 128))
+        with QPainter(self) as painter:
+            painter.fillRect(self.rect(), QColor(0, 0, 255, 128))
+
+
+class GraphicalCursor(QWidget):
+    def __init__(self, parent, scene):
+        super().__init__(parent)
+        self.scene = scene
+        self.pos = QPoint(0, 0)
+        self.show()
+
+
+    def getAbsolutePosition(self, element, pos):
+        pos += element.pos()
+        if element.parent == self.scene.window:
+            return pos
+        return self.getAbsolutePosition(element.parent, pos)
+
+
+    def updatePosition(self):
+        self.hide()
+        lineEditWithFocus = self.scene.getLineEditWithFocus()
+        cursorPosition = lineEditWithFocus.cursorPosition()
+        start = lineEditWithFocus.x()+\
+        lineEditWithFocus.fontMetrics().horizontalAdvance(lineEditWithFocus.text(), 
+                                                                     cursorPosition)
+        self.pos = self.getAbsolutePosition(lineEditWithFocus.parent, QPoint(start, 0))
+        self.show()
+
+
+    def paintEvent(self, event):
+        with QPainter(self) as painter:
+            painter.fillRect(self.pos.x(), self.pos.y(), 3, 200, QColor("black"))
