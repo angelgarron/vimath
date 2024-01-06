@@ -35,7 +35,7 @@ class MyMainWindow(QMainWindow):
 
 
     def updateStatusBar(self):
-        modeInfo = f"--{MODE_NAME[self.scene.mode]}--"
+        modeInfo = f"-- {MODE_NAME[self.scene.mode]} --"
         storedKeys = "".join(map(lambda k: str(k.key())[-1].lower(), self.scene.storedKeys))
         self.storedKeysLabel.setText(storedKeys)
         self.modeInfoLabel.setText(modeInfo)
