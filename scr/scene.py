@@ -177,27 +177,24 @@ class Scene:
         
     def enterInsertMode(self):
         self.mode = INSERT_MODE
-        for lineEdit in self.lineEdits:
-            lineEdit.setThinCursorStyle()
         self.storedKeys = []
         self.window.updateStatusBar()
+        self.window.graphicCursor.updatePosition()
 
 
     def enterNormalMode(self):
         if self.isVisualMode():
             self.clearSelection()
         self.mode = NORMAL_MODE
-        for lineEdit in self.lineEdits:
-            lineEdit.setThickCursorStyle()
         self.window.updateStatusBar()
+        self.window.graphicCursor.updatePosition()
 
 
     def enterVisualMode(self):
         self.mode = VISUAL_MODE
         self.startSelection()
-        for lineEdit in self.lineEdits:
-            lineEdit.setThickCursorStyle()
         self.window.updateStatusBar()
+        self.window.graphicCursor.updatePosition()
 
             
     def isNormalMode(self):

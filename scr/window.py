@@ -77,6 +77,14 @@ class GraphicalCursor(QWidget):
         self.timer.start()
         self.isShowing = True
         self.pos = QPoint(0, 0)
+        
+        
+    @property
+    def cursorWidth(self):
+        if self.scene.isInsertMode():
+            return 1
+        else:
+            return self.scene.getLineEditWithFocus().fontSize
 
         
     def blink(self):
@@ -104,9 +112,9 @@ class GraphicalCursor(QWidget):
             lineEditWithFocus.fontMetrics().horizontalAdvance(lineEditWithFocus.text(), 
                                                                         cursorPosition)
             self.pos = self.getAbsolutePosition(lineEditWithFocus.parent, QPoint(start, lineEditWithFocus.y()))
-            self.setGeometry(self.pos.x(), self.pos.y(), 1, lineEditWithFocus.fontSize*1.2)
+            self.setGeometry(self.pos.x(), self.pos.y(), self.cursorWidth, lineEditWithFocus.fontSize*1.2)
 
 
     def paintEvent(self, event):
         with QPainter(self) as painter:
-            painter.fillRect(self.rect(), QColor("black"))
+            painter.fillRect(self.rect(), QColor(0, 0, 0, 50))

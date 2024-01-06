@@ -5,19 +5,6 @@ from PySide6.QtCore import Qt, QSize
 LINEDIT_SIZE = (8, 20)
 
 
-class ThickCursorStyle(QProxyStyle):
-    def __init__(self, fontSize):
-        super().__init__()
-        self.fontSize = fontSize
-    
-
-    def pixelMetric(self, metric, option=None, widget=None):
-        if metric == QProxyStyle.PM_TextCursorWidth:
-            return self.fontSize
-
-        return super().pixelMetric(metric, option, widget)
-
-
 class EmptyCursorStyle(QProxyStyle):
     def pixelMetric(self, metric, option=None, widget=None):
         if metric == QProxyStyle.PM_TextCursorWidth:
@@ -33,10 +20,8 @@ class MyLineEdit(QLineEdit):
         self.setAlignment(Qt.AlignmentFlag.AlignTop)
         self.fontSize = self.parent.fontSize
         self.isEmpty = False
-        self.thickCursorStyle = ThickCursorStyle(self.fontSize)
-        self.thinCursorStyle = QProxyStyle()
-        self.emptyCursorStyle = EmptyCursorStyle()
-        self.setThickCursorStyle()
+        # hiding cursor to just see my implementation
+        self.setStyle(EmptyCursorStyle())
         self.setFont(QFont("monospace", self.fontSize))
         self.scene = self.parent.scene
         self.scene.addLineEdit(self)
@@ -56,6 +41,11 @@ class MyLineEdit(QLineEdit):
         self.show()
     
 
+    def focusInEvent(self, event):
+        self.scene.window.graphicCursor.updatePosition()
+        return super().focusInEvent(event)
+
+
     def inputMethodEvent(self, event):
         if event.commitString() == "^":
             self.scene.actions["CreateSuperscript"].performAction(self)
@@ -63,26 +53,11 @@ class MyLineEdit(QLineEdit):
         return super().inputMethodEvent(event)
 
 
-    def setThickCursorStyle(self):
-        if not self.isEmpty:
-            self.setStyle(self.thickCursorStyle)
-    
-
-    def setThinCursorStyle(self):
-        if not self.isEmpty:
-            self.setStyle(self.thinCursorStyle)
-    
-
     def setEmpty(self, flag):
         if flag:
-            self.setStyle(self.emptyCursorStyle)
             self.isEmpty = True
         else:
             self.isEmpty = False
-            if self.scene.isInsertMode():
-                self.setThinCursorStyle()
-            elif self.scene.isNormalMode() or self.scene.isVisualMode():
-                self.setThickCursorStyle()
                 
         
     @property
