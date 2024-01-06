@@ -102,7 +102,7 @@ class MyLineEdit(QLineEdit):
                 self.setFixedHeight(self.parent.fontSize*1.2)
                 self.setEmpty(True)
             else:
-                self.setFixedWidth(4)
+                self.setFixedWidth(0)
                 self.setFixedHeight(self.parent.fontSize*1.2)
                 self.setEmpty(False)
         else:
