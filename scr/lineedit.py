@@ -43,7 +43,18 @@ class MyLineEdit(QLineEdit):
 
     def focusInEvent(self, event):
         self.scene.window.graphicCursor.updatePosition()
+        self.parent.setProperty("showBox", "true")
+        self.parent.style().unpolish(self.parent)
+        self.parent.style().polish(self.parent)
         return super().focusInEvent(event)
+    
+
+    def focusOutEvent(self, event):
+        self.parent.setProperty("showBox", "false")
+        self.parent.style().unpolish(self.parent)
+        self.parent.style().polish(self.parent)
+        return super().focusOutEvent(event)
+
 
 
     def inputMethodEvent(self, event):

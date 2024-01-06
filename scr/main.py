@@ -11,8 +11,12 @@ STYLE_SHEET = """
 QFrame {
     background: transparent;
 }
+QFrame[showBox="true"] {
+    border: 1px dashed red;
+}
 QLineEdit {
     border: transparent;
+    background: transparent;
 }
 """
 
