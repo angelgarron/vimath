@@ -1,4 +1,5 @@
 from frame import MyFrame
+from PySide6.QtGui import QPainter
 
 
 class Parenthesis(MyFrame):
@@ -36,9 +37,10 @@ class Parenthesis(MyFrame):
 
     def paintEvent(self, event):
         super().paintEvent(event)
-        painter = self.createPainter()
-        painter.drawArc(4, 0, 19, self.height(), 135*16, 90*16)
-        painter.drawArc(self.width()-24, 0, 19, self.height(), -45*16, 90*16)
+        with QPainter(self) as painter:
+            painter.setPen(self.pen)
+            painter.drawArc(4, 0, 19, self.height(), 135*16, 90*16)
+            painter.drawArc(self.width()-24, 0, 19, self.height(), -45*16, 90*16)
 
 
     def deserialize(self, data):

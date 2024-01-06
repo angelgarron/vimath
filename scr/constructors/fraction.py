@@ -1,4 +1,5 @@
 from frame import MyFrame
+from PySide6.QtGui import QPainter
 
 
 class Numerator(MyFrame):
@@ -85,8 +86,8 @@ class Fraction(MyFrame):
 
     def paintEvent(self, event):
         super().paintEvent(event)
-        painter = self.createPainter()
-        painter.drawLine(0, self.u, self.width(), self.u)
+        with QPainter(self) as painter:
+            painter.drawLine(0, self.u, self.width(), self.u)
         
         
     def deserialize(self, data):

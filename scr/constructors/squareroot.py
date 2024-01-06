@@ -1,4 +1,5 @@
 from frame import MyFrame
+from PySide6.QtGui import QPainter
 
 
 class SquareRoot(MyFrame):
@@ -36,10 +37,11 @@ class SquareRoot(MyFrame):
 
     def paintEvent(self, event):
         super().paintEvent(event)
-        painter = self.createPainter()
-        painter.drawLine(0, 2*self.height()/3, 2*SquareRoot.LHSPACE/3, self.height())
-        painter.drawLine(2*SquareRoot.LHSPACE/3, self.height(), SquareRoot.LHSPACE, SquareRoot.VSPACE)
-        painter.drawLine(SquareRoot.LHSPACE, SquareRoot.VSPACE, self.width(), SquareRoot.VSPACE)
+        with QPainter(self) as painter:
+            painter.setPen(self.pen)
+            painter.drawLine(0, 2*self.height()/3, 2*SquareRoot.LHSPACE/3, self.height())
+            painter.drawLine(2*SquareRoot.LHSPACE/3, self.height(), SquareRoot.LHSPACE, SquareRoot.VSPACE)
+            painter.drawLine(SquareRoot.LHSPACE, SquareRoot.VSPACE, self.width(), SquareRoot.VSPACE)
 
 
     def deserialize(self, data):

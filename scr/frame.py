@@ -132,12 +132,6 @@ class MyFrame(QFrame):
         self.setGeometry(self.x(), self.y(), width, self.u+self.d)
     
 
-    def createPainter(self):
-        painter = QPainter(self)
-        painter.setPen(self.pen)
-        return painter
-    
-
     def setFocus(self):
         self.firstLinedit.setFocus()
 
