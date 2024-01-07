@@ -3,7 +3,7 @@ from scene import scene
 from PySide6.QtGui import Qt
 
 
-@RegisterAction("both")
+@RegisterAction(["normal", "visual"])
 class MoveLeft:
     def __init__(self):
         self.key = [[Qt.Key_H], [Qt.Key_Left]]
@@ -29,7 +29,7 @@ class MoveVertical:
         elements[pos].setFocus()
 
 
-@RegisterAction("both")
+@RegisterAction(["normal", "visual"])
 class MoveDown(MoveVertical):
     def __init__(self):
         self.key = [[Qt.Key_J], [Qt.Key_Down]]
@@ -41,7 +41,7 @@ class MoveDown(MoveVertical):
             self.giveFocusProportion(other, denominatorElements)
 
 
-@RegisterAction("both")
+@RegisterAction(["normal", "visual"])
 class MoveUp(MoveVertical):
     def __init__(self):
         self.key = [[Qt.Key_K], [Qt.Key_Up]]
@@ -53,7 +53,7 @@ class MoveUp(MoveVertical):
             self.giveFocusProportion(other, numeratorElements)
         
 
-@RegisterAction("both")
+@RegisterAction(["normal", "visual"])
 class MoveRight:
     def __init__(self):
         self.key = [[Qt.Key_L], [Qt.Key_Right]]
@@ -68,7 +68,7 @@ class MoveRight:
         other.cursorForward(False)
         
 
-@RegisterAction("both")
+@RegisterAction(["normal", "visual"])
 class MoveWordBegin:
     def __init__(self):
         self.key = [Qt.Key_W]
@@ -81,7 +81,7 @@ class MoveWordBegin:
             nextLinedit.setCursorPosition(0)
         
         
-@RegisterAction("both")
+@RegisterAction(["normal", "visual"])
 class MoveBeginningWord:
     def __init__(self):
         self.key = [Qt.Key_B]
@@ -95,7 +95,7 @@ class MoveBeginningWord:
         
 
 
-@RegisterAction("both")
+@RegisterAction(["normal", "visual"])
 class MoveWordEnd:
     def __init__(self):
         self.key = [Qt.Key_E]
@@ -110,7 +110,7 @@ class MoveWordEnd:
         other.setCursorPosition(len(other.text()))        
 
 
-@RegisterAction("both")
+@RegisterAction(["normal", "visual"])
 class MoveStartDocument:
     def __init__(self):
         self.key = [Qt.Key_G, Qt.Key_G]
@@ -122,7 +122,7 @@ class MoveStartDocument:
         firstLine.setCursorPosition(0)
 
 
-@RegisterAction("both")
+@RegisterAction(["normal", "visual"])
 class MoveEndDocument:
     def __init__(self):
         self.key = [Qt.ShiftModifier | Qt.Key_G]
@@ -134,7 +134,7 @@ class MoveEndDocument:
         lastLine.setCursorPosition(0)
 
 
-@RegisterAction("both")
+@RegisterAction(["normal", "visual"])
 class MoveStartOfLine:
     def __init__(self):
         self.key = [Qt.ShiftModifier | Qt.Key_Underscore]
@@ -148,7 +148,7 @@ class MoveStartOfLine:
         previousLinedit.setFocus()
 
 
-@RegisterAction("both")
+@RegisterAction(["normal", "visual"])
 class MoveEndOfLine:
     def __init__(self):
         self.key = [Qt.ShiftModifier | Qt.Key_Dollar]

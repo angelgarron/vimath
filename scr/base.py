@@ -4,17 +4,19 @@ from scene import scene
 actions = {}
 actionsVisual = {}
 actionsInsert = {}
-def RegisterAction(whichMode="normal"):
+def RegisterAction(whichMode):
     def decorator(constructor):
-        if whichMode == "normal":
-            actions.update({constructor.__name__:constructor()})
-        elif whichMode == "visual": 
-            actionsVisual.update({constructor.__name__:constructor()})
-        elif whichMode == "both":
-            actions.update({constructor.__name__:constructor()})
-            actionsVisual.update({constructor.__name__:constructor()})
-        elif whichMode == "insert":
-            actionsInsert.update({constructor.__name__:constructor()})
+        if type(whichMode) != list:
+            modes = [whichMode]
+        else:
+            modes = whichMode
+        for mode in modes:
+            if mode == "normal":
+                actions.update({constructor.__name__:constructor()})
+            elif mode == "visual": 
+                actionsVisual.update({constructor.__name__:constructor()})
+            elif mode == "insert":
+                actionsInsert.update({constructor.__name__:constructor()})
         return constructor
     return decorator
 
@@ -40,7 +42,7 @@ class EnterInsertModeAppend:
         scene.enterInsertMode()
 
 
-@RegisterAction("both")
+@RegisterAction(["normal", "visual"])
 class ToggleVisualMode:
     def __init__(self):
         self.key = [Qt.Key_V]
