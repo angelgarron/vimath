@@ -73,7 +73,7 @@ class Inferior(MyFrame):
                 rightLineEdit = self.parent.parent.children[indx+1]
                 rightLineEdit.setCursorPosition(0)
             rightLineEdit.setFocus()
-        return super(MyLineEdit, self.firstLinedit).focusOutEvent(event)
+        return MyLineEdit.focusOutEvent(super().firstLinedit, event)
 
 
 class Subscript(MyFrame):

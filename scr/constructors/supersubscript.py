@@ -49,7 +49,7 @@ class Superior(MyFrame):
             self.firstLinedit.deleteLater()
             self.parent.subscript.firstLinedit.focusOutEvent = lambda event: subscript.Inferior.fo(self.parent.subscript, event)
             self.scene.updateFrames()
-        return super(MyLineEdit, self.firstLinedit).focusOutEvent(event)
+        return MyLineEdit.focusOutEvent(super().firstLinedit, event)
 
 
 class Base(MyFrame):
@@ -123,7 +123,7 @@ class Inferior(MyFrame):
             self.firstLinedit.deleteLater()
             self.parent.superscript.firstLinedit.focusOutEvent = lambda event: superscript.Superior.fo(self.parent.superscript, event)
             self.scene.updateFrames()
-        return super(MyLineEdit, self.firstLinedit).focusOutEvent(event)
+        return MyLineEdit.focusOutEvent(super().firstLinedit, event)
 
 
 class SuperSubscript(MyFrame):
