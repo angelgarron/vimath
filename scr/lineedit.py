@@ -150,39 +150,49 @@ class MyLineEdit(QLineEdit):
                 self.scene.history.store("enter normal mode from insert mode")
             return
 
-        if self.scene.isInsertMode():
-            super().keyPressEvent(event)
+        if event.key() in [Qt.Key_Control, Qt.Key_Shift, Qt.Key_Alt]:
             return
 
-        if self.scene.isNormalMode():
+        if self.scene.isInsertMode():
+            actions = self.scene.actionsInsert
+        elif self.scene.isNormalMode():
             actions = self.scene.actions
         else:
             actions = self.scene.actionsVisual
 
-        if event.key() in [Qt.Key_Control, Qt.Key_Shift, Qt.Key_Alt]:
-            return
-
         self.scene.storedKeys.append(event.keyCombination())
-        self.scene.window.updateStatusBar()
 
+        isPossibleMatch = False
         for action in actions.values():
             if isinstance(action.key[0], list):
                 for key in action.key:
                     if key == self.scene.storedKeys:
                         action.performAction(self)
                         self.scene.storedKeys = []
-                        self.scene.window.updateStatusBar()
                         if self.scene.isVisualMode():
                             self.scene.updateVisualSelection()
                         break
             else:
+                isPossibleMatch = isPossibleMatch or self.isPossibleMatch(action.key)
                 if action.key == self.scene.storedKeys:
                     action.performAction(self)
                     self.scene.storedKeys = []
-                    self.scene.window.updateStatusBar()
                     if self.scene.isVisualMode():
                         self.scene.updateVisualSelection()
                     break
+
+        if not isPossibleMatch:
+            self.scene.storedKeys = []
+            if self.scene.isInsertMode():
+                super().keyPressEvent(event)
+        self.scene.window.updateStatusBar()
+
+    
+    def isPossibleMatch(self, keys):
+        for key, storedKey in zip(keys, self.scene.storedKeys):
+            if key != storedKey:
+                return False
+        return True
 
 
     def serialize(self, start=None, end=None):

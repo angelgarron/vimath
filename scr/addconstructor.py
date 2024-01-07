@@ -35,7 +35,7 @@ class Constructor:
 
 
 @visualSurround
-@RegisterAction("normal")
+@RegisterAction(["normal", "insert"])
 class CreateFraction(Constructor):
     def __init__(self):
         self.key = [Qt.AltModifier | Qt.Key_M, Qt.Key_F]
@@ -43,14 +43,14 @@ class CreateFraction(Constructor):
 
     
 @visualSurround
-@RegisterAction("normal")
+@RegisterAction(["normal", "insert"])
 class CreateSquareRoot(Constructor):
     def __init__(self):
         self.key = [Qt.AltModifier | Qt.Key_M, Qt.Key_S]
         self.constructor = SquareRoot
 
 
-@RegisterAction("normal")
+@RegisterAction(["normal", "insert"])
 class CreateIntegral:
     def __init__(self):
         self.key = [Qt.AltModifier | Qt.Key_M, Qt.Key_I]
@@ -203,7 +203,7 @@ class CreateSuperscript:
 
 
 @visualSurround
-@RegisterAction("normal")
+@RegisterAction(["normal", "insert"])
 class CreateParenthesis(Constructor):
     def __init__(self):
         self.key = [Qt.ShiftModifier | Qt.Key_ParenLeft]

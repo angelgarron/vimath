@@ -17,6 +17,12 @@ class MoveLeft:
             return
         other.cursorBackward(False)
 
+        
+@RegisterAction("insert")
+class MoveLeftInsert(MoveLeft):
+    def __init__(self):
+        self.key = [Qt.Key_Left]
+
 
 class MoveVertical:
     def giveFocusProportion(self, lineEdit, elements):
@@ -41,6 +47,12 @@ class MoveDown(MoveVertical):
             self.giveFocusProportion(other, denominatorElements)
 
 
+@RegisterAction("insert")
+class MoveDownInsert(MoveDown):
+    def __init__(self):
+        self.key = [Qt.Key_Down]
+
+
 @RegisterAction(["normal", "visual"])
 class MoveUp(MoveVertical):
     def __init__(self):
@@ -52,6 +64,12 @@ class MoveUp(MoveVertical):
             numeratorElements = other.upperLineEdit.parent.children
             self.giveFocusProportion(other, numeratorElements)
         
+
+@RegisterAction("insert")
+class MoveUpInsert(MoveUp):
+    def __init__(self):
+        self.key = [Qt.Key_Up]
+
 
 @RegisterAction(["normal", "visual"])
 class MoveRight:
@@ -67,6 +85,12 @@ class MoveRight:
             return
         other.cursorForward(False)
         
+
+@RegisterAction("insert")
+class MoveRightInsert(MoveRight):
+    def __init__(self):
+        self.key = [Qt.Key_Right]
+
 
 @RegisterAction(["normal", "visual"])
 class MoveWordBegin:
