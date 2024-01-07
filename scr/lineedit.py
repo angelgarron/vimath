@@ -28,7 +28,6 @@ class MyLineEdit(QLineEdit):
         self.d = self.parent.fontSize/2+2
         self.setGeometry(0, 0, LINEDIT_SIZE[0], self.u+self.d)
         self.textChanged.connect(self.scene.updateFrames)
-        self.textEdited.connect(self.wasEdited)
         self.cursorPositionChanged.connect(self.scene.window.graphicCursor.updatePosition)
         self.pen = QPen()
         self.color_blue = QColor(36, 143, 230)
@@ -97,14 +96,6 @@ class MyLineEdit(QLineEdit):
         return self.parent.lowerLineEdit
         
         
-    def wasEdited(self):
-        text = self.text()
-        for action in self.scene.actionsInsert.values():
-            cursorPosition = text.find(action.key[0])
-            if cursorPosition != -1:
-                action.performAction(self, cursorPosition, text)
-
-
     def updateWidth(self):
         if len(self.text()) == 0: # how to display empty lineEdit
             if len(self.parent.children) == 1:
