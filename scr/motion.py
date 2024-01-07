@@ -161,7 +161,7 @@ class MoveEndDocument:
 @RegisterAction(["normal", "visual"])
 class MoveStartOfLine:
     def __init__(self):
-        self.key = [Qt.ShiftModifier | Qt.Key_Underscore]
+        self.key = [Qt.Key_0]
     
 
     def performAction(self, other):

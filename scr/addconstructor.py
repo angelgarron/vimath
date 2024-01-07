@@ -66,10 +66,10 @@ class CreateIntegral:
         other.setCursorPosition(cursorPosition+1)
 
 
-@RegisterAction("normal")
+@RegisterAction(["normal", "insert"])
 class CreateSubscript:
     def __init__(self):
-        self.key = [Qt.Key_1]
+        self.key = [Qt.ShiftModifier | Qt.Key_Underscore]
 
         
     def performAction(self, other):
