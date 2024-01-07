@@ -257,6 +257,20 @@ class VisualInsideParenthesis(InsideParenthesis):
         pass
 
 
+@RegisterAction("normal")
+class YankInsideParenthesis(InsideParenthesis):
+    def __init__(self):
+        super().__init__()
+        for combination in self.key:
+            combination.insert(0, Qt.Key_Y)
+    
+    
+    def lastAction(self):
+        scene.updateVisualSelection()
+        scene.clipboard.serializeSelected()
+        scene.clearSelection()
+
+
 class AroundParenthesis:
     def __init__(self):
         self.key = [
