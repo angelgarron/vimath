@@ -95,7 +95,6 @@ class MyFrame(QFrame):
         leftLineEdit.setFocus()
         leftLineEdit.setCursorPosition(len(leftText))
         self.parent.children.remove(rightLineEdit)
-        self.scene.removeLineEdit(rightLineEdit)
         rightLineEdit.deleteLater()
         self.parent.children.remove(self)
         self.scene.updateFrames()
@@ -107,8 +106,6 @@ class MyFrame(QFrame):
             if not isinstance(child, MyLineEdit):
                 self.scene.removeFrame(child)
                 self.removeChildrenRecursevly(child)
-            else:
-                self.scene.removeLineEdit(child)
         
 
     def updateFrameSizeAndPosition(self):

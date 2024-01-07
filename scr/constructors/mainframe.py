@@ -42,7 +42,6 @@ class Line(MyFrame):
             lineEditToFocus = self.lowerLinedit
         self.scene.clearLine(self)
         self.firstLinedit.deleteLater()
-        self.scene.removeLineEdit(self.firstLinedit)
         self.deleteLater()
         self.scene.removeFrame(self)
         self.parent.children.remove(self)

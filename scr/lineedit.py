@@ -24,7 +24,6 @@ class MyLineEdit(QLineEdit):
         self.setStyle(EmptyCursorStyle())
         self.setFont(QFont("monospace", self.fontSize))
         self.scene = self.parent.scene
-        self.scene.addLineEdit(self)
         self.u = self.parent.fontSize/2+2
         self.d = self.parent.fontSize/2+2
         self.setGeometry(0, 0, LINEDIT_SIZE[0], self.u+self.d)

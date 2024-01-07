@@ -13,7 +13,6 @@ class Scene:
         self.fontSize = 15
         self.mode = NORMAL_MODE
         self.frames = []
-        self.lineEdits = []
         self.storedKeys = []
         self.selectionFirst = None
         self.selectionSecond = None
@@ -163,18 +162,10 @@ class Scene:
         self.frames.append(frame)
     
 
-    def addLineEdit(self, lineEdit):
-        self.lineEdits.append(lineEdit)
-    
-
     def removeFrame(self, frame):
         self.frames.remove(frame)
     
 
-    def removeLineEdit(self, lineEdit):
-        self.lineEdits.remove(lineEdit)
-
-        
     def enterInsertMode(self):
         self.mode = INSERT_MODE
         self.storedKeys = []

@@ -43,7 +43,6 @@ class Superior(MyFrame):
             self.parent.base.__class__ = subscript.Base
             self.parent.subscript.__class__ = subscript.Inferior
             self.parent.children.remove(self)
-            self.scene.removeLineEdit(self.firstLinedit)
             self.scene.removeFrame(self)
             self.deleteLater()
             self.firstLinedit.deleteLater()
@@ -117,7 +116,6 @@ class Inferior(MyFrame):
             self.parent.base.__class__ = superscript.Base
             self.parent.superscript.__class__ = superscript.Superior
             self.parent.children.remove(self)
-            self.scene.removeLineEdit(self.firstLinedit)
             self.scene.removeFrame(self)
             self.deleteLater()
             self.firstLinedit.deleteLater()
