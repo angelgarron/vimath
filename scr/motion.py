@@ -75,7 +75,10 @@ class MoveWordBegin:
         
     
     def performAction(self, other):
-        other.cursorWordForward(False)
+        nextLinedit = other.nextLinedit
+        if nextLinedit is not None:
+            nextLinedit.setFocus()
+            nextLinedit.setCursorPosition(0)
         
         
 @RegisterAction("both")
@@ -85,27 +88,26 @@ class MoveBeginningWord:
 
 
     def performAction(self, other):
-        other.cursorWordBackward(False)
+        previousLinedit = other.previousLinedit
+        if previousLinedit is not None:
+            previousLinedit.setFocus()
+            previousLinedit.setCursorPosition(0)
+        
 
 
 @RegisterAction("both")
 class MoveWordEnd:
-    # FIXME
     def __init__(self):
         self.key = [Qt.Key_E]
 
     
     def performAction(self, other):
-        movements = [
-                    other.cursorWordForward, 
-                    other.cursorWordForward, 
-                    other.cursorBackward, 
-                    other.cursorBackward, 
-                    ]
-
-        for movement in movements:
-            movement(False)
-        
+        nextLinedit = other.nextLinedit
+        if nextLinedit is not None:
+            nextLinedit.setFocus()
+            nextLinedit.setCursorPosition(len(nextLinedit.text()))        
+            return
+        other.setCursorPosition(len(other.text()))        
 
 
 @RegisterAction("both")
@@ -115,7 +117,9 @@ class MoveStartDocument:
 
         
     def performAction(self, other):
-        other.home(False)
+        firstLine = scene.frames[0].children[0].firstLinedit
+        firstLine.setFocus()
+        firstLine.setCursorPosition(0)
 
 
 @RegisterAction("both")
@@ -125,7 +129,9 @@ class MoveEndDocument:
 
 
     def performAction(self, other):
-        other.end(False)
+        lastLine = scene.frames[0].children[-1].firstLinedit
+        lastLine.setFocus()
+        lastLine.setCursorPosition(0)
 
 
 @RegisterAction("both")
