@@ -166,6 +166,7 @@ class MyLineEdit(QLineEdit):
         for action in actions.values():
             if isinstance(action.key[0], list):
                 for key in action.key:
+                    isPossibleMatch = isPossibleMatch or self.isPossibleMatch(key)
                     if key == self.scene.storedKeys:
                         action.performAction(self)
                         self.scene.storedKeys = []
@@ -185,6 +186,7 @@ class MyLineEdit(QLineEdit):
             self.scene.storedKeys = []
             if self.scene.isInsertMode():
                 super().keyPressEvent(event)
+
         self.scene.window.updateStatusBar()
 
     
