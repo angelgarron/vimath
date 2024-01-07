@@ -203,7 +203,7 @@ class InsideParenthesis:
     def performAction(self, other):
         currentElement = other.parent
         while not isinstance(currentElement, Parenthesis):
-            if currentElement == scene.frames[0]:
+            if currentElement == scene.window.mainMathFrame:
                 return
             currentElement = currentElement.parent
         # we found that we where inside a parenthesis, let's select its contents
@@ -282,7 +282,7 @@ class AroundParenthesis:
     def performAction(self, other):
         currentElement = other.parent
         while not isinstance(currentElement, Parenthesis):
-            if currentElement == scene.frames[0]:
+            if currentElement == scene.window.mainMathFrame:
                 return
             currentElement = currentElement.parent
         # we found that we where inside a parenthesis, let's select it
@@ -348,7 +348,7 @@ class DeleteSurroundingParenthesis(AroundParenthesis):
     def performAction(self, other):
         currentElement = other.parent
         while not isinstance(currentElement, Parenthesis):
-            if currentElement == scene.frames[0]:
+            if currentElement == scene.window.mainMathFrame:
                 return
             currentElement = currentElement.parent
         # we found that we where inside a parenthesis, let's select it

@@ -21,7 +21,6 @@ class MyFrame(QFrame):
         self.pen = QPen()
         self.pen.setColor("black")
         self.children = []
-        self.scene.addFrame(self)
         self.show()
 
         
@@ -47,7 +46,7 @@ class MyFrame(QFrame):
 
     @property
     def nextLinedit(self):
-        if self == self.scene.frames[0]:
+        if self == self.scene.window.mainMathFrame:
             return None
         indx = self.parent.children.index(self)+1
         try:
@@ -58,7 +57,7 @@ class MyFrame(QFrame):
 
     @property
     def previousLinedit(self):
-        if self == self.scene.frames[0]:
+        if self == self.scene.window.mainMathFrame:
             return None
         indx = self.parent.children.index(self)-1
         if indx == -1: # we were in the first element of the frame
@@ -68,21 +67,20 @@ class MyFrame(QFrame):
 
     @property
     def upperLinedit(self):
-        if self == self.scene.frames[0]:
+        if self == self.scene.window.mainMathFrame:
             return None
         return self.parent.upperLinedit
     
 
     @property
     def lowerLinedit(self):
-        if self == self.scene.frames[0]:
+        if self == self.scene.window.mainMathFrame:
             return None
         return self.parent.lowerLinedit
             
             
     def removeFrame(self):
         self.deleteLater()
-        self.scene.removeFrame(self)
         self.removeChildrenRecursevly(self)
         indexDeleted = self.parent.children.index(self)
         leftLineEdit = self.parent.children[indexDeleted-1]
@@ -104,7 +102,6 @@ class MyFrame(QFrame):
         for child in element.children:
             child.deleteLater()
             if not isinstance(child, MyLineEdit):
-                self.scene.removeFrame(child)
                 self.removeChildrenRecursevly(child)
         
 

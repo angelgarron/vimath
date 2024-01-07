@@ -6,11 +6,13 @@ from frame import MyFrame
 from lineedit import MyLineEdit
 from constructors import Fraction, MainFrame
 
+
 MODE_NAME = {
     0: "NORMAL",
     1: "INSERT",
     2: "VISUAL",
 }
+
 
 class MyMainWindow(QMainWindow):
     def __init__(self):
@@ -23,7 +25,12 @@ class MyMainWindow(QMainWindow):
         self.graphicCursor = GraphicalCursor(self, self.scene)
         self.fontSize = self.scene.fontSize
 
-        self.mainMathFrame = MainFrame(self)
+        # doing updateFrame when creating MainFrame, 
+        # but that needs existing mainMathFrame,
+        # so I am separating the creation from the initialization
+        self.mainMathFrame = MainFrame.__new__(MainFrame)
+        self.mainMathFrame.__init__(self)
+
         self.scene.history.store("first stamp")
         self.createMyMath()
         self.modeInfoLabel = QLabel("")

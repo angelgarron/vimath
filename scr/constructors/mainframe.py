@@ -43,7 +43,6 @@ class Line(MyFrame):
         self.scene.clearLine(self)
         self.firstLinedit.deleteLater()
         self.deleteLater()
-        self.scene.removeFrame(self)
         self.parent.children.remove(self)
         lineEditToFocus.setFocus()
         self.scene.updateFrames()

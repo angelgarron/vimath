@@ -12,7 +12,6 @@ class Scene:
     def __init__(self):
         self.fontSize = 15
         self.mode = NORMAL_MODE
-        self.frames = []
         self.storedKeys = []
         self.selectionFirst = None
         self.selectionSecond = None
@@ -154,17 +153,9 @@ class Scene:
 
 
     def updateFrames(self):
-        mainFrame = self.frames[0]
+        mainFrame = self.window.mainMathFrame
         mainFrame.updateFrameSizeAndPosition()
 
-
-    def addFrame(self, frame):
-        self.frames.append(frame)
-    
-
-    def removeFrame(self, frame):
-        self.frames.remove(frame)
-    
 
     def enterInsertMode(self):
         self.mode = INSERT_MODE
@@ -205,7 +196,7 @@ class Scene:
         """
         # remove all lines except for the first one
         # the last line will just be cleared
-        for line in self.frames[0].children.copy():
+        for line in self.window.mainMathFrame.children.copy():
             line.removeLine()
 
 
@@ -241,7 +232,7 @@ class Scene:
 
 
     def serialize(self):
-        mainFrame = self.frames[0]
+        mainFrame = self.window.mainMathFrame
         elements = []
         for element in mainFrame.children:
             elements.append(element.serialize())
@@ -253,7 +244,7 @@ class Scene:
 
     def deserialize(self, data):
         self.clear()
-        mainFrame = self.frames[0]
+        mainFrame = self.window.mainMathFrame
         mainFrame.deserialize(data["mainFrame"])
         mainFrame.children[0].removeLine()
         self.updateFrames()

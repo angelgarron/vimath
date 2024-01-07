@@ -117,7 +117,7 @@ class MoveStartDocument:
 
         
     def performAction(self, other):
-        firstLine = scene.frames[0].children[0].firstLinedit
+        firstLine = scene.window.mainMathFrame.children[0].firstLinedit
         firstLine.setFocus()
         firstLine.setCursorPosition(0)
 
@@ -129,7 +129,7 @@ class MoveEndDocument:
 
 
     def performAction(self, other):
-        lastLine = scene.frames[0].children[-1].firstLinedit
+        lastLine = scene.window.mainMathFrame.children[-1].firstLinedit
         lastLine.setFocus()
         lastLine.setCursorPosition(0)
 

@@ -43,7 +43,6 @@ class Superior(MyFrame):
             self.parent.base.__class__ = subscript.Base
             self.parent.subscript.__class__ = subscript.Inferior
             self.parent.children.remove(self)
-            self.scene.removeFrame(self)
             self.deleteLater()
             self.firstLinedit.deleteLater()
             self.parent.subscript.firstLinedit.focusOutEvent = lambda event: subscript.Inferior.fo(self.parent.subscript, event)
@@ -116,7 +115,6 @@ class Inferior(MyFrame):
             self.parent.base.__class__ = superscript.Base
             self.parent.superscript.__class__ = superscript.Superior
             self.parent.children.remove(self)
-            self.scene.removeFrame(self)
             self.deleteLater()
             self.firstLinedit.deleteLater()
             self.parent.superscript.firstLinedit.focusOutEvent = lambda event: superscript.Superior.fo(self.parent.superscript, event)
