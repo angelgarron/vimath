@@ -83,13 +83,13 @@ class CreateSubscript:
             element.children.append(element.subscript)
             element.superscript.__class__ = supersubscript.Superior
             scene.updateFrames()
-            element.subscript.firstLinedit.setFocus()
+            element.subscript.firstLineEdit.setFocus()
             return
         if isinstance(other.parent, supersubscript.Base):
-            element.subscript.firstLinedit.setFocus()
+            element.subscript.firstLineEdit.setFocus()
             return
         if isinstance(other.parent, subscript.Base):
-            element.subscript.firstLinedit.setFocus()
+            element.subscript.firstLineEdit.setFocus()
             return
 
         # look for the frame to the left
@@ -101,10 +101,10 @@ class CreateSubscript:
             # check what we have to the left
             leftElement = other.parent.children[indx-1]
             if isinstance(leftElement, Subscript): 
-                leftElement.subscript.firstLinedit.setFocus()
+                leftElement.subscript.firstLineEdit.setFocus()
                 return
             if isinstance(leftElement, SuperSubscript): 
-                leftElement.subscript.firstLinedit.setFocus()
+                leftElement.subscript.firstLineEdit.setFocus()
                 return
             if isinstance(leftElement, Superscript): 
                 leftElement.__class__ = SuperSubscript
@@ -114,24 +114,24 @@ class CreateSubscript:
                 leftElement.children.append(leftElement.subscript)
                 leftElement.superscript.__class__ = supersubscript.Superior
                 scene.updateFrames()
-                leftElement.subscript.firstLinedit.setFocus()
+                leftElement.subscript.firstLineEdit.setFocus()
                 return
             selection = [(leftElement, None)]
             register = []
             scene.clipboard.serializeSelected(selection, register)
             newFrame = other.createFrameMiddle(Subscript, storeHistory=False)
             leftElement.removeFrame()
-            newFrame.base.firstLinedit.setFocus()
+            newFrame.base.firstLineEdit.setFocus()
             scene.clipboard.deserializeFromClipboard(register)
-            newFrame.subscript.firstLinedit.setFocus()
+            newFrame.subscript.firstLineEdit.setFocus()
             return
                 
         # we are in the middle of a lineEdit
         newFrame = other.createFrameMiddle(Subscript, storeHistory=False)
         characterLeft = other.text()[-1]
-        newFrame.base.firstLinedit.setText(characterLeft)
+        newFrame.base.firstLineEdit.setText(characterLeft)
         other.setText(other.text()[:-1])
-        newFrame.subscript.firstLinedit.setFocus()
+        newFrame.subscript.firstLineEdit.setFocus()
 
 
 @RegisterAction("normal")
@@ -151,13 +151,13 @@ class CreateSuperscript:
             element.children.insert(0, element.superscript)
             element.subscript.__class__ = supersubscript.Inferior
             scene.updateFrames()
-            element.superscript.firstLinedit.setFocus()
+            element.superscript.firstLineEdit.setFocus()
             return
         if isinstance(other.parent, supersubscript.Base):
-            element.superscript.firstLinedit.setFocus()
+            element.superscript.firstLineEdit.setFocus()
             return
         if isinstance(other.parent, superscript.Base):
-            element.superscript.firstLinedit.setFocus()
+            element.superscript.firstLineEdit.setFocus()
             return
 
         # look for the frame to the left
@@ -169,10 +169,10 @@ class CreateSuperscript:
             # check what we have to the left
             leftElement = other.parent.children[indx-1]
             if isinstance(leftElement, Superscript): 
-                leftElement.superscript.firstLinedit.setFocus()
+                leftElement.superscript.firstLineEdit.setFocus()
                 return
             if isinstance(leftElement, SuperSubscript): 
-                leftElement.superscript.firstLinedit.setFocus()
+                leftElement.superscript.firstLineEdit.setFocus()
                 return
             if isinstance(leftElement, Subscript): 
                 leftElement.__class__ = SuperSubscript
@@ -182,24 +182,24 @@ class CreateSuperscript:
                 leftElement.children.insert(0, leftElement.superscript)
                 leftElement.subscript.__class__ = supersubscript.Inferior
                 scene.updateFrames()
-                leftElement.superscript.firstLinedit.setFocus()
+                leftElement.superscript.firstLineEdit.setFocus()
                 return
             selection = [(leftElement, None)]
             register = []
             scene.clipboard.serializeSelected(selection, register)
             newFrame = other.createFrameMiddle(Superscript, storeHistory=False)
             leftElement.removeFrame()
-            newFrame.base.firstLinedit.setFocus()
+            newFrame.base.firstLineEdit.setFocus()
             scene.clipboard.deserializeFromClipboard(register)
-            newFrame.superscript.firstLinedit.setFocus()
+            newFrame.superscript.firstLineEdit.setFocus()
             return
                 
         # we are in the middle of a lineEdit
         newFrame = other.createFrameMiddle(Superscript, storeHistory=False)
         characterLeft = other.text()[-1]
-        newFrame.base.firstLinedit.setText(characterLeft)
+        newFrame.base.firstLineEdit.setText(characterLeft)
         other.setText(other.text()[:-1])
-        newFrame.superscript.firstLinedit.setFocus()
+        newFrame.superscript.firstLineEdit.setFocus()
 
 
 @visualSurround
@@ -222,7 +222,7 @@ class InsertNewLine:
         while not isinstance(currentLine, mainframe.Line):
             currentLine = currentLine.parent
         newFrame = scene.window.mainMathFrame.createLine(currentLine.lineNumber+1)
-        newFrame.firstLinedit.setFocus()
+        newFrame.firstLineEdit.setFocus()
         scene.enterInsertMode()
 
 
@@ -238,5 +238,5 @@ class InsertNewLineUp:
         while not isinstance(currentLine, mainframe.Line):
             currentLine = currentLine.parent
         newFrame = scene.window.mainMathFrame.createLine(currentLine.lineNumber)
-        newFrame.firstLinedit.setFocus()
+        newFrame.firstLineEdit.setFocus()
         scene.enterInsertMode()

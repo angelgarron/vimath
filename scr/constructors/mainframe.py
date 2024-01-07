@@ -7,29 +7,29 @@ class Line(MyFrame):
 
         
     @property
-    def nextLinedit(self):
-        return self.parent.nextLinedit
+    def nextLineEdit(self):
+        return self.parent.nextLineEdit
     
 
     @property
-    def previousLinedit(self):
-        return self.parent.previousLinedit
+    def previousLineEdit(self):
+        return self.parent.previousLineEdit
     
 
     @property
-    def lowerLinedit(self):
+    def lowerLineEdit(self):
         indx = self.parent.children.index(self)
         if indx+2 > len(self.parent.children):
             return
-        return self.parent.children[indx+1].firstLinedit
+        return self.parent.children[indx+1].firstLineEdit
 
 
     @property
-    def upperLinedit(self):
+    def upperLineEdit(self):
         indx = self.parent.children.index(self)
         if indx == 0:
             return
-        return self.parent.children[indx-1].firstLinedit
+        return self.parent.children[indx-1].firstLineEdit
 
         
     def removeLine(self):
@@ -37,11 +37,11 @@ class Line(MyFrame):
             if self.lineNumber == 0: # there is only one line
                 self.scene.clearLine(self)
                 return
-            lineEditToFocus = self.upperLinedit
+            lineEditToFocus = self.upperLineEdit
         else:
-            lineEditToFocus = self.lowerLinedit
+            lineEditToFocus = self.lowerLineEdit
         self.scene.clearLine(self)
-        self.firstLinedit.deleteLater()
+        self.firstLineEdit.deleteLater()
         self.deleteLater()
         self.parent.children.remove(self)
         lineEditToFocus.setFocus()
@@ -71,13 +71,13 @@ class MainFrame(MyFrame):
         
         
     @property
-    def firstLinedit(self):
-        return self.children[0].firstLinedit
+    def firstLineEdit(self):
+        return self.children[0].firstLineEdit
     
 
     @property
-    def lastLinedit(self):
-        return self.children[0].lastLinedit
+    def lastLineEdit(self):
+        return self.children[0].lastLineEdit
 
 
     def updateFrameSizeAndPosition(self):

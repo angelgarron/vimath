@@ -17,13 +17,13 @@ class SquareRoot(MyFrame):
 
         
     @property
-    def firstLinedit(self):
-        return self.squareRootArgumentFrame.firstLinedit
+    def firstLineEdit(self):
+        return self.squareRootArgumentFrame.firstLineEdit
     
 
     @property
-    def lastLinedit(self):
-        return self.squareRootArgumentFrame.lastLinedit
+    def lastLineEdit(self):
+        return self.squareRootArgumentFrame.lastLineEdit
 
 
     def updateFrameSizeAndPosition(self):

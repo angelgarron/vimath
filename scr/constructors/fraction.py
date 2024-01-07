@@ -8,18 +8,18 @@ class Numerator(MyFrame):
 
         
     @property
-    def nextLinedit(self):
-        return self.parent.nextLinedit
+    def nextLineEdit(self):
+        return self.parent.nextLineEdit
     
 
     @property
-    def previousLinedit(self):
-        return self.parent.previousLinedit
+    def previousLineEdit(self):
+        return self.parent.previousLineEdit
     
 
     @property
-    def lowerLinedit(self):
-        return self.parent.denominator.firstLinedit
+    def lowerLineEdit(self):
+        return self.parent.denominator.firstLineEdit
 
 
 class Denominator(MyFrame):
@@ -29,18 +29,18 @@ class Denominator(MyFrame):
 
         
     @property
-    def nextLinedit(self):
-        return self.parent.nextLinedit
+    def nextLineEdit(self):
+        return self.parent.nextLineEdit
     
 
     @property
-    def previousLinedit(self):
-        return self.parent.previousLinedit
+    def previousLineEdit(self):
+        return self.parent.previousLineEdit
     
 
     @property
-    def upperLinedit(self):
-        return self.parent.numerator.firstLinedit
+    def upperLineEdit(self):
+        return self.parent.numerator.firstLineEdit
 
 
 class Fraction(MyFrame):
@@ -60,13 +60,13 @@ class Fraction(MyFrame):
 
 
     @property
-    def firstLinedit(self):
-        return self.numerator.firstLinedit
+    def firstLineEdit(self):
+        return self.numerator.firstLineEdit
     
 
     @property
-    def lastLinedit(self):
-        return self.numerator.lastLinedit
+    def lastLineEdit(self):
+        return self.numerator.lastLineEdit
 
 
     def updateFrameSizeAndPosition(self):

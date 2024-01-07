@@ -71,30 +71,30 @@ class MyLineEdit(QLineEdit):
                 
         
     @property
-    def nextLinedit(self):
+    def nextLineEdit(self):
         indx = self.parent.children.index(self)+1
         try:
-            return self.parent.children[indx].firstLinedit
+            return self.parent.children[indx].firstLineEdit
         except IndexError: # we were in the last element of the frame
-            return self.parent.nextLinedit
+            return self.parent.nextLineEdit
     
 
     @property
-    def previousLinedit(self):
+    def previousLineEdit(self):
         indx = self.parent.children.index(self)-1
         if indx == -1: # we were in the first element of the frame
-            return self.parent.previousLinedit
-        return self.parent.children[indx].lastLinedit
+            return self.parent.previousLineEdit
+        return self.parent.children[indx].lastLineEdit
         
         
     @property
-    def upperLinedit(self):
-        return self.parent.upperLinedit
+    def upperLineEdit(self):
+        return self.parent.upperLineEdit
     
 
     @property
-    def lowerLinedit(self):
-        return self.parent.lowerLinedit
+    def lowerLineEdit(self):
+        return self.parent.lowerLineEdit
         
         
     def wasEdited(self):
@@ -137,7 +137,7 @@ class MyLineEdit(QLineEdit):
         self.parent.children.insert(currentLineditPosition+2, rightLineEdit)
         rightLineEdit.setText(self.text()[cursorPosition:])
         self.setText(self.text()[:cursorPosition])
-        newFrame.firstLinedit.setFocus()
+        newFrame.firstLineEdit.setFocus()
         self.scene.updateFrames()
         if storeHistory:
             self.scene.history.store(f"create frame {FrameConstructor}")

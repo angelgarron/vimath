@@ -64,7 +64,7 @@ class Clipboard:
                 newLine.deserialize(element["elements"])
             
             self.scene.updateFrames()
-            newLine.firstLinedit.setFocus()
+            newLine.firstLineEdit.setFocus()
             return
 
         if up:

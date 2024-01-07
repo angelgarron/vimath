@@ -30,53 +30,53 @@ class MyFrame(QFrame):
 
 
     def setFirstLineEdit(self):
-        firstLinedit = MyLineEdit(self)
-        self.children.append(firstLinedit)
+        firstLineEdit = MyLineEdit(self)
+        self.children.append(firstLineEdit)
 
         
     @property
-    def firstLinedit(self):
+    def firstLineEdit(self):
         return self.children[0]
     
 
     @property
-    def lastLinedit(self):
+    def lastLineEdit(self):
         return self.children[-1]
 
 
     @property
-    def nextLinedit(self):
+    def nextLineEdit(self):
         if self == self.scene.window.mainMathFrame:
             return None
         indx = self.parent.children.index(self)+1
         try:
             return self.parent.children[indx]
         except IndexError: # we were in the last element of the frame
-            return self.parent.nextLinedit
+            return self.parent.nextLineEdit
 
 
     @property
-    def previousLinedit(self):
+    def previousLineEdit(self):
         if self == self.scene.window.mainMathFrame:
             return None
         indx = self.parent.children.index(self)-1
         if indx == -1: # we were in the first element of the frame
-            return self.parent.previousLinedit
+            return self.parent.previousLineEdit
         return self.parent.children[indx]
 
 
     @property
-    def upperLinedit(self):
+    def upperLineEdit(self):
         if self == self.scene.window.mainMathFrame:
             return None
-        return self.parent.upperLinedit
+        return self.parent.upperLineEdit
     
 
     @property
-    def lowerLinedit(self):
+    def lowerLineEdit(self):
         if self == self.scene.window.mainMathFrame:
             return None
-        return self.parent.lowerLinedit
+        return self.parent.lowerLineEdit
             
             
     def removeFrame(self):
@@ -127,7 +127,7 @@ class MyFrame(QFrame):
     
 
     def setFocus(self):
-        self.firstLinedit.setFocus()
+        self.firstLineEdit.setFocus()
 
         
     def serialize(self):

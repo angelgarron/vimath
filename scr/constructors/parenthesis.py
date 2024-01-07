@@ -17,13 +17,13 @@ class Parenthesis(MyFrame):
 
         
     @property
-    def firstLinedit(self):
-        return self.base.firstLinedit
+    def firstLineEdit(self):
+        return self.base.firstLineEdit
     
 
     @property
-    def lastLinedit(self):
-        return self.base.lastLinedit
+    def lastLineEdit(self):
+        return self.base.lastLineEdit
 
 
     def updateFrameSizeAndPosition(self):

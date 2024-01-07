@@ -87,11 +87,11 @@ class InsertBeginningLine:
 
 
     def performAction(self, other):
-        previousLinedit = other
-        while previousLinedit.previousLinedit:
-            previousLinedit = previousLinedit.previousLinedit
-        previousLinedit.home(False)
-        previousLinedit.setFocus()
+        previousLineEdit = other
+        while previousLineEdit.previousLineEdit:
+            previousLineEdit = previousLineEdit.previousLineEdit
+        previousLineEdit.home(False)
+        previousLineEdit.setFocus()
         scene.enterInsertMode()
 
 
@@ -102,11 +102,11 @@ class InsertEndLine:
 
 
     def performAction(self, other):
-        nextLinedit = other
-        while nextLinedit.nextLinedit:
-            nextLinedit = nextLinedit.nextLinedit
-        nextLinedit.end(False)
-        nextLinedit.setFocus()
+        nextLineEdit = other
+        while nextLineEdit.nextLineEdit:
+            nextLineEdit = nextLineEdit.nextLineEdit
+        nextLineEdit.end(False)
+        nextLineEdit.setFocus()
         scene.enterInsertMode()
 
 
@@ -287,8 +287,8 @@ class AroundParenthesis:
             currentElement = currentElement.parent
         # we found that we where inside a parenthesis, let's select it
         scene.selectionFirst = [currentElement.base.children[0], 0]
-        currentElement.base.children[-1].nextLinedit.setFocus()
-        currentElement.base.children[-1].nextLinedit.setCursorPosition(0)
+        currentElement.base.children[-1].nextLineEdit.setFocus()
+        currentElement.base.children[-1].nextLineEdit.setCursorPosition(0)
 
         self.lastAction()
 

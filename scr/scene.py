@@ -210,7 +210,7 @@ class Scene:
            constructors.supersubscript.Superior,
            constructors.supersubscript.Inferior, 
         )) and len(lineEditWithFocus.text()) == 0:
-            lineEditWithFocus.parent.parent.base.firstLinedit.setFocus()
+            lineEditWithFocus.parent.parent.base.firstLineEdit.setFocus()
 
         for element in line.children.copy():
             if not isinstance(element, MyLineEdit):

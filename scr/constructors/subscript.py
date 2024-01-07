@@ -8,18 +8,18 @@ class Base(MyFrame):
 
         
     @property
-    def nextLinedit(self):
-        return self.parent.nextLinedit
+    def nextLineEdit(self):
+        return self.parent.nextLineEdit
     
 
     @property
-    def previousLinedit(self):
-        return self.parent.previousLinedit
+    def previousLineEdit(self):
+        return self.parent.previousLineEdit
     
 
     @property
-    def lowerLinedit(self):
-        return self.parent.subscript.firstLinedit
+    def lowerLineEdit(self):
+        return self.parent.subscript.firstLineEdit
 
 
 class Inferior(MyFrame):
@@ -34,29 +34,29 @@ class Inferior(MyFrame):
 
 
     @property
-    def nextLinedit(self):
-        return self.parent.nextLinedit
+    def nextLineEdit(self):
+        return self.parent.nextLineEdit
     
 
     @property
-    def previousLinedit(self):
-        return self.parent.base.lastLinedit
+    def previousLineEdit(self):
+        return self.parent.base.lastLineEdit
     
 
     @property
-    def upperLinedit(self):
-        return self.parent.base.firstLinedit
+    def upperLineEdit(self):
+        return self.parent.base.firstLineEdit
 
 
     @property
-    def firstLinedit(self):
-        fl = super().firstLinedit
+    def firstLineEdit(self):
+        fl = super().firstLineEdit
         fl.focusOutEvent = self.fo
         return fl
 
 
     def fo(self, event):
-        if len(self.children) == 1 and len(self.firstLinedit.text()) == 0:
+        if len(self.children) == 1 and len(self.firstLineEdit.text()) == 0:
             indx = self.parent.parent.children.index(self.parent)
             rightLineEditOld = self.parent.parent.children[indx+1]
             selection = []
@@ -73,7 +73,7 @@ class Inferior(MyFrame):
                 rightLineEdit = self.parent.parent.children[indx+1]
                 rightLineEdit.setCursorPosition(0)
             rightLineEdit.setFocus()
-        return MyLineEdit.focusOutEvent(super().firstLinedit, event)
+        return MyLineEdit.focusOutEvent(super().firstLineEdit, event)
 
 
 class Subscript(MyFrame):
@@ -92,13 +92,13 @@ class Subscript(MyFrame):
 
 
     @property
-    def firstLinedit(self):
-        return self.base.firstLinedit
+    def firstLineEdit(self):
+        return self.base.firstLineEdit
     
 
     @property
-    def lastLinedit(self):
-        return self.base.lastLinedit
+    def lastLineEdit(self):
+        return self.base.lastLineEdit
 
 
     def updateFrameSizeAndPosition(self):

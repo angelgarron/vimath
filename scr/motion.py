@@ -10,10 +10,10 @@ class MoveLeft:
 
         
     def performAction(self, other):
-        previousLinedit = other.previousLinedit
-        if other.cursorPosition() == 0 and previousLinedit:
-            previousLinedit.setFocus()
-            previousLinedit.setCursorPosition(len(previousLinedit.text()))
+        previousLineEdit = other.previousLineEdit
+        if other.cursorPosition() == 0 and previousLineEdit:
+            previousLineEdit.setFocus()
+            previousLineEdit.setCursorPosition(len(previousLineEdit.text()))
             return
         other.cursorBackward(False)
 
@@ -36,8 +36,8 @@ class MoveDown(MoveVertical):
         
         
     def performAction(self, other):
-        if other.lowerLinedit:
-            denominatorElements = other.lowerLinedit.parent.children
+        if other.lowerLineEdit:
+            denominatorElements = other.lowerLineEdit.parent.children
             self.giveFocusProportion(other, denominatorElements)
 
 
@@ -48,8 +48,8 @@ class MoveUp(MoveVertical):
 
         
     def performAction(self, other):
-        if other.upperLinedit:
-            numeratorElements = other.upperLinedit.parent.children
+        if other.upperLineEdit:
+            numeratorElements = other.upperLineEdit.parent.children
             self.giveFocusProportion(other, numeratorElements)
         
 
@@ -60,10 +60,10 @@ class MoveRight:
 
     
     def performAction(self, other):
-        nextLinedit = other.nextLinedit
-        if other.cursorPosition() == len(other.text()) and nextLinedit:
-            nextLinedit.setFocus()
-            nextLinedit.setCursorPosition(0)
+        nextLineEdit = other.nextLineEdit
+        if other.cursorPosition() == len(other.text()) and nextLineEdit:
+            nextLineEdit.setFocus()
+            nextLineEdit.setCursorPosition(0)
             return
         other.cursorForward(False)
         
@@ -75,10 +75,10 @@ class MoveWordBegin:
         
     
     def performAction(self, other):
-        nextLinedit = other.nextLinedit
-        if nextLinedit is not None:
-            nextLinedit.setFocus()
-            nextLinedit.setCursorPosition(0)
+        nextLineEdit = other.nextLineEdit
+        if nextLineEdit is not None:
+            nextLineEdit.setFocus()
+            nextLineEdit.setCursorPosition(0)
         
         
 @RegisterAction(["normal", "visual"])
@@ -88,10 +88,10 @@ class MoveBeginningWord:
 
 
     def performAction(self, other):
-        previousLinedit = other.previousLinedit
-        if previousLinedit is not None:
-            previousLinedit.setFocus()
-            previousLinedit.setCursorPosition(0)
+        previousLineEdit = other.previousLineEdit
+        if previousLineEdit is not None:
+            previousLineEdit.setFocus()
+            previousLineEdit.setCursorPosition(0)
         
 
 
@@ -102,10 +102,10 @@ class MoveWordEnd:
 
     
     def performAction(self, other):
-        nextLinedit = other.nextLinedit
-        if nextLinedit is not None:
-            nextLinedit.setFocus()
-            nextLinedit.setCursorPosition(len(nextLinedit.text()))        
+        nextLineEdit = other.nextLineEdit
+        if nextLineEdit is not None:
+            nextLineEdit.setFocus()
+            nextLineEdit.setCursorPosition(len(nextLineEdit.text()))        
             return
         other.setCursorPosition(len(other.text()))        
 
@@ -117,7 +117,7 @@ class MoveStartDocument:
 
         
     def performAction(self, other):
-        firstLine = scene.window.mainMathFrame.children[0].firstLinedit
+        firstLine = scene.window.mainMathFrame.children[0].firstLineEdit
         firstLine.setFocus()
         firstLine.setCursorPosition(0)
 
@@ -129,7 +129,7 @@ class MoveEndDocument:
 
 
     def performAction(self, other):
-        lastLine = scene.window.mainMathFrame.children[-1].firstLinedit
+        lastLine = scene.window.mainMathFrame.children[-1].firstLineEdit
         lastLine.setFocus()
         lastLine.setCursorPosition(0)
 
@@ -141,11 +141,11 @@ class MoveStartOfLine:
     
 
     def performAction(self, other):
-        previousLinedit = other
-        while previousLinedit.previousLinedit:
-            previousLinedit = previousLinedit.previousLinedit
-        previousLinedit.home(False)
-        previousLinedit.setFocus()
+        previousLineEdit = other
+        while previousLineEdit.previousLineEdit:
+            previousLineEdit = previousLineEdit.previousLineEdit
+        previousLineEdit.home(False)
+        previousLineEdit.setFocus()
 
 
 @RegisterAction(["normal", "visual"])
@@ -155,8 +155,8 @@ class MoveEndOfLine:
 
 
     def performAction(self, other):
-        nextLinedit = other
-        while nextLinedit.nextLinedit:
-            nextLinedit = nextLinedit.nextLinedit
-        nextLinedit.end(False)
-        nextLinedit.setFocus()
+        nextLineEdit = other
+        while nextLineEdit.nextLineEdit:
+            nextLineEdit = nextLineEdit.nextLineEdit
+        nextLineEdit.end(False)
+        nextLineEdit.setFocus()
