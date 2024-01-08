@@ -6,9 +6,9 @@ from PySide6.QtGui import Qt
 symbols = {
 "a": "α",
 "b": "β",
-# "g": "Γ",
+"G": "Γ",
 "g": "γ",
-# "Δ",
+"D": "Δ",
 "d": "δ",
 "e": "ε",
 "z": "ζ",
@@ -16,16 +16,16 @@ symbols = {
 "v": "θ",
 # "ι",
 "k": "κ",
-# "Λ",
+"L": "Λ",
 "l": "λ",
 "m": "μ",
 "n": "ν",
 # "Ξ",
 # "ξ",
-# "Π",
+"P": "Π",
 "p": "π",
 "r": "ρ",
-# "Σ",
+"S": "Σ",
 "s": "σ",
 "t": "τ",
 # "υ",
@@ -34,13 +34,14 @@ symbols = {
 # "χ",
 # "Ψ",
 # "ψ",
-# "Ω",
+"O": "Ω",
 "o": "ω",
 }
 
+
 class AddSymbol:
     def __init__(self):
-        self.key = [Qt.AltModifier | Qt.Key_M, Qt.Key_G, getattr(Qt, "Key_"+self.symbol.upper())]
+        self.key = [Qt.AltModifier | Qt.Key_M, Qt.Key_G, self.lastKey]
 
         
     def performAction(self, other):
@@ -54,10 +55,14 @@ class AddSymbol:
 
 
 for symbol in symbols:
+    lastKey = getattr(Qt, "Key_"+symbol.upper())
+    if symbol.isupper():
+        lastKey = Qt.ShiftModifier | lastKey
     newConstructor = type(
         f"{symbol}AddSymbol",
         (AddSymbol, ),
         {
+            "lastKey": lastKey,
             "symbol": symbol
         }
     )
