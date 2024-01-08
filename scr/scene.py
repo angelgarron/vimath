@@ -252,7 +252,7 @@ class Scene:
 
 scene = Scene()
 # initialize all actions
-import motion, operators, addconstructor
+import motion, operators, addconstructor, symbols
 from base import actions, actionsVisual, actionsInsert
 scene.actions = actions
 scene.actionsVisual = actionsVisual
