@@ -1,4 +1,5 @@
 from base import RegisterAction
+from constructors import Parenthesis
 from scene import scene
 from PySide6.QtGui import Qt
 
@@ -90,6 +91,17 @@ class MoveRight:
 class MoveRightInsert(MoveRight):
     def __init__(self):
         self.key = [[Qt.Key_Right], [Qt.Key_Space]]
+
+
+@RegisterAction(["normal", "insert"])
+class MoveRightExitParenthesis(MoveRight):
+    def __init__(self):
+        self.key = [Qt.ShiftModifier | Qt.Key_ParenRight]
+
+        
+    def performAction(self, other):
+        if other.cursorPosition() == len(other.text()) and isinstance(other.parent.parent, Parenthesis):
+            super().performAction(other)
 
 
 @RegisterAction(["normal", "visual"])
