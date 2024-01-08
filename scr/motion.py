@@ -74,7 +74,7 @@ class MoveUpInsert(MoveUp):
 @RegisterAction(["normal", "visual"])
 class MoveRight:
     def __init__(self):
-        self.key = [[Qt.Key_L], [Qt.Key_Right]]
+        self.key = [[Qt.Key_L], [Qt.Key_Right], [Qt.Key_Space]]
 
     
     def performAction(self, other):
@@ -89,7 +89,7 @@ class MoveRight:
 @RegisterAction("insert")
 class MoveRightInsert(MoveRight):
     def __init__(self):
-        self.key = [Qt.Key_Right]
+        self.key = [[Qt.Key_Right], [Qt.Key_Space]]
 
 
 @RegisterAction(["normal", "visual"])
