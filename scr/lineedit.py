@@ -1,6 +1,7 @@
+import re
 from PySide6.QtWidgets import (QLineEdit, QFrame, QProxyStyle)
-from PySide6.QtGui import QPainter, QPen, QPainterPath, QColor, QBrush, QFont
-from PySide6.QtCore import Qt, QSize
+from PySide6.QtGui import QPainter, QPen, QPainterPath, QColor, QBrush, QFont, QTextLayout
+from PySide6.QtCore import Qt, QSize, QPoint
 
 LINEDIT_SIZE = (8, 20)
 
@@ -209,19 +210,24 @@ class MyLineEdit(QLineEdit):
         
 
     def paintEvent(self, event):
-        super().paintEvent(event)
-        if self.isEmpty:
-            with QPainter(self) as painter:
-                if self.hasFocus():
-                    self.brush.setColor(self.color_blue_dark.darker())
-                else:
-                    self.brush.setColor(self.color_blue)
-                rect = self.contentsRect()
-                rect.setHeight(rect.height()-2.5)
-                rect.setWidth(rect.width()-2.5)
-                rect.setX(rect.x()+2.5)
-                rect.setY(rect.y()+2.5)
-                painter.setPen(self.pen)
-                painter.setBrush(self.brush)
-                painter.drawRect(rect)
-        
+        with QPainter(self) as painter:
+            input_str = self.text()
+            result_list = re.findall(r'[a-zA-Z]+|\d+', input_str)
+
+            font = QFont(self.font())
+
+            textUntilNow = ""
+            if len(result_list) > 0:
+                isItalic = result_list[0].isalpha()
+            else:
+                isItalic = False
+            for group in result_list:
+                font.setItalic(isItalic)
+                l = QTextLayout(group, font)
+                l.beginLayout()
+                l.createLine()
+                l.endLayout()
+                l.draw(painter, QPoint(self.fontMetrics().horizontalAdvance(textUntilNow), 0))
+                isItalic = not isItalic
+                textUntilNow += group
+    
