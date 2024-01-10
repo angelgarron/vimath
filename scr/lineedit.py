@@ -212,7 +212,7 @@ class MyLineEdit(QLineEdit):
     def paintEvent(self, event):
         with QPainter(self) as painter:
             input_str = self.text()
-            result_list = re.findall(r'[a-zA-Z]+|\d+', input_str)
+            result_list = re.findall(r'[a-zA-Z]+|[^a-zA-Z]+', input_str)
 
             font = QFont(self.font())
 
@@ -227,7 +227,24 @@ class MyLineEdit(QLineEdit):
                 l.beginLayout()
                 l.createLine()
                 l.endLayout()
-                l.draw(painter, QPoint(self.fontMetrics().horizontalAdvance(textUntilNow), 0))
+                l.draw(painter, QPoint(self.fontMetrics().horizontalAdvance(textUntilNow),
+                                       -self.fontMetrics().tightBoundingRect(self.text()).top()-19
+                                       ))
                 isItalic = not isItalic
                 textUntilNow += group
     
+        if self.isEmpty:
+            with QPainter(self) as painter:
+                if self.hasFocus():
+                    self.brush.setColor(self.color_blue_dark.darker())
+                else:
+                    self.brush.setColor(self.color_blue)
+                rect = self.contentsRect()
+                rect.setHeight(rect.height()-2.5)
+                rect.setWidth(rect.width()-2.5)
+                rect.setX(rect.x()+2.5)
+                rect.setY(rect.y()+2.5)
+                painter.setPen(self.pen)
+                painter.setBrush(self.brush)
+                painter.drawRect(rect)
+        
