@@ -112,8 +112,8 @@ class MyLineEdit(QLineEdit):
             width = self.fontMetrics().horizontalAdvance(self.text())
             self.setFixedWidth(width+8)
             tight = self.fontMetrics().tightBoundingRect(self.text())
-            self.setFixedHeight(tight.height()+6)
-            self.setTextMargins(0, -tight.top()-self.font().pointSize()-2, 0, 0)
+            self.setFixedHeight(tight.height()+self.fontMetrics().descent())
+            self.setTextMargins(0, -tight.top()-self.fontMetrics().height(), 0, 0)
             self.u = -tight.top()
             self.d = self.height()-self.u
 
@@ -227,7 +227,7 @@ class MyLineEdit(QLineEdit):
                 l.createLine()
                 l.endLayout()
                 l.draw(painter, QPoint(self.fontMetrics().horizontalAdvance(textUntilNow),
-                                       -self.fontMetrics().tightBoundingRect(self.text()).top()-19
+                                       -self.fontMetrics().tightBoundingRect(self.text()).top()-self.fontMetrics().ascent()
                                        ))
                 isItalic = not isItalic
                 textUntilNow += group
