@@ -109,11 +109,9 @@ class MyLineEdit(QLineEdit):
                 self.setEmpty(False)
         else:
             self.setEmpty(False)
-            width = self.fontMetrics().horizontalAdvance(self.text())
-            self.setFixedWidth(width+8)
             tight = self.fontMetrics().tightBoundingRect(self.text())
+            self.setFixedWidth(tight.width()+2)
             self.setFixedHeight(tight.height()+self.fontMetrics().descent())
-            self.setTextMargins(0, -tight.top()-self.fontMetrics().height(), 0, 0)
             self.u = -tight.top()
             self.d = self.height()-self.u
 
