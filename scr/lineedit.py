@@ -18,7 +18,6 @@ class MyLineEdit(QLineEdit):
     def __init__(self, parent):
         super().__init__(parent)
         self.parent = parent
-        self.setAlignment(Qt.AlignmentFlag.AlignTop)
         self.fontSize = self.parent.fontSize
         self.isEmpty = False
         # hiding cursor to just see my implementation
@@ -110,8 +109,8 @@ class MyLineEdit(QLineEdit):
         else:
             self.setEmpty(False)
             tight = self.fontMetrics().tightBoundingRect(self.text())
-            self.setFixedWidth(tight.width()+2)
-            self.setFixedHeight(tight.height()+self.fontMetrics().descent())
+            self.setFixedWidth(tight.width())
+            self.setFixedHeight(tight.height())
             self.u = -tight.top()
             self.d = self.height()-self.u
 
@@ -224,9 +223,12 @@ class MyLineEdit(QLineEdit):
                 l.beginLayout()
                 l.createLine()
                 l.endLayout()
-                l.draw(painter, QPoint(self.fontMetrics().horizontalAdvance(textUntilNow),
-                                       -self.fontMetrics().tightBoundingRect(self.text()).top()-self.fontMetrics().ascent()
-                                       ))
+                l.draw(painter, QPoint(
+                    self.fontMetrics().tightBoundingRect(textUntilNow).width()
+                    -self.fontMetrics().leftBearing(group[0]),
+                    -self.fontMetrics().tightBoundingRect(self.text()).top() -
+                    self.fontMetrics().ascent()
+                ))
                 isItalic = not isItalic
                 textUntilNow += group
     
