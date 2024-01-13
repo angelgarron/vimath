@@ -194,6 +194,9 @@ class MyLineEdit(QLineEdit):
                         if self.scene.isVisualMode():
                             self.scene.updateVisualSelection()
                         break
+                else:
+                    continue
+                break
             else:
                 isPossibleMatch = isPossibleMatch or self.isPossibleMatch(action.key)
                 if action.key == self.scene.storedKeys:
