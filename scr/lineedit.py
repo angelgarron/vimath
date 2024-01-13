@@ -110,6 +110,14 @@ class MyLineEdit(QLineEdit):
         return tight.width()
 
 
+    def getWidthUntilCursorPosition(self, cursorPosition):
+        digits = self.getNumbers(self.text()[:cursorPosition])
+        alpha = self.getCharacters(self.text()[:cursorPosition])
+        width = (self.getWidthFromFont(self.fontItalics, alpha) +
+                    self.getWidthFromFont(self.fontPlain, digits))
+        return width
+
+    
     def updateWidth(self):
         if len(self.text()) == 0: # how to display empty lineEdit
             if len(self.parent.children) == 1:
@@ -124,10 +132,7 @@ class MyLineEdit(QLineEdit):
             self.setEmpty(False)
             height = max(QFontMetrics(self.fontPlain).tightBoundingRect(self.text()).height(),
                         QFontMetrics(self.fontItalics).tightBoundingRect(self.text()).height())
-            digits = self.getNumbers(self.text())
-            alpha = self.getCharacters(self.text())
-            width = (self.getWidthFromFont(self.fontItalics, alpha) +
-                     self.getWidthFromFont(self.fontPlain, digits))
+            width = self.getWidthUntilCursorPosition(None)
             self.setFixedWidth(width)
             self.setFixedHeight(height)
             self.u = self.height()/2
@@ -225,8 +230,7 @@ class MyLineEdit(QLineEdit):
     def geometryCursorPosition(self):
         cursorPosition = self.cursorPosition()
         start = self.x()+\
-        self.fontMetrics().horizontalAdvance(self.text(), 
-                                                                    cursorPosition)
+            self.getWidthUntilCursorPosition(cursorPosition)
         pos = self.getAbsolutePosition(self.parent, QPoint(start, self.y()))
         return pos
 
