@@ -1,6 +1,6 @@
 import re
 from PySide6.QtWidgets import (QLineEdit, QFrame, QProxyStyle)
-from PySide6.QtGui import QPainter, QPen, QPainterPath, QColor, QBrush, QFont, QTextLayout
+from PySide6.QtGui import QPainter, QPen, QPainterPath, QColor, QBrush, QFont, QTextLayout, QFontMetrics
 from PySide6.QtCore import Qt, QSize, QPoint
 
 LINEDIT_SIZE = (8, 20)
@@ -22,7 +22,8 @@ class MyLineEdit(QLineEdit):
         self.isEmpty = False
         # hiding cursor to just see my implementation
         self.setStyle(EmptyCursorStyle())
-        self.setFont(QFont("monospace", self.fontSize))
+        self.fontItalics = QFont("cmmi10", self.fontSize)
+        self.fontPlain = QFont("cmr10", self.fontSize)
         self.scene = self.parent.scene
         self.u = self.parent.fontSize/2+2
         self.d = self.parent.fontSize/2+2
@@ -96,6 +97,19 @@ class MyLineEdit(QLineEdit):
         return self.parent.lowerLineEdit
         
         
+    def getNumbers(self, string):
+        return "".join([char for char in string if char.isdigit()])
+
+
+    def getCharacters(self, string):
+        return "".join([char for char in string if not char.isdigit()])
+
+
+    def getWidthFromFont(self, font, text):
+        tight = QFontMetrics(font).tightBoundingRect(text)
+        return tight.width()
+
+
     def updateWidth(self):
         if len(self.text()) == 0: # how to display empty lineEdit
             if len(self.parent.children) == 1:
@@ -108,10 +122,15 @@ class MyLineEdit(QLineEdit):
                 self.setEmpty(False)
         else:
             self.setEmpty(False)
-            tight = self.fontMetrics().tightBoundingRect(self.text())
-            self.setFixedWidth(tight.width())
-            self.setFixedHeight(tight.height())
-            self.u = -tight.top()
+            height = max(QFontMetrics(self.fontPlain).tightBoundingRect(self.text()).height(),
+                        QFontMetrics(self.fontItalics).tightBoundingRect(self.text()).height())
+            digits = self.getNumbers(self.text())
+            alpha = self.getCharacters(self.text())
+            width = (self.getWidthFromFont(self.fontItalics, alpha) +
+                     self.getWidthFromFont(self.fontPlain, digits))
+            self.setFixedWidth(width)
+            self.setFixedHeight(height)
+            self.u = self.height()/2
             self.d = self.height()-self.u
 
 
@@ -210,24 +229,27 @@ class MyLineEdit(QLineEdit):
             input_str = self.text()
             result_list = re.findall(r'[a-zA-Z]+|[^a-zA-Z]+', input_str)
 
-            font = QFont(self.font())
-
             textUntilNow = ""
             if len(result_list) > 0:
                 isItalic = result_list[0].isalpha()
             else:
                 isItalic = False
             for group in result_list:
-                font.setItalic(isItalic)
+                if isItalic:
+                    font = self.fontItalics
+                    fm = QFontMetrics(font)
+                else:
+                    font = self.fontPlain
+                    fm = QFontMetrics(font)
                 l = QTextLayout(group, font)
                 l.beginLayout()
                 l.createLine()
                 l.endLayout()
                 l.draw(painter, QPoint(
-                    self.fontMetrics().tightBoundingRect(textUntilNow).width()
-                    -self.fontMetrics().leftBearing(group[0]),
-                    -self.fontMetrics().tightBoundingRect(self.text()).top() -
-                    self.fontMetrics().ascent()
+                    fm.tightBoundingRect(textUntilNow).width()
+                    -fm.leftBearing(group[0]),
+                    -fm.tightBoundingRect(self.text()).top() -
+                    fm.ascent()
                 ))
                 isItalic = not isItalic
                 textUntilNow += group
