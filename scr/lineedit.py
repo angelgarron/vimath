@@ -213,6 +213,24 @@ class MyLineEdit(QLineEdit):
         return True
 
 
+
+    def getAbsolutePosition(self, element, pos):
+        pos += element.pos()
+        if element.parent == self.scene.window:
+            return pos
+        return self.getAbsolutePosition(element.parent, pos)
+
+
+    @property
+    def geometryCursorPosition(self):
+        cursorPosition = self.cursorPosition()
+        start = self.x()+\
+        self.fontMetrics().horizontalAdvance(self.text(), 
+                                                                    cursorPosition)
+        pos = self.getAbsolutePosition(self.parent, QPoint(start, self.y()))
+        return pos
+
+        
     def serialize(self, start=None, end=None):
         return {
             "constructor": str(self.__class__),

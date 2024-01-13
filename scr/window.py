@@ -83,7 +83,6 @@ class GraphicalCursor(QWidget):
         self.timer.timeout.connect(self.blink)
         self.timer.start()
         self.isShowing = True
-        self.pos = QPoint(0, 0)
         
         
     @property
@@ -103,23 +102,12 @@ class GraphicalCursor(QWidget):
             self.isShowing = True
 
 
-    def getAbsolutePosition(self, element, pos):
-        pos += element.pos()
-        if element.parent == self.scene.window:
-            return pos
-        return self.getAbsolutePosition(element.parent, pos)
-
-
     def updatePosition(self):
         self.show()
         lineEditWithFocus = self.scene.getLineEditWithFocus()
         if lineEditWithFocus is not None:
-            cursorPosition = lineEditWithFocus.cursorPosition()
-            start = lineEditWithFocus.x()+\
-            lineEditWithFocus.fontMetrics().horizontalAdvance(lineEditWithFocus.text(), 
-                                                                        cursorPosition)
-            self.pos = self.getAbsolutePosition(lineEditWithFocus.parent, QPoint(start, lineEditWithFocus.y()))
-            self.setGeometry(self.pos.x(), self.pos.y(), self.cursorWidth, lineEditWithFocus.fontSize*1.2)
+            pos = lineEditWithFocus.geometryCursorPosition
+            self.setGeometry(pos.x(), pos.y(), self.cursorWidth, lineEditWithFocus.fontSize*1.2)
 
 
     def paintEvent(self, event):
