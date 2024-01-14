@@ -117,11 +117,9 @@ class MyFrame(QFrame):
             self.d = max(self.d, child.d)
             
         width = 0
-        x = 0
         for child in self.children:
-            child.setGeometry(x, self.u-child.u, child.width(), child.height())
+            child.setGeometry(width, self.u-child.u, child.width(), child.height())
             width += child.width()
-            x += child.width()
         
         self.setGeometry(self.x(), self.y(), width, self.u+self.d)
     
