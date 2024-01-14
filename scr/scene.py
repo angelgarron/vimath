@@ -153,6 +153,7 @@ class Scene:
     def updateFrames(self):
         mainFrame = self.window.mainMathFrame
         mainFrame.updateFrameSizeAndPosition()
+        self.window.graphicCursor.updatePosition()
 
 
     def enterInsertMode(self):
