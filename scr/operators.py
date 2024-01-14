@@ -1,4 +1,5 @@
 from lineedit import MyLineEdit
+import constructors
 from constructors import Parenthesis
 from constructors import mainframe
 from base import RegisterAction
@@ -110,15 +111,25 @@ class InsertEndLine:
         scene.enterInsertMode()
 
 
-@RegisterAction("normal")
+@RegisterAction("insert")
 class RemoveFrame:
     def __init__(self):
         self.key = [Qt.Key_Backspace]
 
         
     def performAction(self, other):
-        if not other.text():
+        if other.cursorPosition() == 0 and other.parent is not scene.window.mainMathFrame.children[0]:
+            if isinstance(other.parent, (
+                constructors.superscript.Superior,
+                constructors.subscript.Inferior,
+                constructors.supersubscript.Superior,
+                constructors.supersubscript.Inferior,
+                )):
+                other.parent.parent.base.lastLineEdit.setFocus()
+                return
             other = other.parent.parent.removeFrame()
+            return
+        other.backspace()
 
 
 @RegisterAction("normal")
