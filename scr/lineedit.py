@@ -7,6 +7,7 @@ LINEDIT_SIZE = (8, 20)
 
 
 class MyLineEdit(QLineEdit):
+    MIDDLE_GAP = 6
     def __init__(self, parent):
         super().__init__(parent)
         self.parent = parent
@@ -132,7 +133,7 @@ class MyLineEdit(QLineEdit):
             self.setFixedHeight(u+d)
             self.setFixedWidth(width)
 
-        self.u = u-4
+        self.u = u-MyLineEdit.MIDDLE_GAP
         self.d = self.height()-self.u
 
 
@@ -273,7 +274,7 @@ class MyLineEdit(QLineEdit):
                 l.endLayout()
                 l.draw(painter, QPoint(
                     -fm.leftBearing(group[0])+width,
-                    -fm.ascent()+self.u+4
+                    -fm.ascent()+self.u+MyLineEdit.MIDDLE_GAP
                 ))
 
                 width += tight.width()
