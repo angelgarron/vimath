@@ -91,3 +91,8 @@ class MainFrame(MyFrame):
             y += line.height()+MainFrame.VSPACE
             maxWidthLines = max(maxWidthLines, line.width())
         self.setGeometry(0, 0, maxWidthLines, height)
+
+
+    def removeFrame(self):
+        line = self.scene.getLineEditWithFocus().parent
+        line.removeLine()

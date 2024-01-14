@@ -118,7 +118,7 @@ class RemoveFrame:
 
         
     def performAction(self, other):
-        if other.cursorPosition() == 0 and other.parent is not scene.window.mainMathFrame.children[0]:
+        if other.cursorPosition() == 0 and other.parent:
             if isinstance(other.parent, (
                 constructors.superscript.Superior,
                 constructors.subscript.Inferior,
