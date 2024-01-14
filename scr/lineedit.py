@@ -100,7 +100,7 @@ class MyLineEdit(QLineEdit):
         
         
 
-    def getWidthUntilCursorPosition(self, cursorPosition):
+    def getDimensionUntilCursorPosition(self, cursorPosition):
         result_list = re.findall(r'[a-zA-Z]+|[^a-zA-Z]+', self.text()[:cursorPosition])
         if len(result_list) > 0:
             isItalic = result_list[0].isalpha()
@@ -127,8 +127,8 @@ class MyLineEdit(QLineEdit):
 
             isItalic = not isItalic
 
-        self.setFixedHeight(self.u+self.d)
-        return width
+        height = self.u+self.d
+        return width, height
 
     
     def updateWidth(self):
@@ -143,9 +143,9 @@ class MyLineEdit(QLineEdit):
                 self.setEmpty(False)
         else:
             self.setEmpty(False)
-            width = self.getWidthUntilCursorPosition(None)
+            width, height = self.getDimensionUntilCursorPosition(None)
+            self.setFixedHeight(height)
             self.setFixedWidth(width)
-            # self.setFixedHeight(height)
             # self.u = self.height()/2
             # self.d = self.height()-self.u
 
@@ -244,7 +244,7 @@ class MyLineEdit(QLineEdit):
     def geometryCursorPosition(self):
         cursorPosition = self.cursorPosition()
         start = self.x()+\
-            self.getWidthUntilCursorPosition(cursorPosition)
+            self.getDimensionUntilCursorPosition(cursorPosition)[0]
         pos = self.getAbsolutePosition(self.parent, QPoint(start, self.y()))
         return pos
 

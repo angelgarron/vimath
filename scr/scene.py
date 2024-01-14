@@ -95,12 +95,12 @@ class Scene:
         if self.selection:
             if self.selection[0][1] is not None:
                 start = self.selection[0][0].x()+\
-                self.selection[0][0].getWidthUntilCursorPosition(self.selection[0][1])
+                self.selection[0][0].getDimensionUntilCursorPosition(self.selection[0][1])[0]
             else:
                 start = self.selection[0][0].x()
             if self.selection[-1][1] is not None:
                 end = self.selection[-1][0].x()+\
-                self.selection[-1][0].getWidthUntilCursorPosition(self.selection[-1][1])
+                self.selection[-1][0].getDimensionUntilCursorPosition(self.selection[-1][1])[0]
             else:
                 end = self.selection[-1][0].x()+self.selection[-1][0].width()
             pos = self.getAbsolutePosition(self.selection[0][0].parent, QPoint(start, 0))
