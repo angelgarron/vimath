@@ -118,17 +118,22 @@ class RemoveFrame:
 
         
     def performAction(self, other):
-        if other.cursorPosition() == 0 and other.parent:
-            if isinstance(other.parent, (
-                constructors.superscript.Superior,
-                constructors.subscript.Inferior,
-                constructors.supersubscript.Superior,
-                constructors.supersubscript.Inferior,
-                )):
-                other.parent.parent.base.lastLineEdit.setFocus()
+        if other.cursorPosition() == 0:
+            if len(other.parent.children) == 1:
+                if isinstance(other.parent, (
+                    constructors.superscript.Superior,
+                    constructors.subscript.Inferior,
+                    constructors.supersubscript.Superior,
+                    constructors.supersubscript.Inferior,
+                    )):
+                    other.parent.parent.base.lastLineEdit.setFocus()
+                    return
+                other = other.parent.parent.removeFrame()
                 return
-            other = other.parent.parent.removeFrame()
-            return
+            else: # see what we have to the left
+                indx = other.parent.children.index(other)
+                leftElement = other.parent.children[indx-1]
+                leftElement.removeFrame()
         other.backspace()
 
 
