@@ -6,14 +6,6 @@ from PySide6.QtCore import Qt, QSize, QPoint
 LINEDIT_SIZE = (8, 20)
 
 
-class EmptyCursorStyle(QProxyStyle):
-    def pixelMetric(self, metric, option=None, widget=None):
-        if metric == QProxyStyle.PM_TextCursorWidth:
-            return 0
-
-        return super().pixelMetric(metric, option, widget)
-
-
 class MyLineEdit(QLineEdit):
     def __init__(self, parent):
         super().__init__(parent)
@@ -21,7 +13,6 @@ class MyLineEdit(QLineEdit):
         self.fontSize = self.parent.fontSize
         self.isEmpty = False
         # hiding cursor to just see my implementation
-        self.setStyle(EmptyCursorStyle())
         self.fontItalics = QFont("cmmi10", self.fontSize)
         self.fontPlain = QFont("cmr10", self.fontSize)
         self.fmItalics = QFontMetrics(self.fontItalics)
@@ -97,7 +88,6 @@ class MyLineEdit(QLineEdit):
     @property
     def lowerLineEdit(self):
         return self.parent.lowerLineEdit
-        
         
 
     def getDimensionUntilCursorPosition(self, cursorPosition):
