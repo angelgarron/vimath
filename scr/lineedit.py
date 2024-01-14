@@ -107,8 +107,8 @@ class MyLineEdit(QLineEdit):
         else:
             isItalic = False
 
-        self.u = 0
-        self.d = 0
+        u = 0
+        d = 0
         width = 0
         for group in result_list:
 
@@ -119,16 +119,15 @@ class MyLineEdit(QLineEdit):
 
             tight = fm.tightBoundingRect(group)
 
-            u = -tight.top()
-            d = tight.height()-u
-            self.u = max(self.u, u)
-            self.d = max(self.d, d)
+            newu = -tight.top()
+            newd = tight.height()-newu
+            u = max(u, newu)
+            d = max(d, newd)
             width += tight.width()
 
             isItalic = not isItalic
 
-        height = self.u+self.d
-        return width, height
+        return width, u, d
 
     
     def updateWidth(self):
@@ -143,11 +142,11 @@ class MyLineEdit(QLineEdit):
                 self.setEmpty(False)
         else:
             self.setEmpty(False)
-            width, height = self.getDimensionUntilCursorPosition(None)
-            self.setFixedHeight(height)
+            width, u, d = self.getDimensionUntilCursorPosition(None)
+            self.setFixedHeight(u+d)
             self.setFixedWidth(width)
-            # self.u = self.height()/2
-            # self.d = self.height()-self.u
+            self.u = u-4
+            self.d = self.height()-self.u
 
 
     def createFrameMiddle(self, FrameConstructor, storeHistory=True):
@@ -311,8 +310,7 @@ class MyLineEdit(QLineEdit):
                 l.createLine()
                 l.endLayout()
                 l.draw(painter, QPoint(
-                    width
-                    -fm.leftBearing(group[0]),
+                    -fm.leftBearing(group[0])+width,
                     -fm.ascent()+u
                 ))
 
