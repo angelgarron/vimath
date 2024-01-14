@@ -55,13 +55,6 @@ class MyLineEdit(QLineEdit):
             return
         return super().inputMethodEvent(event)
 
-
-    def setEmpty(self, flag):
-        if flag:
-            self.isEmpty = True
-        else:
-            self.isEmpty = False
-                
         
     @property
     def nextLineEdit(self):
@@ -121,22 +114,26 @@ class MyLineEdit(QLineEdit):
 
     
     def updateWidth(self):
-        if len(self.text()) == 0: # how to display empty lineEdit
+        # how to display empty frame
+        if len(self.text()) == 0: 
             if len(self.parent.children) == 1:
                 self.setFixedWidth(self.parent.fontSize)
                 self.setFixedHeight(self.parent.fontSize*1.2)
-                self.setEmpty(True)
-            else:
+                u = self.height()-4
+                self.isEmpty = True
+            else: # there are more elements in the frame, so it's not empty
                 self.setFixedWidth(0)
-                self.setFixedHeight(self.parent.fontSize*1.2)
-                self.setEmpty(False)
+                self.setFixedHeight(0)
+                u = 0
+                self.isEmpty = False
         else:
-            self.setEmpty(False)
+            self.isEmpty = False
             width, u, d = self.getDimensionUntilCursorPosition(None)
             self.setFixedHeight(u+d)
             self.setFixedWidth(width)
-            self.u = u-4
-            self.d = self.height()-self.u
+
+        self.u = u-4
+        self.d = self.height()-self.u
 
 
     def createFrameMiddle(self, FrameConstructor, storeHistory=True):
@@ -219,7 +216,6 @@ class MyLineEdit(QLineEdit):
             if key != storedKey:
                 return False
         return True
-
 
 
     def getAbsolutePosition(self, element, pos):
