@@ -267,32 +267,6 @@ class MyLineEdit(QLineEdit):
             else:
                 isItalic = False
 
-            u = 0
-            d = 0
-            for group in result_list:
-
-                if isItalic:
-                    font = self.fontItalics
-                    fm = self.fmItalics
-                else:
-                    font = self.fontPlain
-                    fm = self.fmPlain
-
-                tight = fm.tightBoundingRect(group)
-
-                newu = -tight.top()
-                newd = tight.height()-newu
-                u = max(u, newu)
-                d = max(d, newd)
-
-                isItalic = not isItalic
-
-
-            if len(result_list) > 0:
-                isItalic = result_list[0].isalpha()
-            else:
-                isItalic = False
-
             width = 0
             for group in result_list:
 
@@ -311,7 +285,7 @@ class MyLineEdit(QLineEdit):
                 l.endLayout()
                 l.draw(painter, QPoint(
                     -fm.leftBearing(group[0])+width,
-                    -fm.ascent()+u
+                    -fm.ascent()+self.u+4
                 ))
 
                 width += tight.width()
