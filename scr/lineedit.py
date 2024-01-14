@@ -119,7 +119,7 @@ class MyLineEdit(QLineEdit):
             if len(self.parent.children) == 1:
                 self.setFixedWidth(self.parent.fontSize)
                 self.setFixedHeight(self.parent.fontSize*1.2)
-                u = self.height()-4
+                u = self.height()
                 self.isEmpty = True
             else: # there are more elements in the frame, so it's not empty
                 self.setFixedWidth(0)
@@ -219,6 +219,9 @@ class MyLineEdit(QLineEdit):
 
 
     def getAbsolutePosition(self, element, pos):
+        """Transform the coordinates from the element frame
+        to the absolute frame
+        """
         pos += element.pos()
         if element.parent == self.scene.window:
             return pos
@@ -228,9 +231,8 @@ class MyLineEdit(QLineEdit):
     @property
     def geometryCursorPosition(self):
         cursorPosition = self.cursorPosition()
-        start = self.x()+\
-            self.getDimensionUntilCursorPosition(cursorPosition)[0]
-        pos = self.getAbsolutePosition(self.parent, QPoint(start, self.y()))
+        width, _, _ = self.getDimensionUntilCursorPosition(cursorPosition)
+        pos = self.getAbsolutePosition(self, QPoint(width, self.u-self.fontSize*0.8))
         return pos
 
         
