@@ -24,6 +24,8 @@ class MyLineEdit(QLineEdit):
         self.setStyle(EmptyCursorStyle())
         self.fontItalics = QFont("cmmi10", self.fontSize)
         self.fontPlain = QFont("cmr10", self.fontSize)
+        self.fmItalics = QFontMetrics(self.fontItalics)
+        self.fmPlain = QFontMetrics(self.fontPlain)
         self.scene = self.parent.scene
         self.u = self.parent.fontSize/2+2
         self.d = self.parent.fontSize/2+2
@@ -97,24 +99,35 @@ class MyLineEdit(QLineEdit):
         return self.parent.lowerLineEdit
         
         
-    def getNumbers(self, string):
-        return "".join([char for char in string if char.isdigit()])
-
-
-    def getCharacters(self, string):
-        return "".join([char for char in string if not char.isdigit()])
-
-
-    def getWidthFromFont(self, font, text):
-        tight = QFontMetrics(font).tightBoundingRect(text)
-        return tight.width()
-
 
     def getWidthUntilCursorPosition(self, cursorPosition):
-        digits = self.getNumbers(self.text()[:cursorPosition])
-        alpha = self.getCharacters(self.text()[:cursorPosition])
-        width = (self.getWidthFromFont(self.fontItalics, alpha) +
-                    self.getWidthFromFont(self.fontPlain, digits))
+        result_list = re.findall(r'[a-zA-Z]+|[^a-zA-Z]+', self.text()[:cursorPosition])
+        if len(result_list) > 0:
+            isItalic = result_list[0].isalpha()
+        else:
+            isItalic = False
+
+        self.u = 0
+        self.d = 0
+        width = 0
+        for group in result_list:
+
+            if isItalic:
+                fm = self.fmItalics
+            else:
+                fm = self.fmPlain
+
+            tight = fm.tightBoundingRect(group)
+
+            u = -tight.top()
+            d = tight.height()-u
+            self.u = max(self.u, u)
+            self.d = max(self.d, d)
+            width += tight.width()
+
+            isItalic = not isItalic
+
+        self.setFixedHeight(self.u+self.d)
         return width
 
     
@@ -130,13 +143,11 @@ class MyLineEdit(QLineEdit):
                 self.setEmpty(False)
         else:
             self.setEmpty(False)
-            height = max(QFontMetrics(self.fontPlain).tightBoundingRect(self.text()).height(),
-                        QFontMetrics(self.fontItalics).tightBoundingRect(self.text()).height())
             width = self.getWidthUntilCursorPosition(None)
             self.setFixedWidth(width)
-            self.setFixedHeight(height)
-            self.u = self.height()/2
-            self.d = self.height()-self.u
+            # self.setFixedHeight(height)
+            # self.u = self.height()/2
+            # self.d = self.height()-self.u
 
 
     def createFrameMiddle(self, FrameConstructor, storeHistory=True):
@@ -251,33 +262,64 @@ class MyLineEdit(QLineEdit):
 
     def paintEvent(self, event):
         with QPainter(self) as painter:
-            input_str = self.text()
-            result_list = re.findall(r'[a-zA-Z]+|[^a-zA-Z]+', input_str)
-
-            textUntilNow = ""
+            result_list = re.findall(r'[a-zA-Z]+|[^a-zA-Z]+', self.text())
             if len(result_list) > 0:
                 isItalic = result_list[0].isalpha()
             else:
                 isItalic = False
+
+            u = 0
+            d = 0
             for group in result_list:
+
                 if isItalic:
                     font = self.fontItalics
-                    fm = QFontMetrics(font)
+                    fm = self.fmItalics
                 else:
                     font = self.fontPlain
-                    fm = QFontMetrics(font)
+                    fm = self.fmPlain
+
+                tight = fm.tightBoundingRect(group)
+
+                newu = -tight.top()
+                newd = tight.height()-newu
+                u = max(u, newu)
+                d = max(d, newd)
+
+                isItalic = not isItalic
+
+
+            if len(result_list) > 0:
+                isItalic = result_list[0].isalpha()
+            else:
+                isItalic = False
+
+            width = 0
+            for group in result_list:
+
+                if isItalic:
+                    font = self.fontItalics
+                    fm = self.fmItalics
+                else:
+                    font = self.fontPlain
+                    fm = self.fmPlain
+
+                tight = fm.tightBoundingRect(group)
+
                 l = QTextLayout(group, font)
                 l.beginLayout()
                 l.createLine()
                 l.endLayout()
                 l.draw(painter, QPoint(
-                    fm.tightBoundingRect(textUntilNow).width()
+                    width
                     -fm.leftBearing(group[0]),
-                    -fm.tightBoundingRect(self.text()).top() -
-                    fm.ascent()
+                    -fm.ascent()+u
                 ))
+
+                width += tight.width()
+
                 isItalic = not isItalic
-                textUntilNow += group
+
     
         if self.isEmpty:
             with QPainter(self) as painter:
