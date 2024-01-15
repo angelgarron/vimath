@@ -84,12 +84,18 @@ class MyLineEdit(QLineEdit):
         return self.parent.lowerLineEdit
         
 
-    def getDimensionUntilCursorPosition(self, cursorPosition):
-        result_list = re.findall(r'[a-zA-Z]+|[^a-zA-Z]+', self.text()[:cursorPosition])
+    def groupCharacters(self, cursorPosition):
+        from symbols import symbols
+        unicodes = "".join([str(chr(c)) for c in symbols.values()])
+        result_list = re.findall(fr'[a-zA-Z{unicodes}]+|[^a-zA-Z{unicodes}]+', self.text()[:cursorPosition])
+        firstItalic = False
         if len(result_list) > 0:
-            isItalic = result_list[0].isalpha()
-        else:
-            isItalic = False
+            firstItalic = result_list[0][0].isalpha() or result_list[0][0] in unicodes
+        return firstItalic, result_list
+
+
+    def getDimensionUntilCursorPosition(self, cursorPosition):
+        isItalic, result_list = self.groupCharacters(cursorPosition)
 
         u = 0
         d = 0
@@ -250,11 +256,7 @@ class MyLineEdit(QLineEdit):
 
     def paintEvent(self, event):
         with QPainter(self) as painter:
-            result_list = re.findall(r'[a-zA-Z]+|[^a-zA-Z]+', self.text())
-            if len(result_list) > 0:
-                isItalic = result_list[0].isalpha()
-            else:
-                isItalic = False
+            isItalic, result_list = self.groupCharacters(None)
 
             width = 0
             for group in result_list:

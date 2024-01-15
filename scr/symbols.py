@@ -4,38 +4,38 @@ from PySide6.QtGui import Qt
 
 
 symbols = {
-"a": "α",
-"b": "β",
-"G": "Γ",
-"g": "γ",
-"D": "Δ",
-"d": "δ",
-"e": "ε",
-"z": "ζ",
-# "η",
-"v": "θ",
+"a": 174,
+"b": 175,
+"G": 161,
+"g": 176,
+"D": 162,
+"d": 177,
+"e": 34,
+"z": 179,
+# "η": 180,
+"v": 181,
 # "ι",
-"k": "κ",
-"L": "Λ",
-"l": "λ",
-"m": "μ",
-"n": "ν",
+"k": 183,
+"L": 164,
+"l": 184,
+"m": 185,
+"n": 186,
 # "Ξ",
 # "ξ",
-"P": "Π",
-"p": "π",
-"r": "ρ",
-"S": "Σ",
-"s": "σ",
-"t": "τ",
+"P": 166,
+"p": 188,
+"r": 189,
+"S": 167,
+"s": 190,
+"t": 191,
 # "υ",
 # "Φ",
 # "φ",
 # "χ",
 # "Ψ",
 # "ψ",
-"O": "Ω",
-"o": "ω",
+"O": 172,
+"o": 33,
 }
 
 
@@ -48,7 +48,7 @@ class AddSymbol:
         cursorPosition = other.cursorPosition()
         text = other.text()
         text = list(text)
-        text.insert(cursorPosition, symbols[self.symbol])
+        text.insert(cursorPosition, chr(symbols[self.symbol]))
         text = "".join(text)
         other.setText(text)
         other.setCursorPosition(cursorPosition+1)
