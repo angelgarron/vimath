@@ -227,8 +227,6 @@ class InsideParenthesis:
         currentElement.base.children[-1].setFocus()
         currentElement.base.children[-1].setCursorPosition(len(currentElement.base.children[-1].text()))
 
-        self.lastAction()
-
 
 @RegisterAction("normal")
 class DeleteInsideParenthesis(InsideParenthesis):
@@ -238,7 +236,8 @@ class DeleteInsideParenthesis(InsideParenthesis):
             combination.insert(0, Qt.Key_D)
     
     
-    def lastAction(self):
+    def performAction(self, other):
+        super().performAction(other)
         scene.updateVisualSelection()
         scene.clipboard.serializeSelected()
         scene.deleteSelection(selection=None, storeHistory=False)
@@ -288,7 +287,8 @@ class ChangeInsideParenthesis(InsideParenthesis):
             combination.insert(0, Qt.Key_C)
     
     
-    def lastAction(self):
+    def performAction(self, other):
+        super().performAction(other)
         scene.updateVisualSelection()
         scene.clipboard.serializeSelected()
         scene.deleteSelection(selection=None, storeHistory=False)
@@ -303,10 +303,6 @@ class VisualInsideParenthesis(InsideParenthesis):
         super().__init__()
     
     
-    def lastAction(self):
-        pass
-
-
 @RegisterAction("normal")
 class YankInsideParenthesis(InsideParenthesis):
     def __init__(self):
@@ -315,7 +311,8 @@ class YankInsideParenthesis(InsideParenthesis):
             combination.insert(0, Qt.Key_Y)
     
     
-    def lastAction(self):
+    def performAction(self, other):
+        super().performAction(other)
         scene.updateVisualSelection()
         scene.clipboard.serializeSelected()
         scene.clearSelection()
@@ -340,8 +337,6 @@ class AroundParenthesis:
         currentElement.base.children[-1].nextLineEdit.setFocus()
         currentElement.base.children[-1].nextLineEdit.setCursorPosition(0)
 
-        self.lastAction()
-
 
 @RegisterAction("normal")
 class DeleteAroundParenthesis(AroundParenthesis):
@@ -351,7 +346,8 @@ class DeleteAroundParenthesis(AroundParenthesis):
             combination.insert(0, Qt.Key_D)
     
     
-    def lastAction(self):
+    def performAction(self, other):
+        super().performAction(other)
         scene.updateVisualSelection()
         scene.clipboard.serializeSelected()
         scene.deleteSelection(selection=None, storeHistory=False)
@@ -367,7 +363,8 @@ class ChangeAroundParenthesis(AroundParenthesis):
             combination.insert(0, Qt.Key_C)
     
     
-    def lastAction(self):
+    def performAction(self, other):
+        super().performAction(other)
         scene.updateVisualSelection()
         scene.clipboard.serializeSelected()
         scene.deleteSelection(selection=None, storeHistory=False)
@@ -382,12 +379,8 @@ class VisualAroundParenthesis(AroundParenthesis):
         super().__init__()
     
     
-    def lastAction(self):
-        pass
-
-
 @RegisterAction("normal")
-class DeleteSurroundingParenthesis(AroundParenthesis):
+class DeleteSurroundingParenthesis:
     def __init__(self):
         self.key = [
             [Qt.Key_D, Qt.Key_S, Qt.ShiftModifier | Qt.Key_ParenLeft],
