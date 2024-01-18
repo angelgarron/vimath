@@ -247,6 +247,28 @@ class DeleteInsideParenthesis(InsideParenthesis):
 
 
 @RegisterAction("normal")
+class DeleteUntilEnd:
+    def __init__(self):
+        self.key = [Qt.ShiftModifier | Qt.Key_D]
+    
+    
+    def performAction(self, other):
+        # find the Line where we are
+        currentLine = other
+        while not isinstance(currentLine, mainframe.Line):
+            currentLine = currentLine.parent
+
+        scene.selectionFirst = [other, other.cursorPosition()]
+        currentLine.children[-1].setFocus()
+        currentLine.children[-1].end(False)
+        scene.updateVisualSelection()
+        scene.clipboard.serializeSelected()
+        scene.deleteSelection(selection=None, storeHistory=False)
+        scene.clearSelection()
+        scene.history.store("removed until end of line")
+
+
+@RegisterAction("normal")
 class ChangeInsideParenthesis(InsideParenthesis):
     def __init__(self):
         super().__init__()
