@@ -253,14 +253,14 @@ class DeleteUntilEnd:
     
     
     def performAction(self, other):
-        # find the Line where we are
-        currentLine = other
-        while not isinstance(currentLine, mainframe.Line):
-            currentLine = currentLine.parent
+        # go until the end of the line
+        lastLineEdit = other
+        while lastLineEdit.nextLineEdit:
+            lastLineEdit = lastLineEdit.nextLineEdit
 
         scene.selectionFirst = [other, other.cursorPosition()]
-        currentLine.children[-1].setFocus()
-        currentLine.children[-1].end(False)
+        lastLineEdit.setFocus()
+        lastLineEdit.end(False)
         scene.updateVisualSelection()
         scene.clipboard.serializeSelected()
         scene.deleteSelection(selection=None, storeHistory=False)
