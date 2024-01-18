@@ -223,9 +223,9 @@ class InsideParenthesis:
                 return
             currentElement = currentElement.parent
         # we found that we where inside a parenthesis, let's select its contents
-        scene.selectionFirst = [currentElement.base.children[0], 0]
-        currentElement.base.children[-1].setFocus()
-        currentElement.base.children[-1].setCursorPosition(len(currentElement.base.children[-1].text()))
+        scene.selectionFirst = [currentElement.base.firstLineEdit, 0]
+        currentElement.base.lastLineEdit.setFocus()
+        currentElement.base.lastLineEdit.end(False)
 
 
 @RegisterAction("normal")
