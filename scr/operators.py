@@ -397,10 +397,10 @@ class DeleteSurroundingParenthesis:
         # we found that we where inside a parenthesis, let's select it
         selection = []
         register = []
-        selection.append((currentElement.base.children[0], 0))
+        selection.append((currentElement.base.firstLineEdit, 0))
         for element in currentElement.base.children[1:-1]:
             selection.append((element, None))
-        selection.append((currentElement.base.children[-1], len(currentElement.base.children[-1].text())))
+        selection.append((currentElement.base.lastLineEdit, len(currentElement.base.lastLineEdit.text())))
         scene.clipboard.serializeSelected(selection=selection, register=register)
         currentElement.removeFrame()
         scene.clipboard.deserializeFromClipboard(register, up=True)
