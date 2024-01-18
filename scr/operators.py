@@ -246,12 +246,7 @@ class DeleteInsideParenthesis(InsideParenthesis):
         scene.history.store("removed inside parenthesis")
 
 
-@RegisterAction("normal")
-class DeleteUntilEnd:
-    def __init__(self):
-        self.key = [Qt.ShiftModifier | Qt.Key_D]
-    
-    
+class UntilEnd:
     def performAction(self, other):
         # go until the end of the line
         lastLineEdit = other
@@ -267,6 +262,23 @@ class DeleteUntilEnd:
         scene.clearSelection()
         scene.history.store("removed until end of line")
 
+
+@RegisterAction("normal")
+class DeleteUntilEnd(UntilEnd):
+    def __init__(self):
+        self.key = [Qt.ShiftModifier | Qt.Key_D]
+
+
+@RegisterAction("normal")
+class ChangeUntilEnd(UntilEnd):
+    def __init__(self):
+        self.key = [Qt.ShiftModifier | Qt.Key_C]
+    
+
+    def performAction(self, other):
+        super().performAction(other)
+        scene.enterInsertMode()
+    
 
 @RegisterAction("normal")
 class ChangeInsideParenthesis(InsideParenthesis):
