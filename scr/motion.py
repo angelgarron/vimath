@@ -14,7 +14,7 @@ class MoveLeft:
         previousLineEdit = other.previousLineEdit
         if other.cursorPosition() == 0 and previousLineEdit:
             previousLineEdit.setFocus()
-            previousLineEdit.setCursorPosition(len(previousLineEdit.text()))
+            previousLineEdit.end(False)
             return
         other.cursorBackward(False)
 
@@ -82,7 +82,7 @@ class MoveRight:
         nextLineEdit = other.nextLineEdit
         if other.cursorPosition() == len(other.text()) and nextLineEdit:
             nextLineEdit.setFocus()
-            nextLineEdit.setCursorPosition(0)
+            nextLineEdit.home(False)
             return
         other.cursorForward(False)
         
@@ -114,7 +114,7 @@ class MoveWordBegin:
         nextLineEdit = other.nextLineEdit
         if nextLineEdit is not None:
             nextLineEdit.setFocus()
-            nextLineEdit.setCursorPosition(0)
+            nextLineEdit.home(False)
         
         
 @RegisterAction(["normal", "visual"])
@@ -127,7 +127,7 @@ class MoveBeginningWord:
         previousLineEdit = other.previousLineEdit
         if previousLineEdit is not None:
             previousLineEdit.setFocus()
-            previousLineEdit.setCursorPosition(0)
+            previousLineEdit.home(False)
         
 
 
@@ -141,9 +141,9 @@ class MoveWordEnd:
         nextLineEdit = other.nextLineEdit
         if nextLineEdit is not None:
             nextLineEdit.setFocus()
-            nextLineEdit.setCursorPosition(len(nextLineEdit.text()))        
+            nextLineEdit.end(False)
             return
-        other.setCursorPosition(len(other.text()))        
+        other.end(False)
 
 
 @RegisterAction(["normal", "visual"])
@@ -155,7 +155,7 @@ class MoveStartDocument:
     def performAction(self, other):
         firstLine = scene.window.mainMathFrame.children[0].firstLineEdit
         firstLine.setFocus()
-        firstLine.setCursorPosition(0)
+        firstLine.home(False)
 
 
 @RegisterAction(["normal", "visual"])
@@ -167,7 +167,7 @@ class MoveEndDocument:
     def performAction(self, other):
         lastLine = scene.window.mainMathFrame.children[-1].firstLineEdit
         lastLine.setFocus()
-        lastLine.setCursorPosition(0)
+        lastLine.home(False)
 
 
 @RegisterAction(["normal", "visual"])
