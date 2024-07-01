@@ -108,11 +108,14 @@ class Scene:
 
 
     def deleteSelection(self, selection=None, storeHistory=True):
+        import constructors
         if selection is None:
             selection = self.selection
 
         first = selection[0]
         second = selection[-1]
+        if isinstance(first[0], constructors.fraction.Numerator):
+            return
         
         if first[0] == second[0]: # we are in the same lineEdit
             first[0].setCursorPosition(first[1])
