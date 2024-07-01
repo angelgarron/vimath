@@ -54,7 +54,8 @@ class Line(MyFrame):
 
 
 class MainFrame(MyFrame):
-    VSPACE = 3
+    HSPACE = 10
+    VSPACE = 10
     def __init__(self, parent):
         super().__init__(parent)
         self.createLine()
@@ -90,7 +91,7 @@ class MainFrame(MyFrame):
             line.setGeometry(0, y, line.width(), line.height())
             y += line.height()+MainFrame.VSPACE
             maxWidthLines = max(maxWidthLines, line.width())
-        self.setGeometry(0, 0, maxWidthLines, height)
+        self.setGeometry(MainFrame.HSPACE, 0, maxWidthLines, height)
 
 
     def removeFrame(self):
