@@ -1,4 +1,4 @@
-from frame import MyFrame
+from vimath.frame import MyFrame
 from PySide6.QtGui import QPainter
 
 

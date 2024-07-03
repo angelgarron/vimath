@@ -1,5 +1,5 @@
 from PySide6.QtCore import Qt
-from scene import scene
+from vimath.scene import scene
 
 actions = {}
 actionsVisual = {}

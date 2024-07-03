@@ -1,7 +1,7 @@
 from PySide6.QtWidgets import (QLineEdit, QFrame, QProxyStyle)
 from PySide6.QtGui import QPainter, QPen, QPainterPath, QColor, QBrush, QFont
-from lineedit import MyLineEdit
-from scene import scene
+from vimath.lineedit import MyLineEdit
+from vimath.scene import scene
 
 
 LINEDIT_SIZE = (8, 20)

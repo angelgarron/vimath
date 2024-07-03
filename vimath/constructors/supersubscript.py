@@ -1,7 +1,6 @@
-from frame import MyFrame
-from lineedit import MyLineEdit
-from constructors import subscript
-from constructors import superscript
+from vimath.frame import MyFrame
+from vimath.lineedit import MyLineEdit
+from vimath.constructors import subscript, superscript
 
 class Superior(MyFrame):
     def __init__(self, parent):

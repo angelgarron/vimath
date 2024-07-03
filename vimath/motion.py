@@ -1,6 +1,6 @@
-from base import RegisterAction
-from constructors import Parenthesis
-from scene import scene
+from vimath.base import RegisterAction
+from vimath.constructors import Parenthesis
+from vimath.scene import scene
 from PySide6.QtGui import Qt
 
 

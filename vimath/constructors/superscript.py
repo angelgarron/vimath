@@ -1,5 +1,5 @@
-from frame import MyFrame
-from lineedit import MyLineEdit
+from vimath.frame import MyFrame
+from vimath.lineedit import MyLineEdit
 
 
 class Superior(MyFrame):

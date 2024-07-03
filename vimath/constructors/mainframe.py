@@ -1,4 +1,4 @@
-from frame import MyFrame
+from vimath.frame import MyFrame
 
 
 class Line(MyFrame):

@@ -85,7 +85,7 @@ class MyLineEdit(QLineEdit):
         
 
     def groupCharacters(self, cursorPosition):
-        from symbols import symbols
+        from vimath.symbols import symbols
         unicodes = "".join([str(chr(c)) for c in symbols.values()])
         result_list = re.findall(fr'[a-zA-Z{unicodes}]+|[^a-zA-Z{unicodes}]+', self.text()[:cursorPosition])
         firstItalic = False

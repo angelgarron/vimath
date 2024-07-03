@@ -1,11 +1,8 @@
-from base import RegisterAction
-from constructors import Fraction, Parenthesis, SquareRoot, Subscript, Superscript, SuperSubscript
-from constructors import subscript
-from constructors import supersubscript
-from constructors import superscript
-from constructors import mainframe
+from vimath.base import RegisterAction
+from vimath.constructors import (Fraction, Parenthesis, SquareRoot, Subscript, Superscript, SuperSubscript,
+                                 subscript, supersubscript, superscript, mainframe)
 from PySide6.QtGui import Qt
-from scene import scene
+from vimath.scene import scene
 
 
 def visualSurround(originalConstructor):

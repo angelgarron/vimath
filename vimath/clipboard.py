@@ -1,4 +1,4 @@
-from lineedit import MyLineEdit
+from vimath.lineedit import MyLineEdit
 
 
 class Clipboard:

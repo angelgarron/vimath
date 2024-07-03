@@ -1,9 +1,8 @@
-from lineedit import MyLineEdit
-import constructors
-from constructors import Parenthesis
-from constructors import mainframe
-from base import RegisterAction
-from scene import scene
+from vimath.lineedit import MyLineEdit
+from vimath import constructors
+from vimath.constructors import Parenthesis, mainframe
+from vimath.base import RegisterAction
+from vimath.scene import scene
 from PySide6.QtGui import Qt
 
 class BaseInnerWord:

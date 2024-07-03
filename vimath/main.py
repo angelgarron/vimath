@@ -1,6 +1,6 @@
 import sys
 from PySide6.QtWidgets import QApplication
-from window import MyMainWindow
+from vimath.window import MyMainWindow
 
 
 STYLE_SHEET = """
@@ -21,7 +21,7 @@ QLineEdit {
 """
 
 
-if __name__ == '__main__':
+def main():
     app = QApplication(sys.argv)
     window = MyMainWindow()
     window.setStyleSheet(STYLE_SHEET)
@@ -29,3 +29,7 @@ if __name__ == '__main__':
     window.tp.raise_()
     window.graphicCursor.raise_()
     sys.exit(app.exec())
+
+
+if __name__ == '__main__':
+    main()

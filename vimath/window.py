@@ -1,10 +1,10 @@
-from scene import scene
+from vimath.scene import scene
 from PySide6.QtGui import QPainter, QPen, QPainterPath, QColor, QBrush, QFont
 from PySide6.QtWidgets import QMainWindow, QWidget, QLabel
 from PySide6.QtCore import QPoint, QTimer
-from frame import MyFrame
-from lineedit import MyLineEdit
-from constructors import Fraction, MainFrame
+from vimath.frame import MyFrame
+from vimath.lineedit import MyLineEdit
+from vimath.constructors import Fraction, MainFrame
 
 
 MODE_NAME = {

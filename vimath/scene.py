@@ -1,8 +1,8 @@
 import json
 from PySide6.QtCore import QPoint
-from lineedit import  MyLineEdit
-from clipboard import Clipboard
-from history import History
+from vimath.lineedit import  MyLineEdit
+from vimath.clipboard import Clipboard
+from vimath.history import History
 
 NORMAL_MODE = 0
 INSERT_MODE = 1
@@ -108,7 +108,7 @@ class Scene:
 
 
     def deleteSelection(self, selection=None, storeHistory=True):
-        import constructors
+        from vimath import constructors
         if selection is None:
             selection = self.selection
 
@@ -254,24 +254,24 @@ class Scene:
 
 scene = Scene()
 # initialize all actions
-import motion, operators, addconstructor, symbols
-from base import actions, actionsVisual, actionsInsert
+from vimath import motion, operators, addconstructor, symbols
+from vimath.base import actions, actionsVisual, actionsInsert
 scene.actions = actions
 scene.actionsVisual = actionsVisual
 scene.actionsInsert = actionsInsert
 
-from frame import MyFrame
-import constructors
+from vimath.frame import MyFrame
+from vimath import constructors
 
 returnClass = {
-    "<class 'lineedit.MyLineEdit'>": MyLineEdit,
-    "<class 'constructors.fraction.Fraction'>": constructors.Fraction,
-    "<class 'frame.MyFrame'>": MyFrame,
-    "<class 'constructors.squareroot.SquareRoot'>": constructors.SquareRoot,
-    "<class 'constructors.parenthesis.Parenthesis'>": constructors.Parenthesis,
-    "<class 'constructors.subscript.Subscript'>": constructors.Subscript,
-    "<class 'constructors.superscript.Superscript'>": constructors.Superscript,
-    "<class 'constructors.supersubscript.SuperSubscript'>": constructors.SuperSubscript,
-    "<class 'constructors.mainframe.Line'>": constructors.mainframe.Line,
+    "<class 'vimath.lineedit.MyLineEdit'>": MyLineEdit,
+    "<class 'vimath.constructors.fraction.Fraction'>": constructors.Fraction,
+    "<class 'vimath.frame.MyFrame'>": MyFrame,
+    "<class 'vimath.constructors.squareroot.SquareRoot'>": constructors.SquareRoot,
+    "<class 'vimath.constructors.parenthesis.Parenthesis'>": constructors.Parenthesis,
+    "<class 'vimath.constructors.subscript.Subscript'>": constructors.Subscript,
+    "<class 'vimath.constructors.superscript.Superscript'>": constructors.Superscript,
+    "<class 'vimath.constructors.supersubscript.SuperSubscript'>": constructors.SuperSubscript,
+    "<class 'vimath.constructors.mainframe.Line'>": constructors.mainframe.Line,
 }
 scene.returnClass = returnClass
