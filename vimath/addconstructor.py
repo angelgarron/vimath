@@ -60,7 +60,7 @@ class CreateIntegral:
         cursorPosition = other.cursorPosition()
         text = other.text()
         text = list(text)
-        text.insert(cursorPosition, "∫")
+        text.insert(cursorPosition, chr(115))
         text = "".join(text)
         other.setText(text)
         other.setCursorPosition(cursorPosition+1)

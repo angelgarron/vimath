@@ -53,10 +53,11 @@ class MyMainWindow(QMainWindow):
 
         
     def createMyMath(self):
-        mainMathFrame = MyFrame(self)
-        # lineEdit = mainMathFrame.graphicsFrame.findChild(MyGraphicsLineEdit)
+        lineEdit = self.mainMathFrame.children[0].firstLineEdit
         # lineEdit.setText("example")
-        # innerFrame = mainMathFrame.createFrameMiddle(2, Fraction)
+        lineEdit.setCursorPosition(3)
+        innerFrame = lineEdit.createFrameMiddle(Fraction)
+        # innerFrame.removeFrame()
         # otherInnerFrame = innerFrame.numerator.createFrameMiddle(2, Fraction)
         # squareRootFrame = innerFrame.denominator.createFrameMiddle(2, SquareRoot)
         # fractionInsideSquareFrame = squareRootFrame.squareRootArgumentFrame.createFrameMiddle(2, Fraction)
