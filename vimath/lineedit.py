@@ -15,10 +15,14 @@ class MyLineEdit(QLineEdit):
         self.fontSize = self.parent.fontSize
         self.isEmpty = False
         # hiding cursor to just see my implementation
-        self.fontItalics = QFont("cmmi10", self.fontSize)
-        self.fontPlain = QFont("cmr10", self.fontSize)
-        self.fmItalics = QFontMetrics(self.fontItalics)
-        self.fmPlain = QFontMetrics(self.fontPlain)
+        self.fontDict = {
+            "cmmi10": QFont("cmmi10", self.fontSize),
+            "cmr10": QFont("cmr10", self.fontSize),
+                                }
+        self.fontMetricsDict = {
+            "cmmi10": QFontMetrics(self.fontDict["cmmi10"]),
+            "cmr10": QFontMetrics(self.fontDict["cmr10"]),
+                                }
         self.scene = self.parent.scene
         self.u = self.parent.fontSize/2+2
         self.d = self.parent.fontSize/2+2
@@ -106,18 +110,14 @@ class MyLineEdit(QLineEdit):
 
 
     def getDimensionUntilCursorPosition(self, cursorPosition):
-        # TODO
-        isItalic, result_list = self.groupCharacters(cursorPosition)
+        groups = self.groupCharacters(cursorPosition)
 
         u = 0
         d = 0
         width = 0
-        for group in result_list:
+        for fontName, group in groups:
 
-            if isItalic:
-                fm = self.fmItalics
-            else:
-                fm = self.fmPlain
+            fm = self.fontMetricsDict[fontName]
 
             tight = fm.tightBoundingRect(group)
 
@@ -126,8 +126,6 @@ class MyLineEdit(QLineEdit):
             u = max(u, newu)
             d = max(d, newd)
             width += tight.width()
-
-            isItalic = not isItalic
 
         return width, u, d
 
@@ -268,18 +266,13 @@ class MyLineEdit(QLineEdit):
 
     def paintEvent(self, event):
         with QPainter(self) as painter:
-            # TODO
-            isItalic, result_list = self.groupCharacters(None)
+            groups = self.groupCharacters(None)
 
             width = 0
-            for group in result_list:
+            for fontName, group in groups:
 
-                if isItalic:
-                    font = self.fontItalics
-                    fm = self.fmItalics
-                else:
-                    font = self.fontPlain
-                    fm = self.fmPlain
+                fm = self.fontMetricsDict[fontName]
+                font = self.fontDict[fontName]
 
                 tight = fm.tightBoundingRect(group)
 
@@ -293,8 +286,6 @@ class MyLineEdit(QLineEdit):
                 ))
 
                 width += tight.width()
-
-                isItalic = not isItalic
 
     
         if self.isEmpty:
