@@ -2,6 +2,7 @@ import re
 from PySide6.QtWidgets import (QLineEdit, QFrame, QProxyStyle)
 from PySide6.QtGui import QPainter, QPen, QPainterPath, QColor, QBrush, QFont, QTextLayout, QFontMetrics
 from PySide6.QtCore import Qt, QSize, QPoint
+from vimath.utils import symbols
 
 LINEDIT_SIZE = (8, 20)
 
@@ -85,16 +86,27 @@ class MyLineEdit(QLineEdit):
         
 
     def groupCharacters(self, cursorPosition):
-        from vimath.symbols import symbols
+        """Group string according to the font each group should display.
+
+        Args:
+            cursorPosition (Int): Length of text to consider.
+
+        Returns:
+            List: List of tuples [(fontName, group), ...]
+        """
         unicodes = "".join([str(chr(c)) for c in symbols.values()])
         result_list = re.findall(fr'[a-zA-Z{unicodes}]+|[^a-zA-Z{unicodes}]+', self.text()[:cursorPosition])
-        firstItalic = False
-        if len(result_list) > 0:
-            firstItalic = result_list[0][0].isalpha() or result_list[0][0] in unicodes
-        return firstItalic, result_list
+        groups = []
+        for group in result_list:
+            if group[0].isalpha() or group[0] in unicodes:
+                groups.append(("cmmi10", group))
+            else:
+                groups.append(("cmr10", group))
+        return groups
 
 
     def getDimensionUntilCursorPosition(self, cursorPosition):
+        # TODO
         isItalic, result_list = self.groupCharacters(cursorPosition)
 
         u = 0
@@ -256,6 +268,7 @@ class MyLineEdit(QLineEdit):
 
     def paintEvent(self, event):
         with QPainter(self) as painter:
+            # TODO
             isItalic, result_list = self.groupCharacters(None)
 
             width = 0
