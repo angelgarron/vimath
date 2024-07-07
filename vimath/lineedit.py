@@ -51,6 +51,10 @@ class MyLineEdit(QLineEdit):
         return self._text.cursorPosition()
 
         
+    def setCursorPosition(self, position):
+        return self._text.setCursorPosition(position)
+
+        
     def cursorForward(self, anchor):
         self._text.cursorForward()
         self.scene.window.graphicCursor.updatePosition()

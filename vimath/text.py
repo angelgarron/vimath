@@ -49,6 +49,10 @@ class Text:
         
     def cursorPosition(self):
         return self._cursorPosition
+    
+
+    def setCursorPosition(self, position):
+        self._cursorPosition = position
 
         
     def cursorForward(self):
