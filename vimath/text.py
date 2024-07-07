@@ -74,8 +74,8 @@ class Text:
             self.plain_text = text.plain_text
 
 
-    def keyPressEvent(self, event):
-        self.plain_text = self.plain_text[:self._cursorPosition]+event.text()+self.plain_text[self._cursorPosition:]
+    def insertTextOnCursorPosition(self, text):
+        self.plain_text = self.plain_text[:self._cursorPosition]+text+self.plain_text[self._cursorPosition:]
         self.cursorForward()
 
         

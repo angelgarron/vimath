@@ -266,7 +266,7 @@ class MyLineEdit(QLineEdit):
         if not isPossibleMatch:
             self.scene.storedKeys = []
             if self.scene.isInsertMode():
-                self._text.keyPressEvent(event)
+                self._text.insertTextOnCursorPosition(event.text())
                 self.scene.updateFrames()
 
         self.scene.window.updateStatusBar()
