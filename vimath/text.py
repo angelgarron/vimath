@@ -86,3 +86,7 @@ class Text:
 
     def __add__(self, other):
         return Text(self.plain_text+other.plain_text)
+
+        
+    def clear(self):
+        self.plain_text = ""

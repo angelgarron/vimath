@@ -69,6 +69,11 @@ class MyLineEdit(QLineEdit):
         self._text.backspace()
         self.scene.updateFrames()
 
+        
+    def clear(self):
+        self._text.clear()
+        self.scene.updateFrames()
+
 
     def focusInEvent(self, event):
         self.scene.window.graphicCursor.updatePosition()
