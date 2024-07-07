@@ -83,6 +83,14 @@ class Text:
         self.plain_text = self.plain_text[:self._cursorPosition-1]+self.plain_text[self._cursorPosition:]
         self.cursorBackward()
 
+        
+    def home(self):
+        self._cursorPosition = 0
+    
+
+    def end(self):
+        self._cursorPosition = len(self)
+
 
     def __add__(self, other):
         return Text(self.plain_text+other.plain_text)
