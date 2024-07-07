@@ -52,10 +52,14 @@ class Text:
 
         
     def cursorForward(self):
+        if self._cursorPosition == len(self):
+            return
         self._cursorPosition += 1
     
 
     def cursorBackward(self):
+        if self._cursorPosition == 0:
+            return
         self._cursorPosition -= 1
 
         
@@ -64,3 +68,8 @@ class Text:
             self.plain_text = text
         elif isinstance(text, Text):
             self.plain_text = text.plain_text
+
+
+    def keyPressEvent(self, event):
+        self.plain_text = self.plain_text[:self._cursorPosition]+event.text()+self.plain_text[self._cursorPosition:]
+        self.cursorForward()

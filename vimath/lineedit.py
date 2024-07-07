@@ -29,7 +29,6 @@ class MyLineEdit(QLineEdit):
         self.u = self.parent.fontSize/2+2
         self.d = self.parent.fontSize/2+2
         self.setGeometry(0, 0, LINEDIT_SIZE[0], self.u+self.d)
-        self.textChanged.connect(self.scene.updateFrames)
         self.pen = QPen()
         self.color_blue = QColor(36, 143, 230)
         self.color_blue_dark = QColor(30, 112, 180)
@@ -246,7 +245,8 @@ class MyLineEdit(QLineEdit):
         if not isPossibleMatch:
             self.scene.storedKeys = []
             if self.scene.isInsertMode():
-                super().keyPressEvent(event)
+                self._text.keyPressEvent(event)
+                self.scene.updateFrames()
 
         self.scene.window.updateStatusBar()
 
