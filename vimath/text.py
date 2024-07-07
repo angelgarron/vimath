@@ -77,3 +77,12 @@ class Text:
     def keyPressEvent(self, event):
         self.plain_text = self.plain_text[:self._cursorPosition]+event.text()+self.plain_text[self._cursorPosition:]
         self.cursorForward()
+
+        
+    def backspace(self):
+        self.plain_text = self.plain_text[:self._cursorPosition-1]+self.plain_text[self._cursorPosition:]
+        self.cursorBackward()
+
+
+    def __add__(self, other):
+        return Text(self.plain_text+other.plain_text)

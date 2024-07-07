@@ -86,12 +86,13 @@ class MyFrame(QFrame):
         leftLineEdit = self.parent.children[indexDeleted-1]
         rightLineEdit = self.parent.children[indexDeleted+1]
         leftText = leftLineEdit.text()
+        newCursorPosition = len(leftText)
         rightText = rightLineEdit.text()
         mergedText = leftText+rightText
         leftLineEdit.setText(mergedText)
         # give focus to someone else so it doesn't crash when self is deleted
         leftLineEdit.setFocus()
-        leftLineEdit.setCursorPosition(len(leftText))
+        leftLineEdit.setCursorPosition(newCursorPosition)
         self.parent.children.remove(rightLineEdit)
         rightLineEdit.deleteLater()
         self.parent.children.remove(self)
