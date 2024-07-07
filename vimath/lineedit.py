@@ -142,11 +142,10 @@ class MyLineEdit(QLineEdit):
         Returns:
             List: List of tuples [(fontName, group), ...]
         """
-        unicodes = "".join([str(chr(c)) for c in symbols.values()])
-        result_list = re.findall(fr'[a-zA-Z{unicodes}]+|[^a-zA-Z{unicodes}]+', self.text()[:cursorPosition].plain_text)
+        result_list = self._text[:cursorPosition].splitText()
         groups = []
         for group in result_list:
-            if group[0].isalpha() or group[0] in unicodes:
+            if group[0].isalpha():
                 groups.append(("cmmi10", group))
             else:
                 groups.append(("cmr10", group))
