@@ -3,6 +3,7 @@ from PySide6.QtWidgets import (QLineEdit, QFrame, QProxyStyle)
 from PySide6.QtGui import QPainter, QPen, QPainterPath, QColor, QBrush, QFont, QTextLayout, QFontMetrics
 from PySide6.QtCore import Qt, QSize, QPoint
 from vimath.utils import symbols
+from vimath.text import Text
 
 LINEDIT_SIZE = (8, 20)
 
@@ -11,6 +12,7 @@ class MyLineEdit(QLineEdit):
     MIDDLE_GAP = 6
     def __init__(self, parent):
         super().__init__(parent)
+        self._text = Text()
         self.parent = parent
         self.fontSize = self.parent.fontSize
         self.isEmpty = False
@@ -28,7 +30,6 @@ class MyLineEdit(QLineEdit):
         self.d = self.parent.fontSize/2+2
         self.setGeometry(0, 0, LINEDIT_SIZE[0], self.u+self.d)
         self.textChanged.connect(self.scene.updateFrames)
-        self.cursorPositionChanged.connect(self.scene.window.graphicCursor.updatePosition)
         self.pen = QPen()
         self.color_blue = QColor(36, 143, 230)
         self.color_blue_dark = QColor(30, 112, 180)
@@ -38,6 +39,28 @@ class MyLineEdit(QLineEdit):
         self.brush.setStyle(Qt.SolidPattern)
         self.show()
     
+
+    def text(self):
+        return self._text
+
+        
+    def setText(self, text):
+        self._text.setText(text)
+
+
+    def cursorPosition(self):
+        return self._text.cursorPosition()
+
+        
+    def cursorForward(self, anchor):
+        self._text.cursorForward()
+        self.scene.window.graphicCursor.updatePosition()
+    
+
+    def cursorBackward(self, anchor):
+        self._text.cursorBackward()
+        self.scene.window.graphicCursor.updatePosition()
+
 
     def focusInEvent(self, event):
         self.scene.window.graphicCursor.updatePosition()
@@ -99,7 +122,7 @@ class MyLineEdit(QLineEdit):
             List: List of tuples [(fontName, group), ...]
         """
         unicodes = "".join([str(chr(c)) for c in symbols.values()])
-        result_list = re.findall(fr'[a-zA-Z{unicodes}]+|[^a-zA-Z{unicodes}]+', self.text()[:cursorPosition])
+        result_list = re.findall(fr'[a-zA-Z{unicodes}]+|[^a-zA-Z{unicodes}]+', self.text()[:cursorPosition].plain_text)
         groups = []
         for group in result_list:
             if group[0].isalpha() or group[0] in unicodes:
