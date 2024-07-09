@@ -85,8 +85,11 @@ class Text:
 
 
     def insertTextOnCursorPosition(self, text):
+        splitted = self.furtherSplitting()[:self._cursorPosition]
         if text[0] == "\\": # adding whitespace at the end of math symbols
             text += " "
+        elif self.plain_text and splitted[-1][0] == "\\": # if we are going to place new text at the right of a symbol
+            text = " "+text
         self.plain_text = self[:self._cursorPosition].plain_text+text+self[self._cursorPosition:].plain_text
         if self.plain_text[-1] == " ": # remove whitespace at the end
             self.plain_text = self.plain_text[:len(self.plain_text)-1]

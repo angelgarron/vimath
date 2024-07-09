@@ -64,6 +64,7 @@ def test_subscriptable(text, fullString, slice, expected):
         ("qwerty", "\\pi", 6, "qwerty\\pi"),
         ("qwerty\\pi", "\\pi", 7, "qwerty\\pi\\pi"),
         ("qwer\\pi ty", "\\pi", 5, "qwer\\pi\\pi ty"),
+        ("qwer\\pi ty", "q", 5, "qwer\\pi qty"),
     ]
 )
 def test_insertTextOnCursorPosition(text, initialPlainText, eventText, cursorPosition, expected):
