@@ -11,12 +11,9 @@ class AddSymbol:
         
     def performAction(self, other):
         cursorPosition = other.cursorPosition()
-        text = other.text()
-        text = list(text)
-        text.insert(cursorPosition, chr(symbols[self.symbol]))
-        text = "".join(text)
-        other.setText(text)
+        other.text().insertTextOnCursorPosition(symbols[self.symbol])
         other.setCursorPosition(cursorPosition+1)
+        other.scene.updateFrames()
 
 
 for symbol in symbols:

@@ -18,6 +18,8 @@ class Text:
             splitis = re.split(f"(?={re.escape(s)})", sp)
             for ss in splitis:
                 for aa in ss.split(" "):
+                    if aa == "":
+                        continue
                     split_text.append(aa)
         return split_text
 
@@ -43,7 +45,15 @@ class Text:
         
     def __getitem__(self, index):
         further_splitted = self.furtherSplitting()[index]
-        joined =  "".join(further_splitted)
+        joined = []
+        for sub in further_splitted:
+            if sub[0] != "\\":
+                joined.append(sub)
+            else:
+                joined.append(sub+" ")
+        joined =  "".join(joined)
+        if joined and joined[-1] == " ": # check that string is not empty, remove whitespace at the end
+            joined = joined[:len(joined)-1]
         return Text(joined)
 
         
@@ -75,7 +85,11 @@ class Text:
 
 
     def insertTextOnCursorPosition(self, text):
+        if text[0] == "\\": # adding whitespace at the end of math symbols
+            text += " "
         self.plain_text = self.plain_text[:self._cursorPosition]+text+self.plain_text[self._cursorPosition:]
+        if self.plain_text[-1] == " ": # remove whitespace at the end
+            self.plain_text = self.plain_text[:len(self.plain_text)-1]
         self.cursorForward()
 
         

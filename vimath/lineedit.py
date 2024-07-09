@@ -4,6 +4,7 @@ from PySide6.QtGui import QPainter, QPen, QPainterPath, QColor, QBrush, QFont, Q
 from PySide6.QtCore import Qt, QSize, QPoint
 from vimath.utils import symbols
 from vimath.text import Text
+from vimath.utils import translateUnicode
 
 LINEDIT_SIZE = (8, 20)
 
@@ -147,6 +148,8 @@ class MyLineEdit(QLineEdit):
         for group in result_list:
             if group[0].isalpha():
                 groups.append(("cmmi10", group))
+            elif group[0] == "\\":
+                groups.append(("cmmi10", translateUnicode[group]))
             else:
                 groups.append(("cmr10", group))
         return groups

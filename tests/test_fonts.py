@@ -2,6 +2,7 @@ import pytest
 from vimath.lineedit import MyLineEdit
 from PySide6.QtWidgets import QWidget
 from unittest.mock import Mock
+from vimath.utils import translateUnicode, symbols
 
 
 @pytest.fixture
@@ -32,6 +33,9 @@ def test_groupCharacters(lineEdit):
     expected_result = [("cmmi10", "q"), ("cmr10", "23"), ("cmmi10", "we")]
     assert lineEdit.groupCharacters(5) == expected_result
     expected_result = [("cmmi10", "q"), ("cmr10", "23"), ("cmmi10", "werty")]
+    assert lineEdit.groupCharacters(None) == expected_result
+    lineEdit.setText("qwert\\pi qwert")
+    expected_result = [("cmmi10", "qwert"), ("cmmi10", translateUnicode["\\pi"]), ("cmmi10", "qwert")]
     assert lineEdit.groupCharacters(None) == expected_result
 
     
