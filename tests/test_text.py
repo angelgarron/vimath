@@ -33,7 +33,7 @@ def test_length(text, fullString, expected):
 @pytest.mark.parametrize(
     "fullString, expected",
     [
-        ("24ssdf\\pi kld\\rho\\nu jfsf344", ["24", "s", "s", "d", "f", 
+        ("24ssdf\\pi kld\\rho\\nu jfsf344", ["2", "4", "s", "s", "d", "f", 
                                              "\\pi", "k", "l", "d", "\\rho", "\\nu", 
                                              "j", "f", "s", "f", "3", "4", "4"])
     ]

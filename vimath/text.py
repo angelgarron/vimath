@@ -87,7 +87,7 @@ class Text:
     def insertTextOnCursorPosition(self, text):
         if text[0] == "\\": # adding whitespace at the end of math symbols
             text += " "
-        self.plain_text = self.plain_text[:self._cursorPosition]+text+self.plain_text[self._cursorPosition:]
+        self.plain_text = self[:self._cursorPosition].plain_text+text+self[self._cursorPosition:].plain_text
         if self.plain_text[-1] == " ": # remove whitespace at the end
             self.plain_text = self.plain_text[:len(self.plain_text)-1]
         self.cursorForward()
