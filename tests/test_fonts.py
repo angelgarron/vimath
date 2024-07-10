@@ -35,7 +35,7 @@ def test_groupCharacters(lineEdit):
     expected_result = [("cmmi10", "q"), ("cmr10", "23"), ("cmmi10", "werty")]
     assert lineEdit.groupCharacters(None) == expected_result
     lineEdit.setText("qwert\\pi qwert")
-    expected_result = [("cmmi10", "qwert"), ("cmmi10", translateUnicode["\\pi"]), ("cmmi10", "qwert")]
+    expected_result = [("cmmi10", "qwert"), ("cmmi10", chr(188)), ("cmmi10", "qwert")]
     assert lineEdit.groupCharacters(None) == expected_result
 
     

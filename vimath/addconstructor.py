@@ -54,13 +54,8 @@ class CreateIntegral:
 
         
     def performAction(self, other):
-        cursorPosition = other.cursorPosition()
-        text = other.text()
-        text = list(text)
-        text.insert(cursorPosition, chr(115))
-        text = "".join(text)
-        other.setText(text)
-        other.setCursorPosition(cursorPosition+1)
+        other.text().insertTextOnCursorPosition("\\int")
+        other.scene.updateFrames()
 
 
 @RegisterAction(["normal", "insert"])

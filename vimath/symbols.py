@@ -10,9 +10,7 @@ class AddSymbol:
 
         
     def performAction(self, other):
-        cursorPosition = other.cursorPosition()
         other.text().insertTextOnCursorPosition(symbols[self.symbol])
-        other.setCursorPosition(cursorPosition+1)
         other.scene.updateFrames()
 
 

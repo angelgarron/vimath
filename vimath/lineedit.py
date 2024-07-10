@@ -21,10 +21,14 @@ class MyLineEdit(QLineEdit):
         self.fontDict = {
             "cmmi10": QFont("cmmi10", self.fontSize),
             "cmr10": QFont("cmr10", self.fontSize),
+            "cmsy10": QFont("cmsy10", self.fontSize),
+            "cmex10": QFont("cmex10", self.fontSize),
                                 }
         self.fontMetricsDict = {
             "cmmi10": QFontMetrics(self.fontDict["cmmi10"]),
             "cmr10": QFontMetrics(self.fontDict["cmr10"]),
+            "cmsy10": QFontMetrics(self.fontDict["cmsy10"]),
+            "cmex10": QFontMetrics(self.fontDict["cmex10"]),
                                 }
         self.scene = self.parent.scene
         self.u = self.parent.fontSize/2+2
@@ -149,7 +153,8 @@ class MyLineEdit(QLineEdit):
             if group[0].isalpha():
                 groups.append(("cmmi10", group))
             elif group[0] == "\\":
-                groups.append(("cmmi10", translateUnicode[group]))
+                fontAndUnicode = translateUnicode[group]
+                groups.append((fontAndUnicode[0], fontAndUnicode[1]))
             else:
                 groups.append(("cmr10", group))
         return groups
