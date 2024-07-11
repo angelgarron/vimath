@@ -50,6 +50,7 @@ class MyLineEdit(QLineEdit):
         
     def setText(self, text):
         self._text.setText(text)
+        self.scene.updateFrames()
 
 
     def cursorPosition(self):
