@@ -310,7 +310,7 @@ class MyLineEdit(QLineEdit):
     def serialize(self, start=None, end=None):
         return {
             "constructor": str(self.__class__),
-            "text": self.text()[start:end],
+            "text": self.text()[start:end].text(),
         }
 
         
