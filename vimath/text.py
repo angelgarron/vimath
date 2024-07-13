@@ -5,6 +5,7 @@ class Text:
     def __init__(self, text=""):
         self.plain_text = text
         self._cursorPosition = 0
+        self.indicesSelectedText = None
 
         
     def setText(self, text):
@@ -65,13 +66,15 @@ class Text:
         self._cursorPosition = position
 
         
-    def cursorForward(self):
+    def cursorForward(self, mark, steps):
+        if mark:
+            self.indicesSelectedText = self._cursorPosition, self._cursorPosition+steps
         if self._cursorPosition == len(self):
             return
         self._cursorPosition += 1
     
 
-    def cursorBackward(self):
+    def cursorBackward(self, mark, steps):
         if self._cursorPosition == 0:
             return
         self._cursorPosition -= 1
@@ -88,17 +91,17 @@ class Text:
         splitted = self.furtherSplitting()[:self._cursorPosition]
         if text[0] == "\\": # adding whitespace at the end of math symbols
             text += " "
-        elif self.plain_text and splitted[-1][0] == "\\": # if we are going to place new text at the right of a symbol
+        elif splitted and splitted[-1][0] == "\\": # if we are going to place new text at the right of a symbol
             text = " "+text
         self.plain_text = self[:self._cursorPosition].plain_text+text+self[self._cursorPosition:].plain_text
         if self.plain_text[-1] == " ": # remove whitespace at the end
             self.plain_text = self.plain_text[:len(self.plain_text)-1]
-        self.cursorForward()
+        self.cursorForward(False, 1)
 
         
     def backspace(self):
         self.plain_text = self.plain_text[:self._cursorPosition-1]+self.plain_text[self._cursorPosition:]
-        self.cursorBackward()
+        self.cursorBackward(False, 1)
 
         
     def home(self):
@@ -115,3 +118,9 @@ class Text:
         
     def clear(self):
         self.plain_text = ""
+
+
+    def del_(self):
+        self.plain_text = self.plain_text[:self.indicesSelectedText[0]]+self.plain_text[self.indicesSelectedText[1]:]
+        self._cursorPosition -= self.indicesSelectedText[1]-self.indicesSelectedText[0]
+        

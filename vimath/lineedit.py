@@ -61,21 +61,21 @@ class MyLineEdit(QLineEdit):
         return self._text.setCursorPosition(position)
 
         
-    def cursorForward(self, anchor):
-        self._text.cursorForward()
+    def cursorForward(self, mark, steps=1):
+        self._text.cursorForward(mark, steps)
         self.scene.window.graphicCursor.updatePosition()
     
 
-    def cursorBackward(self, anchor):
-        self._text.cursorBackward()
+    def cursorBackward(self, mark, steps=1):
+        self._text.cursorBackward(mark, steps)
         self.scene.window.graphicCursor.updatePosition()
 
         
-    def home(self, anchor):
+    def home(self, mark):
         self._text.home()
 
 
-    def end(self, anchor):
+    def end(self, mark):
         self._text.end()
 
         
@@ -223,8 +223,9 @@ class MyLineEdit(QLineEdit):
         
 
     def deleteText(self):
-        if self.hasSelectedText():
-            self.del_()
+        if self.text().indicesSelectedText:
+            self.text().del_()
+            self.scene.updateFrames()
 
 
     def keyPressEvent(self, event):
