@@ -3,15 +3,19 @@ from PySide6.QtCore import QPoint
 from vimath.lineedit import  MyLineEdit
 from vimath.clipboard import Clipboard
 from vimath.history import History
+from enum import Enum, auto
 
-NORMAL_MODE = 0
-INSERT_MODE = 1
-VISUAL_MODE = 2
+
+class Mode(Enum):
+    NORMAL = auto()
+    INSERT = auto()
+    VISUAL = auto()
+
 
 class Scene:
     def __init__(self):
         self.fontSize = 15
-        self.mode = NORMAL_MODE
+        self.mode = Mode.NORMAL
         self.storedKeys = []
         self.selectionFirst = None
         self.selectionSecond = None
@@ -160,7 +164,7 @@ class Scene:
 
 
     def enterInsertMode(self):
-        self.mode = INSERT_MODE
+        self.mode = Mode.INSERT
         self.storedKeys = []
         self.window.updateStatusBar()
         self.window.graphicCursor.updatePosition()
@@ -169,28 +173,33 @@ class Scene:
     def enterNormalMode(self):
         if self.isVisualMode():
             self.clearSelection()
-        self.mode = NORMAL_MODE
+        self.mode = Mode.NORMAL
         self.window.updateStatusBar()
         self.window.graphicCursor.updatePosition()
 
 
     def enterVisualMode(self):
-        self.mode = VISUAL_MODE
+        self.mode = Mode.VISUAL
         self.startSelection()
         self.window.updateStatusBar()
         self.window.graphicCursor.updatePosition()
 
             
     def isNormalMode(self):
-        return self.mode == NORMAL_MODE
+        return self.mode == Mode.NORMAL
     
 
     def isInsertMode(self):
-        return self.mode == INSERT_MODE
+        return self.mode == Mode.INSERT
     
 
     def isVisualMode(self):
-        return self.mode == VISUAL_MODE
+        return self.mode == Mode.VISUAL
+
+        
+    @property
+    def currentMode(self):
+        return self.mode.name
 
 
     def clear(self):

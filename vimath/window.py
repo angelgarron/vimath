@@ -7,13 +7,6 @@ from vimath.lineedit import MyLineEdit
 from vimath.constructors import Fraction, MainFrame
 
 
-MODE_NAME = {
-    0: "NORMAL",
-    1: "INSERT",
-    2: "VISUAL",
-}
-
-
 class MyMainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -42,7 +35,7 @@ class MyMainWindow(QMainWindow):
 
 
     def updateStatusBar(self):
-        modeInfo = f"-- {MODE_NAME[self.scene.mode]} --"
+        modeInfo = f"-- {self.scene.currentMode} --"
         storedKeys = "".join(map(lambda k: str(k.key())[-1].lower(), self.scene.storedKeys))
         self.storedKeysLabel.setText(storedKeys)
         self.modeInfoLabel.setText(modeInfo)
