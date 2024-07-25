@@ -14,7 +14,7 @@ class MyMainWindow(QMainWindow):
         self.initUI()
         self.scene = scene
         self.scene.window = self
-        self.tp = SelectionRectangle(self)
+        self.selectionRectangle = SelectionRectangle(self)
         self.graphicCursor = GraphicalCursor(self, self.scene)
         self.fontSize = self.scene.fontSize
 
