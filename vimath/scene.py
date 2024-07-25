@@ -78,14 +78,14 @@ class Scene:
     def clearSelection(self):
         self.selectionFirst = None
         self.selectionSecond = None
-        self.window.tp.hide()
+        self.window.selectionRectangle.hide()
 
 
     def startSelection(self):
         lineEditWithFocus = self.getLineEditWithFocus()
         self.selectionFirst = [lineEditWithFocus, lineEditWithFocus.cursorPosition()]
         self.selectionSecond = [lineEditWithFocus, lineEditWithFocus.cursorPosition()]
-        self.window.tp.show()
+        self.window.selectionRectangle.show()
 
 
     def getAbsolutePosition(self, element, pos):
@@ -108,7 +108,7 @@ class Scene:
             else:
                 end = self.selection[-1][0].x()+self.selection[-1][0].width()
             pos = self.getAbsolutePosition(self.selection[0][0].parent, QPoint(start, 0))
-            self.window.tp.setGeometry(pos.x(), pos.y(), end-start, self.selection[0][0].parent.height())
+            self.window.selectionRectangle.setGeometry(pos.x(), pos.y(), end-start, self.selection[0][0].parent.height())
 
 
     def deleteSelection(self, selection=None, storeHistory=True):
