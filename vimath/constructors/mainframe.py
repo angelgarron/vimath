@@ -1,3 +1,4 @@
+from typing import Optional
 from vimath.frame import MyFrame
 
 
@@ -61,7 +62,7 @@ class MainFrame(MyFrame):
         self.createLine()
 
         
-    def createLine(self, position=None):
+    def createLine(self, position: Optional[int] = None):
         if position is None:
             position = len(self.children)
         line = Line(self)
