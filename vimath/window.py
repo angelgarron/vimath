@@ -24,12 +24,16 @@ class MyMainWindow(QMainWindow):
 
         self.scene.history.store("first stamp")
         self.createMyMath()
+        self.createStatusBar()
+        self.graphicCursor.updatePosition()
+
+        
+    def createStatusBar(self):
         self.modeInfoLabel = QLabel("")
         self.statusBar().addWidget(self.modeInfoLabel, 1)
         self.storedKeysLabel = QLabel("")
         self.statusBar().addWidget(self.storedKeysLabel)
         self.updateStatusBar()
-        self.graphicCursor.updatePosition()
 
 
     def updateStatusBar(self):
